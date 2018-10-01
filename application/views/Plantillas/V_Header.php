@@ -33,10 +33,13 @@
       </li>   
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('C_Seguimiento') ?>"><i class="fas fa-book"></i> Periodos de Seguimientos</a>
-      </li>   
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> <i class="fas fa-search"></i> Buscador de Mascotas</a>
+      </li>  
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-search"></i> Buscador de Mascotas
+          <i class="fas fa-chart-pie"></i> Generar Informe
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
