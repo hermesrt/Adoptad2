@@ -12,7 +12,7 @@
 
     <title>A2!</title>
   </head>
-  <body>
+  <body class="bg-light">
    
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <a class="navbar-brand" href="<?= base_url() ?>">Adopta2</a>
