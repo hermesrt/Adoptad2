@@ -86,11 +86,11 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label for="fecha">Fecha</label>
+					<label for="fecha">Fecha revisión</label>
 					<input type="date" class="form-control" id="fecha" placeholder="Fecha">
 				</div>
 				<div class="form-group">
-					<label for="TipoRevision">Tipo de Revisión</label>
+					<label for="TipoRevision">Tipo de revisión</label>
 					<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
 						<option>Castración</option>
 						<option>Seguimiento</option>
@@ -107,7 +107,7 @@
 					</select>
 				</div>
 				<div class="form-group" >
-					<label for="detalle">Detalle de Revisión</label>
+					<label for="detalle">Detalle de revisión</label>
 					<textarea class="form-control"></textarea>
 				</div>
 			</div>

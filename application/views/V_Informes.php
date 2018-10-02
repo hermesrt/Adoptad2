@@ -37,7 +37,7 @@
 						</center>
 
 						<div class="form-group">
-							<label for="tipoInforme"></label>
+							<label for="tipoInforme">Seleccione el tipo de informe:</label>
 							<select class="form-control" id="tipoInforme">
 								<option>Informe de Adopciones</option>
 								<option>Informe de Denuncias</option>
@@ -47,11 +47,11 @@
 
 						<div class="row">
 							<div class="form-group col-6">
-								<label>Fecha desde: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha desde donde se comienzan a recuperar los datos para generar el informe">Fecha desde: </label> <input class="form-control" type="date" name="">
 							</div>
 							<div class="form-group col-6">
 
-								<label>Fecha Hasta: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha tope hasta donde se recuperan los datos para generar el informe">Fecha hasta: </label> <input class="form-control" type="date" name="">
 							</div>
 						</div>
 						<center><button type="button" class="btn btn-primary"><i class="fas fa-chart-pie"></i> Generar informe</button></center>

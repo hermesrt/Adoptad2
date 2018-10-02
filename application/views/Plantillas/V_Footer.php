@@ -27,6 +27,14 @@
         </div>	
     </div></center>
 </div>
+
+    <!-- Script para habilitar los PopOvers y ToolTips en toda la aplicacion -->
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 </footer>
 
 
