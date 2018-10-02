@@ -22,7 +22,6 @@
 								<div class="row">
 									<div class="col-3">
 										<label for="direccion">Buscar por Direccion:</label>
-
 									</div>
 									<div class="col-9">
 										<input type="text" class="form-control" id="direccion" placeholder="Ingrese Direccion">

@@ -10,7 +10,6 @@
             Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopcion" correspondiente.
             Regsitramos tus datos, y ante cualquier necesidad nosotros nos comunicamos!
           </p>
-          <center><a href="#" class="btn btn-primary"><i class="fas fa-search"></i> Buscador Personalizado</a></center>
         </div>
       </div>
     </div>
@@ -57,7 +56,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Adoptar</button>
+        <a class="btn btn-primary" href="<?= base_url('C_Adoptante') ?>">Adoptar</a>
       </div>
     </div>
   </div>
