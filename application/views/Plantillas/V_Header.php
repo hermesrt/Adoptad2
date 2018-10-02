@@ -14,8 +14,8 @@
   <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
 </head>
 <body class="bg-light">
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <img height="50px" width="50px" src="<?= base_url('assets/img/logo.png') ?>">
       <a class="navbar-brand" href="<?= base_url() ?>">Adopta2</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,8 @@
         </ul>
       </div>
     </nav>
-  </header>
-  <main role="main" class="container">
+  </div>
+  
+
 
 
