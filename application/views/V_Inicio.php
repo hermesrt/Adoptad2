@@ -23,7 +23,10 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <center><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a></center>
+            <center>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#"><i class="fas fa-plus"></i> Ver Animal</a>
+            </center>
           </div>
         </div>
       </div>
