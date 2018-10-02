@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/fontawesome/css/all.css') ?>">
 
   <title>A2!</title>
+  <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
 </head>
 <body class="bg-light">
 
