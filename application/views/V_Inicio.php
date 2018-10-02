@@ -6,9 +6,9 @@
         <div class="card-body">
           <center><h1 class="card-title">Bienvenidos a Adpota2!</h1></center>
           <p class="card-text">
-            Busca tu proxima mascota en nuestro sitio web desde la comodidad de tu casa.
-            Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopcion" correspondiente.
-            Regsitramos tus datos, y ante cualquier necesidad nosotros nos comunicamos!
+            Buscá tu próxima mascota en nuestro sitio web desde la comodidad de tu casa.
+            Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopción" correspondiente.
+            Registramos tus datos, y ante cualquier necesidad nosotros nos comunicamos!
           </p>
         </div>
       </div>

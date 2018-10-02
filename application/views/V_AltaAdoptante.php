@@ -6,11 +6,11 @@
 				<center><h1 class="my-2"><i class="fas fa-bullhorn"></i></h1></center>
 				<div class="card-body">
 					<h5 class="card-title">Registrar Adoptante</h5>
-					<p class="card-text">En esta seccion podras registrar a los adoptantes para poder contar con los datos personales de estos y para que lo utilize el sitema para realizar automaticamente acciones cuando sea necesario.</p>
+					<p class="card-text">En esta sección podrás registrar a los adoptantes para poder contar con los datos personales de estos y para que lo utilize el sitema para realizar automáticamente acciones cuando sea necesario.</p>
 
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic"> <i class="fas fa-info"></i> 
-							 Algunas de las funciones automaticas del sistema:
+							 Algunas de las funciones automáticas del sistema:
 							<ul>
 								<li>Enviar email cuando sea denunciado.</li>
 								<li>Enviar email cuando se inicie un periodo de seguimiento.</li>
@@ -43,9 +43,9 @@
 
 
 						<div class="form-group row">
-							<label for="inputPassword3" class="col-sm-2 form-control-label">Direccion</label>
+							<label for="inputPassword3" class="col-sm-2 form-control-label">Dirección</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese deireccion...">
+								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese dirección...">
 							</div>
 						</div>
 
@@ -57,9 +57,9 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="inputPassword3" class="col-sm-2 form-control-label">Telefono</label>
+							<label for="inputPassword3" class="col-sm-2 form-control-label">Teléfono</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese Telefono...">
+								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese Teléfono...">
 							</div>
 						</div>
 

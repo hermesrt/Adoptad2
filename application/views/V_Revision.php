@@ -4,15 +4,15 @@
 			<div class="card my-5">
 				<center><h1 class="my-2"><i class="fas fa-plus-square"></i></h1></center>
 				<div class="card-body">
-					<center><h5 class="card-title">Nueva Revision</h5>
+					<center><h5 class="card-title">Nueva Revisión</h5>
 						<p class="card-text">
-							En esta seccion podras registrar una nueva revision que se haya realizado a un animal.
+							En esta sección podras registrar una nueva revisión que se haya realizado a un animal.
 						</p>
 					</center>
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Recuerda que necesitas el domicilio del adptante para poder realizar esta accion.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Recuerda que necesitas el domicilio del adptante para poder realizar esta acción.</p>
 					</div>
-					<center><a  data-toggle="modal" data-target="#ModalNuevaRevision" class="btn btn-success">Nueva Revision</a></center>
+					<center><a  data-toggle="modal" data-target="#ModalNuevaRevision" class="btn btn-success">Nueva Revisión</a></center>
 				</div>
 			</div>
 		</div>
@@ -37,8 +37,8 @@
 								</div>
 								<div class="col-5">
 									<select  class="form-control">
-										<option>Vacuncaion</option>
-										<option>Castracion</option>
+										<option>Vacuncaión</option>
+										<option>Castración</option>
 										<option>Seguimiento</option>
 									</select>
 								</div>
@@ -58,21 +58,21 @@
 						<tbody>
 							<tr>
 								<th scope="row">1</th>
-								<td>Vacunacion</td>
+								<td>Vacunación</td>
 								<td>23/04/1997</td>
 								<td><a href="#">Jorge Perez</a></td>
 								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
 							</tr>
 							<tr>
 								<th scope="row">1</th>
-								<td>Vacunacion</td>
+								<td>Vacunación</td>
 								<td>23/04/1997</td>
 								<td><a href="#">Jorge Perez</a></td>
 								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
 							</tr>
 							<tr>
 								<th scope="row">1</th>
-								<td>Vacunacion</td>
+								<td>Vacunación</td>
 								<td>23/04/1997</td>
 								<td><a href="#">Jorge Perez</a></td>
 								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
@@ -101,14 +101,14 @@
       <div class="modal-body">
         <form class="form-inline">
         	<div class="form-group">
-        		<label class="mx-5" for="Direccion">Direccion:</label>
+        		<label class="mx-5" for="Direccion">Dirección:</label>
         		<input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingrese Direccion...">
         	</div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <a class="btn btn-primary" href="<?= base_url('C_Revision/NuevaRevision'); ?>">Continuar con la Revision</a>
+        <a class="btn btn-primary" href="<?= base_url('C_Revision/NuevaRevision'); ?>">Continuar con la Revisión</a>
       </div>
     </div>
   </div>

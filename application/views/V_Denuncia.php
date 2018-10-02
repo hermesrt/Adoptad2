@@ -4,11 +4,11 @@
 			<div class="card my-5">
 				<center><h1 class="my-2"><i class="fas fa-bullhorn"></i></h1></center>
 				<div class="card-body">
-					<h5 class="card-title">Seccion de Denuncias</h5>
-					<p class="card-text">En esta seccion podras registrar denuncias a aquellos adoptantes registrados en el sistema que hayan incumplido las obligaciones legales del cuidado animal.</p>
+					<h5 class="card-title">Sección de Denuncias</h5>
+					<p class="card-text">En esta sección podrás registrar denuncias a aquellos adoptantes registrados en el sistema que hayan incumplido las obligaciones legales del cuidado animal.</p>
 
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Nuestro sistema usa este el registro de denuncias para llevar el control de quellas personas que yo no son aptas para adoptar</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Nuestro sistema usa este registro de denuncias para llevar el control de quellas personas que yo no son aptas para adoptar</p>
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 							<fieldset class="form-group">
 								<div class="row">
 									<div class="col-3">
-										<label for="direccion">Buscar por Direccion:</label>
+										<label for="direccion">Buscar por Dirección:</label>
 									</div>
 									<div class="col-9">
 										<input type="text" class="form-control" id="direccion" placeholder="Ingrese Direccion">
@@ -37,8 +37,8 @@
 									<th scope="col">Nombre y Apellido</th>
 									<th scope="col">Direccion</th>
 									<th scope="col">Email</th>
-									<th scope="col">Telefono</th>
-									<th scope="col">Accion</th>
+									<th scope="col">Teléfono</th>
+									<th scope="col">Acción</th>
 								</tr>
 							</thead>
 							<tbody>

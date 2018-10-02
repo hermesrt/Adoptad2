@@ -16,7 +16,7 @@
 									<li><i class="far fa-calendar-alt"></i> Edad:</li>
 									<li><i class="fas fa-venus-mars"></i> Sexo:</li>
 									<li><i class="fas fa-cut"></i> Castrado:</li>
-									<li><i class="fas fa-align-center"></i> Descripcion:</li>
+									<li><i class="fas fa-align-center"></i> Descripción:</li>
 								</ul>
 							</p>
 						</div>

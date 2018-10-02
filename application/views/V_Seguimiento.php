@@ -6,9 +6,9 @@
 					<center><h1 class="my-2"><i class="fas fa-book"></i></h1></center>
 
 					<center><h4 class="card-title">Periodos de Seguimiento</h4></center>
-					<p class="card-text">En esta seccion encontraras los seguimientos activos de los Centros de Adopcion, en caso de ser personal del Centro de Adopcion, aqui tambien podras iniciar nuevos periodos</p>
+					<p class="card-text">En esta sección encontraras los seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aqui tambien podras iniciar nuevos periodos</p>
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envia automaticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envía automáticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
 					</div>
 				</div>
 			</div>
@@ -29,12 +29,12 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><i class="fas fa-pills"></i> Vacunacion</td>
+									<td><i class="fas fa-pills"></i> Vacunación</td>
 									<td>23/04/18</td>
 									<td>23/09/18</td>
 								</tr>
 								<tr>
-									<td><i class="fas fa-cut"></i> Castracion</td>
+									<td><i class="fas fa-cut"></i> Castración</td>
 									<td>23/04/18</td>
 									<td>23/09/18</td>
 								</tr>
@@ -63,9 +63,9 @@
 						<fieldset class="form-group">
 							<label for="inputGroupSelect01">Tipo de Periodo</label>
 							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choose...</option>
-								<option value="1">Vacunacion</option>
-								<option value="2">Castracion</option>
+								<option selected>Seleccione un periodo de vacunación</option>
+								<option value="1">Vacunación</option>
+								<option value="2">Castración</option>
 								<option value="3">Seguimiento</option>
 							</select>
 						</fieldset>
