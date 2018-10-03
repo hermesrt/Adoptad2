@@ -40,14 +40,7 @@
             <a class="nav-link" href="<?= base_url('C_Revision') ?>">  <i class="fas fa-notes-medical"></i> Revisiones</a>
           </li> 
           <li class="nav-item">
-        <!--    <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesión</a> -->
-             <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-alt"></i> Perfil</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-door-closed"></i> Cerrar sesión</a>
-                </div>
-            </div>
+            <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesión</a>
           </li>
         </ul>
       </div>
