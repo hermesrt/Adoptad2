@@ -13,7 +13,7 @@
 						<label for="contraseña">Contraseña</label>
 						<input type="password" class="form-control" id="contraseña" placeholder="Ingrese contraseña...">
 					</div>
-					<button type="submit" class="btn btn-primary">iniciar Sesion</button>
+					<button type="submit" class="btn btn-primary">Iniciar Sesión</button>
 				</form>
 
 			</center>

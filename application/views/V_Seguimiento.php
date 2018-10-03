@@ -18,13 +18,13 @@
 				<div class="card-body">
 					<center><h1 class="my-2"><i class="fas fa-check"></i></center>						
 						<center><h4 class="card-title">Periodos de Seguimiento Activos:</h4></center>
-						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo"><i class="far fa-calendar-plus"></i> Agregar nuevo</button>
+						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo" data-placement="right" title="Presione para agregar un nuevo periodo de seguimiento"><i class="far fa-calendar-plus"></i> Agregar Nuevo</button>
 						<table class="table table-striped table-dark">
 							<thead>
 								<tr>
 									<th>Tipo de Periodo</th>
-									<th>Fecha Desde</th>
-									<th>Fecha Hasta</th>
+									<th>Fecha Inicio Periodo</th>
+									<th>Fecha Fin Periodo</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -63,18 +63,18 @@
 						<fieldset class="form-group">
 							<label for="inputGroupSelect01">Tipo de Periodo</label>
 							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Seleccione un periodo de vacunación</option>
+								<option selected>Seleccione un tipo de periodo de seguimiento</option>
 								<option value="1">Vacunación</option>
 								<option value="2">Castración</option>
 								<option value="3">Seguimiento</option>
 							</select>
 						</fieldset>
 						<fieldset class="form-group">
-							<label for="fechaDesde">Fecha Desde</label>
+							<label for="fechaDesde">Fecha Inicio Periodo</label>
 							<input type="date" class="form-control" name="" id="fechaDesde">
 						</fieldset>
 						<fieldset class="form-group">
-							<label for="fechaHasta">Fecha Desde</label>
+							<label for="fechaHasta">Fecha Fin Periodo</label>
 							<input type="date" name="" class="form-control" id="fechaHasta">
 						</fieldset>
 					</form>

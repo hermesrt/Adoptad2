@@ -24,7 +24,7 @@
 										<label for="direccion">Buscar por Dirección:</label>
 									</div>
 									<div class="col-9">
-										<input type="text" class="form-control" id="direccion" placeholder="Ingrese Direccion">
+										<input type="text" class="form-control" id="direccion" placeholder="Ingrese dirección...">
 
 									</div>
 								</div>
@@ -35,7 +35,7 @@
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">Nombre y Apellido</th>
-									<th scope="col">Direccion</th>
+									<th scope="col">Dirección</th>
 									<th scope="col">Email</th>
 									<th scope="col">Teléfono</th>
 									<th scope="col">Acción</th>

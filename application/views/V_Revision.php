@@ -12,7 +12,7 @@
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic"> <i class="fas fa-info"></i> Recuerda que necesitas el domicilio del adptante para poder realizar esta acción.</p>
 					</div>
-					<center><a  data-toggle="modal" data-target="#ModalNuevaRevision" class="btn btn-success">Nueva Revisión</a></center>
+					<center><button type="button" data-toggle="modal" data-target="#ModalNuevaRevision" class="btn btn-success">Nueva Revisión</button></center>
 				</div>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 
 					<h4 class="card-title"><i class="fas fa-notes-medical"></i> Revisiones:</h4>
 
-					<h6><i class="fas fa-filter"></i> Filtros</h6>	
+					<h6><i class="fas fa-filter"></i> Filtros de búsqueda</h6>	
 					<form>
 						<fieldset class="form-group">
 							<div class="row">
@@ -37,7 +37,7 @@
 								</div>
 								<div class="col-5">
 									<select  class="form-control">
-										<option>Vacuncaión</option>
+										<option>Vacunación</option>
 										<option>Castración</option>
 										<option>Seguimiento</option>
 									</select>

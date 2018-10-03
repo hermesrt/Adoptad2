@@ -28,16 +28,23 @@
 
 					<form>
 						<div class="form-group row">
-							<label for="inputPassword3" class="col-sm-2 form-control-label">Nombre y Apellido</label>
+							<label for="inputPassword3" class="col-sm-2 form-control-label">Nombre</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese nombre y apellido..">
+								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese nombre del adoptante...">
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label for="inputPassword3" class="col-sm-2 form-control-label">Apellido</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese apellido del adoptante...">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-2 form-control-label">Email</label>
 							<div class="col-sm-10">
-								<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+								<input type="email" class="form-control" id="inputEmail3" placeholder="Ingrese email del adoptante...">
 							</div>
 						</div>
 
@@ -45,21 +52,21 @@
 						<div class="form-group row">
 							<label for="inputPassword3" class="col-sm-2 form-control-label">Dirección</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese dirección...">
+								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese dirección del adoptante...">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label for="inputPassword3" class="col-sm-2 form-control-label">Localidad</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese Localidad...">
+								<input type="text" class="form-control" id="inputPassword3" placeholder="Ingrese la ciudad actual de residencia del adoptante...">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label for="inputPassword3" class="col-sm-2 form-control-label">Teléfono</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese Teléfono...">
+								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese teléfono o celular del adoptante...">
 							</div>
 						</div>
 
@@ -68,7 +75,7 @@
 						<div class="form-group row">
 							<label for="inputPassword3" class="col-sm-2 form-control-label">DNI</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese DNI...">
+								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese DNI del adoptante...">
 							</div>
 						</div>
 						<div class="form-group row">
