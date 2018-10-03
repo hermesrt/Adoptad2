@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-10-2018 a las 22:28:09
+-- Tiempo de generación: 03-10-2018 a las 05:13:16
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.6.15
 
@@ -52,6 +52,15 @@ CREATE TABLE `adoptante` (
   `estado_adoptante` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `adoptante`
+--
+
+INSERT INTO `adoptante` (`id_adoptante`, `dni_adoptante`, `nombre_adoptante`, `apellido_adoptante`, `direccion_adoptante`, `telefono_adoptante`, `email_adoptante`, `ciudad_adoptante`, `estado_adoptante`) VALUES
+(1, 18795485, 'Juanfer', 'Quinteros', 'Av. Libertador 4865', 155798465, 'estamosMelos@gmail.com', 'Bs As', 1),
+(2, 17495635, 'Carola', 'Estevez', 'Granaderos 487', 155487956, 'caritoooo@gmail.com', 'Comodoro Rivadavia', 1),
+(3, 16489158, 'Guillermo', 'Barros Schelotto', 'Hirigoyen 1586', 112486579, 'lloron@gmail.com', 'Bs As', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -88,6 +97,15 @@ CREATE TABLE `centro_adopcion` (
   `estado_ca` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `centro_adopcion`
+--
+
+INSERT INTO `centro_adopcion` (`id_centro`, `nombre_ca`, `direccion_ca`, `telefono_ca`, `email_ca`, `ciudad_ca`, `estado_ca`) VALUES
+(1, 'Centro Adopciones Roca', 'Av. Roca 1654', 4471548, 'adopcionesRoca@gmail.com', 'Comodoro Rivadavia', 1),
+(2, 'Veterinaria Rada', 'Av. Moyano 1050', 4481749, 'radaPerritos@gmail.com', 'Rada Tilly', 1),
+(3, 'Adopciones Caninas Concordia', 'Los Alamos 346', 4865132, 'canesEntreRios@gmail.com', 'Concordia', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +129,16 @@ CREATE TABLE `motivo_denuncia` (
   `id_motivo` int(11) NOT NULL,
   `motivo_denuncia` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `motivo_denuncia`
+--
+
+INSERT INTO `motivo_denuncia` (`id_motivo`, `motivo_denuncia`) VALUES
+(1, 'Maltrato'),
+(2, 'Abandono'),
+(3, 'Tenencia Irresponsable'),
+(4, 'Otros');
 
 -- --------------------------------------------------------
 
@@ -171,6 +199,18 @@ CREATE TABLE `vacuna` (
   `id_vacuna` int(11) NOT NULL,
   `nombre_vacuna` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `vacuna`
+--
+
+INSERT INTO `vacuna` (`id_vacuna`, `nombre_vacuna`) VALUES
+(1, 'Antirrábica'),
+(2, 'Parvovirus y moquillo'),
+(3, 'Polivalente'),
+(4, 'Trivalente'),
+(5, 'Pentavalente'),
+(6, 'Tos de las perreras');
 
 -- --------------------------------------------------------
 
@@ -279,7 +319,7 @@ ALTER TABLE `adopcion`
 -- AUTO_INCREMENT de la tabla `adoptante`
 --
 ALTER TABLE `adoptante`
-  MODIFY `id_adoptante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_adoptante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `animal`
 --
@@ -289,7 +329,7 @@ ALTER TABLE `animal`
 -- AUTO_INCREMENT de la tabla `centro_adopcion`
 --
 ALTER TABLE `centro_adopcion`
-  MODIFY `id_centro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_centro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `denuncia`
 --
@@ -299,7 +339,7 @@ ALTER TABLE `denuncia`
 -- AUTO_INCREMENT de la tabla `motivo_denuncia`
 --
 ALTER TABLE `motivo_denuncia`
-  MODIFY `id_motivo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_motivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `periodo_seguimiento`
 --
@@ -319,7 +359,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vacuna`
 --
 ALTER TABLE `vacuna`
-  MODIFY `id_vacuna` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_vacuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `vacuna_aplicada`
 --
