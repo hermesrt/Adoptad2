@@ -40,7 +40,7 @@
             <a class="nav-link" href="<?= base_url('C_Revision') ?>">  <i class="fas fa-notes-medical"></i> Revisiones</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesion</a>
+            <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesión</a>
           </li>
         </ul>
       </div>

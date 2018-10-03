@@ -6,9 +6,9 @@
 					<center><h1 class="my-2"><i class="fas fa-book"></i></h1></center>
 
 					<center><h4 class="card-title">Periodos de Seguimiento</h4></center>
-					<p class="card-text">En esta seccion encontraras los seguimientos activos de los Centros de Adopcion, en caso de ser personal del Centro de Adopcion, aqui tambien podras iniciar nuevos periodos</p>
+					<p class="card-text">En esta sección encontraras los seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aqui tambien podras iniciar nuevos periodos</p>
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envia automaticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envía automáticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
 					</div>
 				</div>
 			</div>
@@ -18,23 +18,23 @@
 				<div class="card-body">
 					<center><h1 class="my-2"><i class="fas fa-check"></i></center>						
 						<center><h4 class="card-title">Periodos de Seguimiento Activos:</h4></center>
-						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo"><i class="far fa-calendar-plus"></i> Agregar nuevo</button>
+						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo" data-placement="right" title="Presione para agregar un nuevo periodo de seguimiento"><i class="far fa-calendar-plus"></i> Agregar Nuevo</button>
 						<table class="table table-striped table-dark">
 							<thead>
 								<tr>
 									<th>Tipo de Periodo</th>
-									<th>Fecha Desde</th>
-									<th>Fecha Hasta</th>
+									<th>Fecha Inicio Periodo</th>
+									<th>Fecha Fin Periodo</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><i class="fas fa-pills"></i> Vacunacion</td>
+									<td><i class="fas fa-pills"></i> Vacunación</td>
 									<td>23/04/18</td>
 									<td>23/09/18</td>
 								</tr>
 								<tr>
-									<td><i class="fas fa-cut"></i> Castracion</td>
+									<td><i class="fas fa-cut"></i> Castración</td>
 									<td>23/04/18</td>
 									<td>23/09/18</td>
 								</tr>
@@ -63,18 +63,18 @@
 						<fieldset class="form-group">
 							<label for="inputGroupSelect01">Tipo de Periodo</label>
 							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choose...</option>
-								<option value="1">Vacunacion</option>
-								<option value="2">Castracion</option>
+								<option selected>Seleccione un tipo de periodo de seguimiento</option>
+								<option value="1">Vacunación</option>
+								<option value="2">Castración</option>
 								<option value="3">Seguimiento</option>
 							</select>
 						</fieldset>
 						<fieldset class="form-group">
-							<label for="fechaDesde">Fecha Desde</label>
+							<label for="fechaDesde">Fecha Inicio Periodo</label>
 							<input type="date" class="form-control" name="" id="fechaDesde">
 						</fieldset>
 						<fieldset class="form-group">
-							<label for="fechaHasta">Fecha Desde</label>
+							<label for="fechaHasta">Fecha Fin Periodo</label>
 							<input type="date" name="" class="form-control" id="fechaHasta">
 						</fieldset>
 					</form>
