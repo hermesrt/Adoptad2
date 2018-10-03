@@ -6,9 +6,9 @@
         <div class="card-body">
           <center><h1 class="card-title">Bienvenidos a Adpota2!</h1></center>
           <p class="card-text">
-            Busca tu proxima mascota en nuestro sitio web desde la comodidad de tu casa.
-            Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopcion" correspondiente.
-            Regsitramos tus datos, y ante cualquier necesidad nosotros nos comunicamos!
+            Buscá tu próxima mascota en nuestro sitio web desde la comodidad de tu casa.
+            Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopción" correspondiente.
+            Registramos tus datos, y ante cualquier necesidad nosotros nos comunicamos!
           </p>
         </div>
       </div>
@@ -21,9 +21,18 @@
         <div class="card" style="width: 18rem;">
           <img class="card-img-top" src="https://loremflickr.com/320/240?random=<?= $i ?>" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <center><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a></center>
+            <h5 class="card-title">Nombre del Animal</h5>
+            <p class="card-text">
+              <ul>
+                <li>Raza:</li>
+                <li>Sexo:</li>
+                <li>Edad:</li>
+              </ul>
+            </p>
+            <center>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a>
+                <a href="<?= base_url('C_Animal') ?>" class="btn btn-primary" data-target="#"><i class="fas fa-plus"></i> Ver Animal</a>
+            </center>
           </div>
         </div>
       </div>

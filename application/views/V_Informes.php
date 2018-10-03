@@ -5,7 +5,7 @@
 				<div class="card-body">
 					<center><h1><i class="fas fa-chart-pie"></i></h1></center>
 					<center><h4 class="card-title">Generador de informes</h4></center>
-					<p class="card-text">En este seccion podras generar informes para poder contar con la informacion estadistica de los Centros de Adopcion de una manera mas util para su uso y/o seguimiento. Selecciona el intervalo de fechas y los Centros de Adopcion y se genereara un PDF con el informe</p>
+					<p class="card-text">En este sección podras generar informes para poder contar con la información estadística de los Centros de Adopción de una manera mas util para su uso y/o seguimiento. Selecciona el intervalo de fechas y los Centros de Adopción y se genereara un PDF con el informe</p>
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic">
 							<i class="fas fa-info"></i> Los informes disponibles son los siguientes:
@@ -37,7 +37,7 @@
 						</center>
 
 						<div class="form-group">
-							<label for="tipoInforme"></label>
+							<label for="tipoInforme">Seleccione el tipo de informe:</label>
 							<select class="form-control" id="tipoInforme">
 								<option>Informe de Adopciones</option>
 								<option>Informe de Denuncias</option>
@@ -47,11 +47,11 @@
 
 						<div class="row">
 							<div class="form-group col-6">
-								<label>Fecha desde: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha desde donde se comienzan a recuperar los datos para generar el informe">Fecha desde: </label> <input class="form-control" type="date" name="">
 							</div>
 							<div class="form-group col-6">
 
-								<label>Fecha Hasta: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha tope hasta donde se recuperan los datos para generar el informe">Fecha hasta: </label> <input class="form-control" type="date" name="">
 							</div>
 						</div>
 						<center><button type="button" class="btn btn-primary"><i class="fas fa-chart-pie"></i> Generar informe</button></center>

@@ -8,13 +8,13 @@
 					<p class="card-text">
 						<ul>
 							<li>Nombre y apellido:</li>
-							<li>Direccion:</li>
+							<li>Dirección:</li>
 							<li>Email:</li>
-							<li>Telefono:</li>
+							<li>Teléfono:</li>
 						</ul>
 					</p>					
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> En esta seccion puedes visualizar los animales adoptados por esta persona. Seleciona el boton "Registrar Revision" en que desees.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> En esta sección puedes visualizar los animales adoptados por esta persona. Seleciona el botón "Registrar Revisión" en que desees.</p>
 					</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 							</div>
 							<br>
 							<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-								Registrar Revision
+								Registrar Revisión
 							</button></center>
 						</li>
 						<li class="list-group-item">
@@ -60,7 +60,7 @@
 							</div>
 							<br>
 							<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-								Registrar Revision
+								Registrar Revisión
 							</button></center>
 
 						</li>
@@ -79,20 +79,20 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Nueva Revision</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Nueva Revisión</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label for="fecha">Fecha</label>
+					<label for="fecha">Fecha revisión</label>
 					<input type="date" class="form-control" id="fecha" placeholder="Fecha">
 				</div>
 				<div class="form-group">
-					<label for="TipoRevision">Tipo de Revision</label>
+					<label for="TipoRevision">Tipo de revisión</label>
 					<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
-						<option>Castracion</option>
+						<option>Castración</option>
 						<option>Seguimiento</option>
 						<option>Vacuna</option>						
 					</select>
@@ -107,13 +107,13 @@
 					</select>
 				</div>
 				<div class="form-group" >
-					<label for="detalle">Detalle de Revision</label>
+					<label for="detalle">Detalle de revisión</label>
 					<textarea class="form-control"></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Registrar Revision</button>
+				<button type="button" class="btn btn-primary">Registrar Revisión</button>
 			</div>
 		</div>
 	</div>
