@@ -36,7 +36,6 @@ class M_Animal extends CI_Model {
     function recuperaAnimal($id)
     {
         $result = array();
-        $this->db->select("*");
         $this->db->from("animal");
         $this->db->where("id_animal", $id);
         $query = $this->db->get();
@@ -55,12 +54,12 @@ class M_Animal extends CI_Model {
     
     function cambiarEstado(){}
     function agregarVacunaAnimal(){}
-    function Boolean estaCastrado(){ return true;}
+    function estaCastrado(){}
     function getEspecie(){}
     function getSexo(){}
     function getEdad(){}
     function castrar(){}
-    function Boolean estaAdoptado(){return true;}
+    function estaAdoptado(){}
     
 }
 
