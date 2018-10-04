@@ -33,13 +33,31 @@ class M_Animal extends CI_Model {
 
     
     //---------> Recupera a el animal con el id pasado como parametro de la BD
-    function recuperaAnimal($id)
+    function obtenerUno($id)
     {
         $result = array();
         $this->db->from("animal");
         $this->db->where("id_animal", $id);
         $query = $this->db->get();
 
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $new_object = new self();
+                $new_object->init($row);
+                $result = $new_object;  //----> el resultado seria un array de objetos M_Animal
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
+    
+    //---------> Recupera todos los animales de la bd
+    function obtenerTodos()
+    {
+        $result = array();
+        $this->db->from("animal");
+        $query = $this->db->get();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
                 $new_object = new self();
@@ -51,6 +69,9 @@ class M_Animal extends CI_Model {
             return false;
         }
     }
+    
+    //--------- Recupera todos los animales por centro de adopcion
+    
     
     function cambiarEstado(){}
     function agregarVacunaAnimal(){}
