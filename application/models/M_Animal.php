@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Animal extends CI_Model {
 
-    //----- Atributos de la tabla animal 
+    //----- Atributos 
     private $id_animal;
     private $nombre_animal;
     private $raza_animal;
