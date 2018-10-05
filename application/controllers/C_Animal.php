@@ -17,6 +17,7 @@ class C_Animal extends CI_Controller {
 		$this->load->view('V_Animal',$data);
 		$this->load->view('Plantillas/V_Footer');
 	}
+	//comentario
 
 }
 
