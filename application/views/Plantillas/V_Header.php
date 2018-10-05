@@ -27,26 +27,36 @@
           <li class="nav-item active">
             <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-home"></i> Inicio</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Denuncia') ?>"><i class="fas fa-bullhorn"></i> Denuncias</a>
-          </li>   
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Seguimiento') ?>"><i class="fas fa-book"></i> Periodos de Seguimientos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Informes') ?>">  <i class="fas fa-chart-pie"></i> Generador de informes</a>
-          </li> 
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Revision') ?>">  <i class="fas fa-notes-medical"></i> Revisiones</a>
-          </li> 
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesión</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-  
+          <?php if ($this->session->has_userdata('nombre_usuario')): ?>
+            <?php if ($this->session->userdata('tipo_usuario')=="veterinario"): ?>              
+              <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('C_Denuncia') ?>"><i class="fas fa-bullhorn"></i> Denuncias</a>
+              </li>   
+            <?php endif ?>
+            <?php if ($this->session->userdata('tipo_usuario')=="administrativo"): ?>           
+              <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('C_Informes') ?>">  <i class="fas fa-chart-pie"></i> Generador de informes</a>
+              </li> 
+            <?php endif ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('C_Seguimiento') ?>"><i class="fas fa-book"></i> Periodos de Seguimientos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('C_Revision') ?>">  <i class="fas fa-notes-medical"></i> Revisiones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('C_InicioSesion/cerrarSesion') ?>"><i class="fas fa-user-alt"></i> Cerrar Sesión</a>
+            </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('C_InicioSesion') ?>"><i class="fas fa-user-alt"></i> Iniciar Sesión</a>
+              </li>
+            <?php endif ?>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
 
 
 

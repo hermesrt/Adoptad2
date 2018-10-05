@@ -7,14 +7,15 @@ class C_InicioSesion extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
- 		$this->load->model('M_Centro_adopcion','centro');
-        $this -> load ->model('M_Animal','animal');
+		$this->load->model('M_Usuario');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-warning">', '</div>');
 	}
 
-	public function index()
+	public function index($mensajeError=null)
 	{
+		$data['mensajeError'] = $mensajeError;
 		$this->load->view('Plantillas/V_Header');
-		$this->load->view('V_InicioSesion');
+		$this->load->view('V_InicioSesion',$data);
 		$this->load->view('Plantillas/V_Footer');
 		
 	}
@@ -29,11 +30,22 @@ class C_InicioSesion extends CI_Controller {
 		}
 		else
 		{
-			$this->M_Usuario->IniciarSesion($this->input->post('usuario'), $this->input->post('contraseña'));
-			//var_dump($this->session->userdata());
-			#falta comprobar que el usuario y pass sean correctos
-			redirect('C_Inicio','refresh');
+			$usuario = $this->M_Usuario->IniciarSesion($this->input->post('usuario'), $this->input->post('contraseña'));
+			if ($usuario) {
+				$this->session->set_userdata($usuario);
+				redirect(base_url());
+			} else {				
+				$this->index("Usuario o contraseña incorrecta. Intente nuevamente!");
+			}
 		}
+	}
+	
+	function cerrarSesion()
+	{
+		foreach ($this->session->all_userdata() as $key => $value) {
+			$this->session->unset_userdata($key);
+		}
+		redirect(base_url());
 	}
 
 

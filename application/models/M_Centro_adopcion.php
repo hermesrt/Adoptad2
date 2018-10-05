@@ -101,7 +101,7 @@ class M_Centro_adopcion extends CI_Model {
     //----- get Animales, devuelve el array de animales asociado a ese centro
     function getAnimales()
     {
-        retutn $this -> animales;
+        return $this -> animales;
     }
     
 }

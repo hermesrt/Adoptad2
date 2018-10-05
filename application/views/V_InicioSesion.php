@@ -3,6 +3,9 @@
 		<div class="col"></div>
 		<div class="col">
 			<center>
+				<?php if (!$mensajeError==null): ?>
+					<h4><?= $mensajeError ?></h4>
+				<?php endif ?>
 				<img src="<?= base_url('assets/img/logo.png') ?>">
 				<?php echo validation_errors(); ?>
 				<?php echo form_open('C_InicioSesion/InicioSesion'); ?>
