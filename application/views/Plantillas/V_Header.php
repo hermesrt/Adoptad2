@@ -14,7 +14,6 @@
   <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
 </head>
 <body class="bg-light">
-  <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <img height="50px" width="50px" src="<?= base_url('assets/img/logo.png') ?>">
       <a class="navbar-brand" href="<?= base_url() ?>">Adopta2</a>
@@ -55,7 +54,6 @@
           </ul>
         </div>
       </nav>
-    </div>
 
 
 
