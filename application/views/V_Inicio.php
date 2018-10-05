@@ -15,28 +15,6 @@
     </div>
   </div>
   <div class="row">
-    <?php for ($i = 0; $i <25 ; $i++): ?>
-
-      <div class="my-2 col-xs-12 col-sm-6 col-md-4 ">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="https://loremflickr.com/320/240?random=<?= $i ?>" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Nombre del Animal</h5>
-            <p class="card-text">
-              <ul>
-                <li>Raza:</li>
-                <li>Sexo:</li>
-                <li>Edad:</li>
-              </ul>
-            </p>
-            <center>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a>
-                <a href="<?= base_url('C_Animal') ?>" class="btn btn-primary" data-target="#"><i class="fas fa-plus"></i> Ver Animal</a>
-            </center>
-          </div>
-        </div>
-      </div>
-    <?php endfor ?>
     <?php foreach ($animales as $animal) { ?>
         <div class="my-2 col-xs-12 col-sm-6 col-md-4 ">
             <div class="card" style="width: 18rem;">

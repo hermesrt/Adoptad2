@@ -17,12 +17,13 @@ class M_Animal extends CI_Model {
     public $nombre_imagen_animal;
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
-    public $vacunas;          //------->  es un array de muchos objetos vacuna
+    public $vacunas;          //------->  es un array de muchos objetos vacuna_aplicada
     
     //-------> iniciliza el objeto M_Animal con todos los valores de la columna que trae de la bd
     function init($row)
     {
         $this -> load -> model('M_Revision','revision'); //---> cargo el modelo M_Revision 
+        $this -> load -> model('M_Vacuna_aplicada','vacuna_aplicada');  //---> cargo el modelo M_Vacuna_aplicada
         $this -> id_animal = $row -> id_animal;
         $this -> nombre_animal = $row -> nombre_animal;
         $this -> raza_animal = $row -> raza_animal;
@@ -35,6 +36,8 @@ class M_Animal extends CI_Model {
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
+        //-----> obtengo todas las vacunas aplicadas para un animal
+        $this -> vacunas = $this -> vacuna_aplicada -> obtenerTodos($this -> id_animal);
     }
 
     

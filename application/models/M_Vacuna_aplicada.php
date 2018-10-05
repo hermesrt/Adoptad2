@@ -35,11 +35,11 @@ class M_Vacuna_aplicada extends CI_Model {
         }
     }
     
-    //---> obtiene todas las vacunas_aplicadas
-    function obtenerTodos()
+    //---> obtiene todas las vacunas_aplicadas a un animal
+    function obtenerTodos($id_animal)
     {
         $result = array();
-        $this->db->from("vacuna_aplicada");
+        $this->db->from("vacuna_aplicada")->where('id_animal',$id_animal);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
