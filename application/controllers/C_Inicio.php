@@ -11,7 +11,7 @@
      
  	public function index()
  	{
-        $data['animales'] = $this -> animal -> obtenerPorCentro(1);
+        $data['animales'] = $this -> animal -> obtenerPorCentro(1); //---> aca en realidad iria el id del centro de adopcion del usuario
  		$this->load->view('Plantillas/V_Header',$data);
  		$this->load->view('V_Inicio');
  		$this->load->view('Plantillas/V_Footer');		

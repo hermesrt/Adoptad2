@@ -4,10 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Denuncia extends CI_Model {
     
     //------> atributos
-    private $id_denuncia;
-    private $fecha_denuncia;
-    private $id_adoptante;
-    private $id_motivo;
+    public $id_denuncia;
+    public $fecha_denuncia;
+    public $id_adoptante;
+    public $id_motivo;
     
     
     //-------> iniciliza el objeto M_Denuncia con todos los valores de la columna que trae de la bd
@@ -23,15 +23,13 @@ class M_Denuncia extends CI_Model {
     //-----> obtiene una Denuncia
     function obtenerUno($id)
     {
-        $result = array();
         $this->db->from("denuncia")->where('id_denuncia',$id);
         $query = $this->db->get();
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result = $new_object;  //----> el resultado es un objeto M_Denuncia
-            return $result;
+            return $new_object;
         }else {
             return false;
         }

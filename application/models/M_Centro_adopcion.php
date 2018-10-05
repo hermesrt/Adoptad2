@@ -4,15 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Centro_adopcion extends CI_Model {
     
     //------> atributos
-    private $id_centro;
-    private $nombre_ca;
-    private $direccion_ca;
-    private $telefono_ca;
-    private $email_ca;
-    private $ciudad_ca;
-    private $estado_ca;
-    private $animales;          //----> array de objeto M_Animal
-    private $periodos_seguimientos; //-----> el centro de adopcion tiene muchos periodos de seguimiento
+    public $id_centro;
+    public $nombre_ca;
+    public $direccion_ca;
+    public $telefono_ca;
+    public $email_ca;
+    public $ciudad_ca;
+    public $estado_ca;
+    public $animales;          //----> array de objeto M_Animal
+    public $periodos_seguimientos; //-----> el centro de adopcion tiene muchos periodos de seguimiento
     
     
     function init($row)
@@ -38,15 +38,13 @@ class M_Centro_adopcion extends CI_Model {
     //-----> Obtiene un centro de adopcion
     function obtenerUno($id_centro)
     {
-        $result = array();
         $this->db->from("centro_adopcion") -> where('id_centro',$id_centro);
         $query = $this->db->get();
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
-            $new_object->init($row);
-            $result[] = $new_object;  //----> el resultado seria un array de objetos M_Centro_adopcion
-            return $result;
+            $new_object->init($row[0]);
+            return $new_object;
         }else {
             return false;
         }
@@ -84,7 +82,7 @@ class M_Centro_adopcion extends CI_Model {
         if ( $this -> animales -> sizeof() > 0 ) {
             $this -> load -> model('M_Adopcion','adopcion');
             foreach ($this -> animales as $animal){
-                $adopciones[] = $this -> model -> adopcion -> obtenerAdopcionPorAnimal($animal -> id_animal);
+                $adopciones[] = $this -> adopcion -> obtenerAdopcionPorAnimal($animal -> id_animal);
             }
             return $adopciones;
         }else{

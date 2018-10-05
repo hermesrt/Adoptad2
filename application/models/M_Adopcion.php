@@ -4,11 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Adopcion extends CI_Model {
     
     //------> atributos
-    private $id_adopcion;
-    private $fecha_adopcion;
-    private $detalle_adopcion;
-    private $id_adoptante;
-    private $id_animal;
+    public $id_adopcion;
+    public $fecha_adopcion;
+    public $detalle_adopcion;
+    public $id_adoptante;
+    public $id_animal;
     
     
     //-------> iniciliza el objeto M_Adopcion con todos los valores de la columna que trae de la bd
@@ -25,17 +25,15 @@ class M_Adopcion extends CI_Model {
     //---------> Recupera la adopcion con el id pasado como parametro de la BD
     function obtenerUno($id)
     {
-        $result = array();
         $this->db->from("adopcion");
         $this->db->where("id_adopcion", $id);
         $query = $this->db->get();
         
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result = $new_object;  //----> el resultado seria un objeto M_Adopcion
-            return $result;
+            return $new_object;
         }else {
             return false;
         }
