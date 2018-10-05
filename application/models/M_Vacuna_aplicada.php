@@ -4,10 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Vacuna_aplicada extends CI_Model {
     
     //------> Atributos
-    private $id_vacuna_aplicada;
-    private $fecha_aplicacion_vacuna;
-    private $id_animal;
-    private $id_vacuna;
+    public $id_vacuna_aplicada;
+    public $fecha_aplicacion_vacuna;
+    public $id_animal;
+    public $id_vacuna;
 
     
     //-------> iniciliza el objeto M_Vacuna aplicada con todos los valores de la columna que trae de la bd
@@ -23,15 +23,13 @@ class M_Vacuna_aplicada extends CI_Model {
     //-----> obtiene una vacuna aplicada de el id_animal pasado como parametro
     function obtenerUno($id_animal)
     {
-        $result = array();
         $this->db->from("vacuna_aplicada")->where('id_animal',$id_animal);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result = $new_object;  //----> el resultado es un objeto M_Vacuna_aplicada
-            return $result;
+            return $new_object;
         }else {
             return false;
         }

@@ -4,12 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Periodo_seguimiento extends CI_Model {
     
     //------> Atributos
-    private $id_periodo;
-    private $tipo_periodo;
-    private $fecha_inicio_periodo;
-    private $fecha_fin_periodo;
-    private $id_centro;
-    private $adopciones[];
+    public $id_periodo;
+    public $tipo_periodo;
+    public $fecha_inicio_periodo;
+    public $fecha_fin_periodo;
+    public $id_centro;
+    public $adopciones;
     
     
     function init($row)
@@ -29,15 +29,13 @@ class M_Periodo_seguimiento extends CI_Model {
     //-----> Obtiene un periodo de seguimiento
     function obtenerUno($id_seguimiento)
     {
-        $result = array();
         $this->db->from("periodo_seguimiento")->where('id_seguimiento',$id_seguimiento);
         $query = $this->db->get();
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result[] = $new_object;  //----> el resultado seria un array de objetos 
-            return $result;
+            return $new_object;
         }else {
             return false;
         }
@@ -83,7 +81,8 @@ class M_Periodo_seguimiento extends CI_Model {
     }
     
     
-    //--------> NO SE QUE HACE ESTA FUNCION CHABOOOOOOON O_O
+    // ---> verifica que la fecha desde no sea mayor a la fecha hasta y verifica que el periodo seleccionado
+    //--> no se pise con otro periodo de seguimiento activo
     function verificarPeriodo()
     {
         
@@ -93,7 +92,7 @@ class M_Periodo_seguimiento extends CI_Model {
     //----> Genera un listado con objetos M_Adoptante y lo devuelve como parametro
     function generarListaEmail()
     {
-        if ($this -> adopcinoes -> sizeof() > 0) {
+        if ($this -> adopciones -> sizeof() > 0) {
             foreach ($this -> adopciones as $adopcion){
                 $listado[] = $adopcion -> getAdopante() ;
             }

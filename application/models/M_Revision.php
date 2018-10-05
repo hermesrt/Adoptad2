@@ -4,12 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Revision extends CI_Model {
     
     //------> atributos
-    private $id_revision;
-    private $fecha_revision;
-    private $tipo_revision;
-    private $detalle_revision;
-    private $id_animal;
-    private $id_usuario;
+    public $id_revision;
+    public $fecha_revision;
+    public $tipo_revision;
+    public $detalle_revision;
+    public $id_animal;
+    public $id_usuario;
     
     
     //-------> iniciliza el objeto M_Revision con todos los valores de la columna que trae de la bd
@@ -28,15 +28,13 @@ class M_Revision extends CI_Model {
     //-----> obtiene una Revision
     function obtenerUno($id)
     {
-        $result = array();
         $this->db->from("revision")->where('id_revision',$id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result = $new_object;  //----> el resultado es un objeto M_Revision
-            return $result;
+            return $new_object;
         }else {
             return false;
         }

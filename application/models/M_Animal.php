@@ -41,17 +41,15 @@ class M_Animal extends CI_Model {
     //---------> Recupera a el animal con el id pasado como parametro de la BD
     function obtenerUno($id)
     {
-        $result = array();
         $this->db->from("animal");
         $this->db->where("id_animal", $id);
         $query = $this->db->get();
 
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
-            $result = $new_object;  //----> el resultado seria un array de objetos M_Animal
-            return $result;
+            return $new_object;
         }else {
             return false;
         }
