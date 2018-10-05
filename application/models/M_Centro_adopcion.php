@@ -29,9 +29,9 @@ class M_Centro_adopcion extends CI_Model {
         $this -> ciudad_ca = $row -> ciudad_ca;
         $this -> estado_ca = $row -> estado_ca;
         //-------> obtengo todos los animales para un centro de adopcion
-        $this -> animales = $this -> model -> animal -> obtenerPorCentro($this -> id_centro);
+        $this -> animales = $this -> animal -> obtenerPorCentro($this -> id_centro);
         //------> obtengo todos los periodos de seguimiento para un centro de adopcion
-        $this -> periodos_seguimientos = $this -> model -> periodo -> obtenerPorCentro($this -> id_centro);
+        $this -> periodos_seguimientos = $this ->  periodo -> obtenerPorCentro($this -> id_centro);
     }
     
     
@@ -98,6 +98,11 @@ class M_Centro_adopcion extends CI_Model {
         
     }
     
+    //----- get Animales, devuelve el array de animales asociado a ese centro
+    function getAnimales()
+    {
+        retutn $this -> animales;
+    }
     
 }
 

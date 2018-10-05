@@ -3,9 +3,16 @@
  
  class C_Inicio extends CI_Controller {
  
+     public function __construct()
+     {
+         parent::__construct();
+         $this -> load -> model ('M_Animal','animal');
+     }
+     
  	public function index()
  	{
- 		$this->load->view('Plantillas/V_Header');		
+        $data['animales'] = $this -> animal -> obtenerPorCentro(1);
+ 		$this->load->view('Plantillas/V_Header',$data);
  		$this->load->view('V_Inicio');
  		$this->load->view('Plantillas/V_Footer');		
  	}

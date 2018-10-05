@@ -86,7 +86,7 @@ class M_Adopcion extends CI_Model {
     function getAnimal()
     {
         $this -> load -> model('M_Animal','animal');
-        return $this -> model -> animal -> obtenerUno($this -> id_animal);  //---> esto devuelve un objeto M_Animal
+        return $this -> animal -> obtenerUno($this -> id_animal);  //---> esto devuelve un objeto M_Animal
     }
     
     
@@ -94,7 +94,7 @@ class M_Adopcion extends CI_Model {
     function getAdoptante()
     {
         $this -> load -> model('M_Adoptante','adoptante');
-        return $this -> model -> adoptante -> obtenerUno($this -> id_adoptante); //---> esto devuelve un objeto M_Adoptante
+        return $this -> adoptante -> obtenerUno($this -> id_adoptante); //---> esto devuelve un objeto M_Adoptante
     }
     
     

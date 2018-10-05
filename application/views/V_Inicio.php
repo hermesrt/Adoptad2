@@ -36,11 +36,29 @@
           </div>
         </div>
       </div>
-
-
-
     <?php endfor ?>
-  </div>
+    <?php foreach ($animales as $animal) { ?>
+        <div class="my-2 col-xs-12 col-sm-6 col-md-4 ">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="<?= base_url() ?>assets/img/animales/<?= $animal->nombre_imagen_animal ?>" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title"><?= $animal -> nombre_animal ?></h5>
+                <p class="card-text">
+                  <ul>
+                    <li>Raza: <?= $animal -> raza_animal ?></li>
+                    <li>Sexo: <?= $animal -> sexo_animal ?></li>
+                    <li>Edad: <?= $animal -> edad_animal ?></li>
+                  </ul>
+                </p>
+                <center>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar"><i class="fas fa-plus"></i> Adoptar</a>
+                    <a href="<?= base_url('C_Animal') ?>" class="btn btn-primary" data-target="#"><i class="fas fa-plus"></i> Ver Animal</a>
+                </center>
+              </div>
+            </div>
+          </div>
+    <?php } ?>
+    </div>
 </div>
 
 

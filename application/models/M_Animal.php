@@ -4,20 +4,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Animal extends CI_Model {
 
     //----- Atributos 
-    private $id_animal;
-    private $nombre_animal;
-    private $raza_animal;
-    private $especie_animal;
-    private $sexo_animal;
-    private $edad_animal;
-    private $descripcion_animal;
-    private $estado_animal;
-    private $castrado;
-    private $adoptado;
-    private $nombre_imagen_animal;
-    private $id_centro;
-    private $revisiones;       //------->  es un array de muchos objetos revision    
-    private $vacunas;          //------->  es un array de muchos objetos vacuna
+    public $id_animal;
+    public $nombre_animal;
+    public $raza_animal;
+    public $especie_animal;
+    public $sexo_animal;
+    public $edad_animal;
+    public $descripcion_animal;
+    public $estado_animal;
+    public $castrado;
+    public $adoptado;
+    public $nombre_imagen_animal;
+    public $id_centro;
+    public $revisiones;       //------->  es un array de muchos objetos revision    
+    public $vacunas;          //------->  es un array de muchos objetos vacuna
     
     //-------> iniciliza el objeto M_Animal con todos los valores de la columna que trae de la bd
     function init($row)
@@ -34,7 +34,7 @@ class M_Animal extends CI_Model {
         $this -> nombre_imagen_animal = $row -> nombre_imagen_animal;
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
-        $this -> revisiones = $this -> model -> revision -> obtenerRevisiones($this -> $id_animal);
+        $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
     }
 
     

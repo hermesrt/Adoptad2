@@ -7,8 +7,8 @@ class C_InicioSesion extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
- 		$this->load->model('M_Usuario');
-
+ 		$this->load->model('M_Centro_adopcion','centro');
+        $this -> load ->model('M_Animal','animal');
 	}
 
 	public function index()

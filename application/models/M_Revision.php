@@ -43,6 +43,26 @@ class M_Revision extends CI_Model {
     }
     
     
+    //---> obtiene todas las Revisiones para un animal
+    function obtenerRevisiones($id_animal)
+    {
+        $result = array();
+        $this->db->from("revision")->where('id_animal',$id_animal);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $new_object = new self();
+                $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Revision para el animal $id_animal
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
+    
+    
+    
     //---> obtiene todas las Revisiones
     function obtenerTodos()
     {

@@ -22,7 +22,7 @@ class M_Periodo_seguimiento extends CI_Model {
         
         //---> cargo el modelo M_Centro_adopcion  y obtengo las adopciones de ese centro de adopcion
         $this -> load -> model('M_Centro_adopcion','centro');
-        $this -> adopciones = $this -> model -> centro -> getAdopciones();
+        $this -> adopciones = $this -> centro -> getAdopciones();
     }
     
     
