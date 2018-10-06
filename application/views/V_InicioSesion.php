@@ -11,13 +11,13 @@
 				<?php echo form_open('C_InicioSesion/InicioSesion'); ?>
 				<div class="form-group">
 					<label for="usuario">Usuario</label>
-					<input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese usuario...">
+					<input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese su dirección de correo electrónico...">
 				</div>
 				<div class="form-group">
 					<label for="contraseña">Contraseña</label>
 					<input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese contraseña...">
 				</div>
-				<button type="submit" class="btn btn-primary">iniciar Sesion</button>
+				<button type="submit" class="btn btn-primary">Iniciar Sesión</button>
 			</form>
 
 		</center>

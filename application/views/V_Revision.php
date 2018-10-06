@@ -100,9 +100,9 @@
       </div>
       <div class="modal-body">
         <form class="form-inline">
-        	<div class="form-group">
+        	<div class="form-group" data-toggle="tooltip" data-placement="right" title="Ingrese la dirección del adoptante para continuar con la revisión">
         		<label class="mx-5" for="Direccion">Dirección:</label>
-        		<input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingrese Direccion...">
+        		<input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingrese dirección...">
         	</div>
         </form>
       </div>
