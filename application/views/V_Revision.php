@@ -10,7 +10,7 @@
 						</p>
 					</center>
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Recuerda que necesitas el domicilio del adptante para poder realizar esta acción.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Recuerda que necesitas el domicilio del adoptante para poder realizar esta acción.</p>
 					</div>
 					<center><button type="button" data-toggle="modal" data-target="#ModalNuevaRevision" class="btn btn-success">Nueva Revisión</button></center>
 				</div>
@@ -45,10 +45,10 @@
 							</div>
 						</fieldset>
 					</form>
-					<table class="table table-striped table-dark">
+					<table class="table table-striped table-dark display" id="table_id">
 						<thead>
 							<tr>
-								<th scope="col">#</th>
+                                <th scope="col">#</th>
 								<th scope="col">Tipo</th>
 								<th scope="col">Fecha</th>
 								<th scope="col">Adoptante</th>
@@ -56,30 +56,18 @@
 							</tr>
 						</thead>
 						<tbody>
+						<?php foreach($revisiones as $revision): ?>
 							<tr>
-								<th scope="row">1</th>
-								<td>Vacunación</td>
-								<td>23/04/1997</td>
-								<td><a href="#">Jorge Perez</a></td>
-								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
+                                <th scope="row"><?= $revision -> id_revision ?></th>
+								<td><?= $revision -> tipo_revision ?></td>
+								<td><?= $revision -> fecha_revision ?></td>
+								<td><a href="#">Nombre adoptante</a></td>
+								<td><a class="btn btn-primary" href="<?= base_url('C_Animal/index/'.$revision->id_animal) ?>">Ver Animal</a></td>
 							</tr>
-							<tr>
-								<th scope="row">1</th>
-								<td>Vacunación</td>
-								<td>23/04/1997</td>
-								<td><a href="#">Jorge Perez</a></td>
-								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
-							</tr>
-							<tr>
-								<th scope="row">1</th>
-								<td>Vacunación</td>
-								<td>23/04/1997</td>
-								<td><a href="#">Jorge Perez</a></td>
-								<td><a class="btn btn-primary" href="#">Ver Animal</a></td>
-							</tr>
+							<?php endforeach ?>
 						</tbody>
 					</table>
-
+        
 				</div>
 			</div>
 		</div>
@@ -100,9 +88,9 @@
       </div>
       <div class="modal-body">
         <form class="form-inline">
-        	<div class="form-group">
+        	<div class="form-group" data-toggle="tooltip" data-placement="right" title="Ingrese la dirección del adoptante para continuar con la revisión">
         		<label class="mx-5" for="Direccion">Dirección:</label>
-        		<input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingrese Direccion...">
+        		<input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingrese dirección...">
         	</div>
         </form>
       </div>
@@ -113,3 +101,44 @@
     </div>
   </div>
 </div>
+
+
+<!-- Script para activar el datatable en la tabla -->
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable({
+        select: true,  //-----> hace que las filas sean seleccionables
+        paging: true,  //--> habilita el paginado
+        "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
+            "lengthMenu": "Muestra _MENU_ revisiones por página",
+            "zeroRecords": "No se encontro resultados",
+            "info": "Mostrando página _PAGE_ of _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(Filtrando los _MAX_ registros)",
+            "search": "Búsqueda",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "previous": "Anterior",
+                "next": "Siguiente"
+            }
+        },
+        pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
+        lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
+        lengthMenu: [5,10,20],       //--> longitud del menu del paginado
+        searching: true,             //---> habilita la busqueda de registros
+        "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
+            { "searchable": false, "targets": 0, "orderable": false, "visible": false},   //---> columna del id
+            { "searchable": true, "targets": 1, "orderable": true, "visible": true},      //---> busca por tipo_revision
+            { "searchable": true, "targets": 2, "orderable": true, "visible": true},     //---> busca por fecha_revision
+            { "searchable": false, "targets": [3,4], "orderable": false},                //---> columna del adoptante y animal
+        ],
+        "ordering": true,                     //-->  habilita el ordenamiento de columnas
+        "search": {                           // -----> opciones para la busqueda de datos 
+            "caseInsensitive": false,        //----> habilita el caseSensitive
+            "search": " ",               //---> se le puede asignar un filtro por defecto a la busqueda asi los encuentra y ordena por ese filtro
+            "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
+        }
+    });
+} );
+</script>

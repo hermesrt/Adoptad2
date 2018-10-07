@@ -7,8 +7,10 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-
+    <!-- La libreria de FontAwesome -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/fontawesome/css/all.css') ?>">
+  <!-- Cargo la libreria del DataTable -->
+  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/datatables.css') ?>">
 
   <title>A2!</title>
   <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>

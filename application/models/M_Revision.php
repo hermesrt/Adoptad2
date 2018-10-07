@@ -80,6 +80,34 @@ class M_Revision extends CI_Model {
     }
     
     
+    //-----> Esta funcion fue un intento fallido de traer todas las cosas
+    ///----> necesarias para llenar la tabla en la vista V_Revision
+    //-----> NO anduvo no se porque...
+    function obtenerDatosAdoptanteAnimalRevisado()
+    {
+        $this -> db -> from('revision');
+        $this -> db -> select('revision.tipo_revision,revision.fecha_revision,adopcion.id_adoptante,revision.id_animal');
+        $this -> db -> join('adopcion','revision.id_animal = adopcion.id_animal','inner');
+        $query = $this -> db -> get();
+        if ($query -> num_rows() > 0) {
+            $data = array();
+            $this -> load -> model('M_Adoptante','adoptante');
+            foreach ($query as $obj){
+                $adoptante = $this -> adoptante -> obtenerUno($obj->id_adoptante);
+                $data[] = ['tipo_revision' => $obj -> tipo_revision,
+                          'fecha_revision' => $obj-> fecha_revision,
+                          'nombre_adoptante' => $adoptante -> nombre_adoptante,
+                           'apellido_adoptante' => $adoptante -> apellido_adoptante,
+                           'id_animal' => $obj -> id_animal
+                          ]; 
+            }
+            return $data;  //----> devuelve un array asociativo con todos los datos necesarios para armar la tabla Revisiones
+        } else {
+            return false;
+        }
+    }
+    
+    
     function fechaUltimaRevision()
     {
         

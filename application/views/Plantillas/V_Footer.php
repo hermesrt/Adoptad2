@@ -3,7 +3,9 @@
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/popper.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
-
+    <!-- Cargo el script que utiliza el datatable -->
+    <script type="text/javascript" charset="utf8" src="<?= base_url('assets/js/datatables.js') ?>"></script>
+    
     <footer>
         <div class="container-fluid text-light bg-dark">
           <center><div class="row">

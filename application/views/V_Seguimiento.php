@@ -6,7 +6,7 @@
 					<center><h1 class="my-2"><i class="fas fa-book"></i></h1></center>
 
 					<center><h4 class="card-title">Periodos de Seguimiento</h4></center>
-					<p class="card-text">En esta sección encontraras los seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aqui tambien podras iniciar nuevos periodos</p>
+					<p class="card-text">En esta sección encontrarás los seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aquí tambien podrás iniciar nuevos periodos</p>
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envía automáticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
 					</div>
