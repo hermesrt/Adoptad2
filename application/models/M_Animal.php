@@ -105,7 +105,7 @@ class M_Animal extends CI_Model {
     
     function agregarVacunaAnimal()
     {
-        
+
     }
     
     //--> Cambia estado "castrado" de 0 a 1
@@ -154,8 +154,19 @@ class M_Animal extends CI_Model {
             return true;  //--> si adoptado == 1 esta adoptado
         }
     }
-    
-    
+
+    function editar($datos)
+    {
+       $this->db->set('nombre_animal', $datos['nombre']);
+       $this->db->set('especie_animal', $datos['especie']);
+       $this->db->set('raza_animal', $datos['raza']);
+       $this->db->set('sexo_animal', $datos['sexo']);
+       $this->db->set('edad_animal', $datos['edad']);
+       $this->db->where('id_animal', $datos['idAnimal']);
+       return $this->db->update('animal');  //devuelve true on Correcto, false on Error
+}
+
+
 }
 
 /* End of file M_Animal.php */

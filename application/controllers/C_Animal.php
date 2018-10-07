@@ -12,8 +12,9 @@ class C_Animal extends CI_Controller {
 
     function index()
     {
-    	$this->load->view('Plantillas/V_Header');
-		$this->load->view('V_ListaAnimales');
+        $data['animales'] = $this->animal->obtenerTodos();
+    	$this->load->view('Plantillas/V_Header',$data);
+		$this->load->view('V_Animal');
 		$this->load->view('Plantillas/V_Footer');
     }
     
@@ -21,10 +22,21 @@ class C_Animal extends CI_Controller {
 	{
         $data['animal'] = $this -> animal -> obtenerUno($id_animal);
 		$this->load->view('Plantillas/V_Header');
-		$this->load->view('V_Animal',$data);
+		$this->load->view('V_VerAnimal',$data);
 		$this->load->view('Plantillas/V_Footer');
 	}
-	//comentario
+
+    function guardarEdicion()
+    {
+       $datos=$this->input->post();
+        $rta = array();
+        if ($this->animal->editar($datos)) {
+            $rta['status'] = 'success';
+        } else {
+            $rta['status'] = 'error';
+        }
+        return json_encode($rta);
+    }
 
 }
 

@@ -1,3 +1,4 @@
+<?php var_dump($revisiones) ?>
 <div class="container">
 	<div class="row">
 		<div class="col-3">
@@ -62,7 +63,7 @@
 								<td><?= $revision -> tipo_revision ?></td>
 								<td><?= $revision -> fecha_revision ?></td>
 								<td><a href="#">Nombre adoptante</a></td>
-								<td><a class="btn btn-primary" href="<?= base_url('C_Animal/index/'.$revision->id_animal) ?>">Ver Animal</a></td>
+								<td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
 							</tr>
 							<?php endforeach ?>
 						</tbody>
@@ -135,7 +136,7 @@ $(document).ready( function () {
         ],
         "ordering": true,                     //-->  habilita el ordenamiento de columnas
         "search": {                           // -----> opciones para la busqueda de datos 
-            "caseInsensitive": false,        //----> habilita el caseSensitive
+            "caseInsensitive": true,        //----> habilita el caseSensitive
             "search": " ",               //---> se le puede asignar un filtro por defecto a la busqueda asi los encuentra y ordena por ese filtro
             "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
         }
