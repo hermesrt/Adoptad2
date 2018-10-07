@@ -92,18 +92,18 @@
 				<div class="form-group">
 					<label for="TipoRevision">Tipo de revisión</label>
 					<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
-						<option>Castración</option>
-						<option>Seguimiento</option>
-						<option>Vacuna</option>						
+						<option>castración</option>
+						<option>seguimiento</option>
+                        <option>vacunación</option>						
 					</select>
 				</div>
 				<div class="form-group" style="display: none;" id="divVacuna">
 					<label for="tipoVacuna">Tipo de vacuna</label>
 					<select class="form-control" id="tipoVacuna">
 						<option>-------	</option>
-						<option>Vacuna1</option>
-						<option>Vacuna2</option>
-						<option>Vacuna3</option>						
+						<?php foreach($vacunas as $vacuna): ?>
+                        <option><?= $vacuna -> nombre_vacuna ?></option>
+                        <?php endforeach ?>						
 					</select>
 				</div>
 				<div class="form-group" >
@@ -124,7 +124,7 @@
 
 	//--------Muestra u Oculta el input tipo vacuna------------//
 	function MostrarTipoVacuna() {
-		if ($('#TipoRevision').val()=='Vacuna') {
+		if ($('#TipoRevision').val()=='vacunación') {
 			$('#divVacuna').show();
 		} else {
 			$('#divVacuna').hide();
