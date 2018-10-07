@@ -44,6 +44,9 @@
               <a class="nav-link" href="<?= base_url('C_Revision') ?>">  <i class="fas fa-notes-medical"></i> Revisiones</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('C_Animal') ?>"><i class="fas fa-paw"></i> Gestion de Animales</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<?= base_url('C_InicioSesion/cerrarSesion') ?>"><i class="fas fa-user-alt"></i> Cerrar Sesión</a>
             </li>
             <?php else: ?>

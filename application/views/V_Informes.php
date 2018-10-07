@@ -1,6 +1,6 @@
 <div class="container my-5">
 	<div class="row">
-		<div class="col-3 ">
+		<div class="col-xs-12 col-sm-12 col-md-3">
 			<div class="card">
 				<div class="card-body">
 					<center><h1><i class="fas fa-chart-pie"></i></h1></center>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-9">
+		<div class="col-xs-12 col-sm-12 col-md-9">
 
 			<div class="card">
 				<div class="card-body">

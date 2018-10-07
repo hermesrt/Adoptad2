@@ -9,8 +9,15 @@ class C_Animal extends CI_Controller {
         parent::__construct();
         $this -> load -> model('M_Animal','animal');
     }
+
+    function index()
+    {
+    	$this->load->view('Plantillas/V_Header');
+		$this->load->view('V_ListaAnimales');
+		$this->load->view('Plantillas/V_Footer');
+    }
     
-	public function index($id_animal)
+	public function verAnimal($id_animal)
 	{
         $data['animal'] = $this -> animal -> obtenerUno($id_animal);
 		$this->load->view('Plantillas/V_Header');

@@ -30,7 +30,7 @@
                 </p>
                 <center>
                   <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar" ><i class="fas fa-plus"></i> Adoptar</a>
-                  <a href="<?= base_url('C_Animal/index/'.$animal -> id_animal) ?>" class="btn btn-primary" ><i class="fas fa-plus"></i> Ver Animal</a>
+                  <a href="<?= base_url('C_Animal/verAnimal/'.$animal -> id_animal) ?>" class="btn btn-primary" ><i class="fas fa-plus"></i> Ver Animal</a>
                 </center>
               </div>
             </div>
