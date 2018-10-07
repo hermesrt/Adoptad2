@@ -38,6 +38,12 @@ class C_Animal extends CI_Controller {
         return json_encode($rta);
     }
 
+    function getAnimales()
+    {
+        $todos = $this->animal->obtenerTodos();
+        return json_encode($todos);
+    }
+
 }
 
 /* End of file C_Animal.php */

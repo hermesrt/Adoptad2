@@ -25,72 +25,72 @@
 									<td class="sexo"><?= $animal -> sexo_animal ?></td>
 									<td class="edad"><?= $animal -> edad_animal ?></td>
 									<td class="castrado"><?php if ($animal->castrado == 1): ?>
-										si
+									si
 									<?php else: ?>
 										no
-									<?php endif ?></td>
-									<td>
-										<a class="btn btn-success" href="<?= base_url('C_Animal/VerAnimal/'.$animal->id_animal) ?>">Ver Animal</a>
-										<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>
-									</td>
-								</tr>
-							<?php endforeach ?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-
-
-		<!-- Modal -->
-		<div class="modal fade" id="md-edicion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form>
-							<input type="hidden" id="idAnimal">
-							<fieldset class="form-group">
-								<label for="nombre">Nombre</label>
-								<input type="text" class="form-control" id="nombre" placeholder="Nombre">
-							</fieldset>
-							<fieldset class="form-group">
-								<label for="especie">Especie</label>
-								<input type="text" class="form-control" id="especie" placeholder="Especie">
-							</fieldset>
-							<fieldset class="form-group">
-								<label for="raza">Raza</label>
-								<input type="text" class="form-control" id="raza" placeholder="Raza">
-							</fieldset>
-							<fieldset class="form-group">
-								<label for="sexo">Sexo</label>
-								<input type="text" class="form-control" id="sexo" placeholder="Sexo">
-							</fieldset>
-							<fieldset class="form-group">
-								<label for="edad">Edad</label>
-								<input type="text" class="form-control" id="edad" placeholder="Edad">
-							</fieldset>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
+										<?php endif ?></td>
+										<td>
+											<a class="btn btn-success" href="<?= base_url('C_Animal/VerAnimal/'.$animal->id_animal) ?>">Ver Animal</a>
+											<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>
+										</td>
+									</tr>
+								<?php endforeach ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Script para activar el datatable en la tabla -->
-		<script>
 
-			function dibujarTabla(){
-				$('#table_id').DataTable({
+
+			<!-- Modal -->
+			<div class="modal fade" id="md-edicion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<input type="hidden" id="idAnimal">
+								<fieldset class="form-group">
+									<label for="nombre">Nombre</label>
+									<input type="text" class="form-control" id="nombre" placeholder="Nombre">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="especie">Especie</label>
+									<input type="text" class="form-control" id="especie" placeholder="Especie">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="raza">Raza</label>
+									<input type="text" class="form-control" id="raza" placeholder="Raza">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="sexo">Sexo</label>
+									<input type="text" class="form-control" id="sexo" placeholder="Sexo">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="edad">Edad</label>
+									<input type="text" class="form-control" id="edad" placeholder="Edad">
+								</fieldset>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="button" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Script para activar el datatable en la tabla -->
+			<script>
+
+				function dibujarTabla(){
+					$('#table_id').DataTable({
         select: false,  //-----> hace que las filas sean seleccionables
         paging: true,  //--> habilita el paginado
         "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
@@ -130,74 +130,92 @@
             "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
         }
     });
-			}
-
-			function armarRegistro(dato){
-				$trEdicion = $(dato).closest('tr');
-				registroSeleccionado = {
-					idAnimal: $($trEdicion).find('.id').html(),
-					nombre: $($trEdicion).find('.nombre').html(),
-					especie: $($trEdicion).find('.especie').html(),
-					raza: $($trEdicion).find('.raza').html(),
-					sexo: $($trEdicion).find('.sexo').html(),
-					edad: $($trEdicion).find('.edad').html()
 				}
-				return registroSeleccionado;
-			}
-			function llenarModal(registro){
-				$('#nombre').val(registro.nombre)
-				$('#especie').val(registro.especie)
-				$('#raza').val(registro.raza)
-				$('#sexo').val(registro.sexo)
-				$('#edad').val(registro.edad)
-				$('#idAnimal').val(registro.idAnimal)
-			}
 
-			$(document).ready( function () {
-				dibujarTabla();
-
-				$('.btn-editar').click(function(event) {
-					var dato = armarRegistro(this);
-					llenarModal(dato);
-					$('#md-edicion').modal('show');
-				})
-
-				$('#btnGuardarEdicion').click(function(event) {
-					var registro;
-					registro =
-					{
-						idAnimal:$('#idAnimal').val(),
-						nombre :$('#nombre').val(),
-						edad :$('#edad').val(),
-						especie :$('#especie').val(),
-						raza :$('#raza').val(),
-						sexo: $('#sexo').val()
-					}
-					console.log(registro);
+				function obtenerAnimales(){					//problema 002: esto no esta funcionando, no se xq no recupera el json de GetAimales
 
 					$.ajax({
-						url: '<?= base_url('C_Animal/guardarEdicion') ?>',
+						url: 'C_animal/getAnimales',
 						type: 'POST',
-						data: {idAnimal:$('#idAnimal').val(),
-						nombre :$('#nombre').val(),
-						edad :$('#edad').val(),
-						especie :$('#especie').val(),
-						raza :$('#raza').val(),
-						sexo: $('#sexo').val()},
 					})
-					.done(function() {
-						console.log("success");
+					.done(function(todos) {
+						console.log(todos);
 					})
-					.fail(function() {
-						console.log("error");
+					.fail(function( jqXHR, textStatus, errorThrown ) {
+						if ( console && console.log ) {
+							console.log( "La solicitud a fallado: " +  textStatus);
+						}			
 					})
-					.always(function() {
-						console.log("complete");
-					});
+				}
 
-					$('#md-edicion').modal('hide');
-				});
-			} );
-		</script>
+				function armarRegistro(dato){
+					$trEdicion = $(dato).closest('tr');
+					registroSeleccionado = {
+						idAnimal: $($trEdicion).find('.id').html(),
+						nombre: $($trEdicion).find('.nombre').html(),
+						especie: $($trEdicion).find('.especie').html(),
+						raza: $($trEdicion).find('.raza').html(),
+						sexo: $($trEdicion).find('.sexo').html(),
+						edad: $($trEdicion).find('.edad').html()
+					}
+					return registroSeleccionado;
+				}
+				function llenarModal(registro){
+					$('#nombre').val(registro.nombre)
+					$('#especie').val(registro.especie)
+					$('#raza').val(registro.raza)
+					$('#sexo').val(registro.sexo)
+					$('#edad').val(registro.edad)
+					$('#idAnimal').val(registro.idAnimal)
+				}
+
+				$(document).ready( function () {
+					dibujarTabla();
+					var a = obtenerAnimales()
+					console.log(a);	
+					$('.btn-editar').click(function(event) {
+						var dato = armarRegistro(this);
+						llenarModal(dato);
+						$('#md-edicion').modal('show');
+					})
+
+					$('#btnGuardarEdicion').click(function(event) {
+						var registro;
+						registro =
+						{
+							idAnimal:$('#idAnimal').val(),
+							nombre :$('#nombre').val(),
+							edad :$('#edad').val(),
+							especie :$('#especie').val(),
+							raza :$('#raza').val(),
+							sexo: $('#sexo').val()
+						}
+						console.log(registro);
+
+						$.ajax({
+							url: '<?= base_url('C_Animal/guardarEdicion') ?>',
+							type: 'POST',
+							data: {idAnimal:$('#idAnimal').val(),
+							nombre :$('#nombre').val(),
+							edad :$('#edad').val(),
+							especie :$('#especie').val(),
+							raza :$('#raza').val(),
+							sexo: $('#sexo').val()},
+						})
+						.done(function() {
+							console.log("success");
+						})
+						.fail(function() {
+							console.log("error");
+						})
+						.always(function() {
+							console.log("complete");
+						});
+
+						$('#md-edicion').modal('hide');
+						 location.href ="<?= base_url('c_animal') ?>";		//problmea 001= estoa estaria mal, habria que cargar la tabla con ajax y cuando se cierre el modal que se actualize tambien con ajax, no recargar la pagina completa. Funciona pero estaria bueno cambiarlo.
+					});
+				} );
+			</script>
 
 
