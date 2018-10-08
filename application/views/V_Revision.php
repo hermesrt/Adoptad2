@@ -1,4 +1,4 @@
-<?php var_dump($revisiones) ?>
+<?php     // var_dump($revisiones)       ?>
 <div class="container">
 	<div class="row">
 		<div class="col-3">

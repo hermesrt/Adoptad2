@@ -89,8 +89,8 @@
 			<!-- Script para activar el datatable en la tabla -->
 			<script>
 
-				function dibujarTabla(){
-					$('#table_id').DataTable({
+function dibujarTabla(){
+    $('#table_id').DataTable({
         select: false,  //-----> hace que las filas sean seleccionables
         paging: true,  //--> habilita el paginado
         "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
@@ -112,7 +112,7 @@
         lengthMenu: [5,10,20],       //--> longitud del menu del paginado
         searching: true,             //---> habilita la busqueda de registros
         "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
-        { "searchable": true, "targets": 0, "orderable": true},         
+        { "searchable": true, "targets": 0, "orderable": true, "visible": false},         
         { "searchable": true, "targets": 1, "orderable": true}, 
         { "searchable": true, "targets": 2, "orderable": true}, 
         { "searchable": true, "targets": 3, "orderable": true}, 
@@ -131,9 +131,6 @@
         }
     });
 				}
-
-
-
 
 				function armarRegistro(dato){
 					$trEdicion = $(dato).closest('tr');
