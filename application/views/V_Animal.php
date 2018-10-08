@@ -1,4 +1,10 @@
 <div class="container border my-3">
+	<div class="row my-2">
+		<div class="col">
+			
+			<a class="btn btn-success" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
+		</div>
+	</div>
 	<div class="row my-3">
 		<div class="col-12">			
 			<table class="table table-striped table-dark display" id="table_id">
@@ -91,7 +97,7 @@
 		/*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 		$('#table_id').DataTable({	
 			ajax: {
-				url: 'getAnimales',
+				url: 'C_Animal/getAnimales',
 				dataSrc: ''
 			},
 			columns: [ 
@@ -114,6 +120,7 @@
 			]
 		});
 		/*--------------</Renderizado de la tabla obteniendo datos con ajax>-----------*/
+
 		var table = $('#table_id').DataTable();
 
 		table.on( 'draw', function () {
