@@ -29,9 +29,11 @@
 						<center>
 						<div class="form-group">
 							<div class="col-sm-10">
-								<input type="checkbox" checked> Centro de Adopcion 1
-								<input type="checkbox" > Centro de Adopcion 2
-								<input type="checkbox"> Centro de Adopcion 3
+							<?php foreach($centros as $centro): ?> 
+								<input type="checkbox" id="<?= $centro -> id_centro ?>" ><?= $centro -> nombre_ca ?>
+								<!-- <input type="checkbox" > Centro de Adopcion 2 -->
+								<!-- <input type="checkbox"> Centro de Adopcion 3   -->
+                            <?php endforeach ?>
 							</div>
 						</div>
 						</center>

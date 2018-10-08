@@ -8,13 +8,15 @@ class C_Informes extends CI_Controller {
 		if ($this->session->userdata('tipo_usuario')!="administrativo") {
 			redirect(base_url());
 		}
+        $this -> load -> model('M_Centro_adopcion','centro');
 	}
 
 	public function index()
 	{
 		//if ($this->session->userdata('tipo_usuario')=="administrativo") {
+        $data['centros'] = $this -> centro -> obtenerTodos();
 			$this->load->view('Plantillas/V_Header');
-			$this->load->view('V_Informes');
+			$this->load->view('V_Informes',$data);
 			$this->load->view('Plantillas/V_Footer');
 		/*} else {
 			redirect(base_url());

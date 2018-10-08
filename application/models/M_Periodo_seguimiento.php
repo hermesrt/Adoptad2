@@ -16,8 +16,8 @@ class M_Periodo_seguimiento extends CI_Model {
     {
         $this -> id_periodo = $row -> id_periodo;
         $this -> tipo_periodo = $row -> tipo_periodo;
-        $this -> fecha_inicio_periodo = row -> $fecha_inicio_periodo;
-        $this -> fecha_fin_periodo = row -> $fecha_fin_periodo;
+        $this -> fecha_inicio_periodo = $row -> fecha_inicio_periodo;
+        $this -> fecha_fin_periodo = $row -> fecha_fin_periodo;
         $this -> id_centro = $row -> id_centro;
         
         //---> cargo el modelo M_Centro_adopcion  y obtengo las adopciones de ese centro de adopcion
@@ -29,7 +29,7 @@ class M_Periodo_seguimiento extends CI_Model {
     //-----> Obtiene un periodo de seguimiento
     function obtenerUno($id_seguimiento)
     {
-        $this->db->from("periodo_seguimiento")->where('id_seguimiento',$id_seguimiento);
+        $this->db->from("periodo_seguimiento")->where('id_periodo',$id_seguimiento);
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
             $row = $query->result();
@@ -46,7 +46,7 @@ class M_Periodo_seguimiento extends CI_Model {
     function obtenerPorCentro($id_centro)
     {
         $result = array();
-        $this->db->from("periodo_seguimiento")->where('id_seguimiento',$id_seguimiento);
+        $this->db->from("periodo_seguimiento")->where('id_centro',$id_centro);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row){
@@ -107,11 +107,11 @@ class M_Periodo_seguimiento extends CI_Model {
     function registarPeriodo($tipo,$fecha_inicio,$fecha_fin,$id_centro)
     {
         $data = array(
-            'id_periodo' => null;   //---> es autoincremental asi que el id se setea solo en la BD
-            'tipo_periodo'  => $tipo;
-            'fecha_inicio_periodo' => $fecha_inicio;
-            'fecha_fin_periodo' => $fecha_fin;
-            'id_centro' => $id_centro;
+            'id_periodo' => null,   //---> es autoincremental asi que el id se setea solo en la BD
+            'tipo_periodo'  => $tipo,
+            'fecha_inicio_periodo' => $fecha_inicio,
+            'fecha_fin_periodo' => $fecha_fin,
+            'id_centro' => $id_centro
         );
         $this -> db -> insert('periodo_seguimiento',$data);
     }
