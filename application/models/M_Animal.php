@@ -75,6 +75,21 @@ class M_Animal extends CI_Model {
             return false;
         }
     }
+
+    function getTodosJson()
+    {
+        $result = array();
+        $this->db->from("animal");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $result[] = $row;  
+            }
+            return json_encode($result);
+        }else {
+            return false;
+        }
+    }
     
     //--------- Recupera todos los animales por centro de adopcion
     function obtenerPorCentro($id_centro)

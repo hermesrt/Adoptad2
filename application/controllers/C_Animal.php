@@ -40,8 +40,16 @@ class C_Animal extends CI_Controller {
 
     function getAnimales()
     {
-        $todos = $this->animal->obtenerTodos();
-        return json_encode($todos);
+        $todos = $this->animal->getTodosJson();
+        echo $todos;
+    }
+    function prueba()
+    {
+        
+        $this->load->view('Plantillas/V_Header');
+        $this->load->view('prueba');
+        $this->load->view('Plantillas/V_Footer');
+
     }
 
 }

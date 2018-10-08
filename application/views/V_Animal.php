@@ -132,21 +132,8 @@
     });
 				}
 
-				function obtenerAnimales(){					//problema 002: esto no esta funcionando, no se xq no recupera el json de GetAimales
 
-					$.ajax({
-						url: 'C_animal/getAnimales',
-						type: 'POST',
-					})
-					.done(function(todos) {
-						console.log(todos);
-					})
-					.fail(function( jqXHR, textStatus, errorThrown ) {
-						if ( console && console.log ) {
-							console.log( "La solicitud a fallado: " +  textStatus);
-						}			
-					})
-				}
+
 
 				function armarRegistro(dato){
 					$trEdicion = $(dato).closest('tr');
@@ -171,8 +158,6 @@
 
 				$(document).ready( function () {
 					dibujarTabla();
-					var a = obtenerAnimales()
-					console.log(a);	
 					$('.btn-editar').click(function(event) {
 						var dato = armarRegistro(this);
 						llenarModal(dato);
@@ -214,7 +199,7 @@
 
 						$('#md-edicion').modal('hide');
 						 location.href ="<?= base_url('c_animal') ?>";		//problmea 001= estoa estaria mal, habria que cargar la tabla con ajax y cuando se cierre el modal que se actualize tambien con ajax, no recargar la pagina completa. Funciona pero estaria bueno cambiarlo.
-					});
+						});
 				} );
 			</script>
 
