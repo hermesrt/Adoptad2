@@ -8,7 +8,7 @@
 							<img class="card-img-top" src="<?= base_url() ?>assets/img/animales/<?= $animal -> nombre_imagen_animal ?>" alt="Card image cap">
 						</div>
 						<div class="col-9">				
-							<h4 class="card-title">Nombre Animal</h4>
+							<h4 class="card-title"><?= $animal -> nombre_animal ?></h4>
 							<p class="card-text">
 								<ul>
 									<li><i class="fab fa-sticker-mule"></i> Especie: <?= $animal -> especie_animal ?></li>

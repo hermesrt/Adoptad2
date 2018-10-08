@@ -23,29 +23,6 @@
 
 					<h4 class="card-title"><i class="fas fa-notes-medical"></i> Revisiones:</h4>
 
-					<h6><i class="fas fa-filter"></i> Filtros de búsqueda</h6>	
-					<form>
-						<fieldset class="form-group">
-							<div class="row">
-								<div class="col-1">
-									<label for="Fecha">Fecha:</label>
-								</div>
-								<div class="col-5">
-									<input type="date" class="form-control" id="Fecha">
-								</div>
-								<div class="col-1">
-									<label for="tipo">Tipo:</label>
-								</div>
-								<div class="col-5">
-									<select  class="form-control">
-										<option>Vacunación</option>
-										<option>Castración</option>
-										<option>Seguimiento</option>
-									</select>
-								</div>
-							</div>
-						</fieldset>
-					</form>
 					<table class="table table-striped table-dark display" id="table_id">
 						<thead>
 							<tr>
@@ -116,7 +93,7 @@ $(document).ready( function () {
             "info": "Mostrando página _PAGE_ of _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(Filtrando los _MAX_ registros)",
-            "search": "Búsqueda",
+            "search": "<i class='fas fa-filter'></i> Búsqueda",
             "paginate": {
                 "first": "Primero",
                 "last": "Último",
