@@ -91,11 +91,11 @@
 		/*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 		$('#table_id').DataTable({	
 			ajax: {
-				url: 'getAnimales',
+				url: 'C_Animal/getAnimales',
 				dataSrc: ''
 			},
 			columns: [ 
-			{ data: 'id_animal',className: "id"},
+			{ data: 'id_animal',className: "id","visible":false},
 			{ data: 'nombre_animal',className: "nombre" },
 			{ data: 'especie_animal',className: "especie" },
 			{ data: 'raza_animal',className: "raza" },
@@ -111,7 +111,24 @@
 					'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
 				}
 			}
-			]
+			],
+            "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
+            "lengthMenu": "Muestra _MENU_ revisiones por página",
+            "zeroRecords": "No se encontro resultados",
+            "info": "Mostrando página _PAGE_ of _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(Filtrando los _MAX_ registros)",
+            "search": "<i class='fas fa-filter'></i> Búsqueda",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "previous": "Anterior",
+                "next": "Siguiente"
+            }
+        },
+        pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
+        lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
+        lengthMenu: [5,10,20],       //--> longitud del menu del paginado
 		});
 		/*--------------</Renderizado de la tabla obteniendo datos con ajax>-----------*/
 		var table = $('#table_id').DataTable();
