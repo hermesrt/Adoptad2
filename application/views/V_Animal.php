@@ -101,7 +101,7 @@
 				dataSrc: ''
 			},
 			columns: [ 
-			{ data: 'id_animal',className: "id","visible":false},
+			{ data: 'id_animal',className: "id"},
 			{ data: 'nombre_animal',className: "nombre" },
 			{ data: 'especie_animal',className: "especie" },
 			{ data: 'raza_animal',className: "raza" },
@@ -121,7 +121,7 @@
             "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
             "lengthMenu": "Muestra _MENU_ revisiones por página",
             "zeroRecords": "No se encontro resultados",
-            "info": "Mostrando página _PAGE_ of _PAGES_",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(Filtrando los _MAX_ registros)",
             "search": "<i class='fas fa-filter'></i> Búsqueda",
