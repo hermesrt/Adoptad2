@@ -43,13 +43,12 @@ class C_Animal extends CI_Controller {
         $todos = $this->animal->getTodosJson();
         echo $todos;
     }
+    
     function prueba()
     {
-        
         $this->load->view('Plantillas/V_Header');
         $this->load->view('prueba');
         $this->load->view('Plantillas/V_Footer');
-
     }
 
 }

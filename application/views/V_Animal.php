@@ -27,12 +27,12 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal para editar el animal  -->
 <div class="modal fade" id="md-edicion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Editar animal</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -69,6 +69,11 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
 <script type="text/javascript">
 
 	function armarRegistro(dato){
@@ -112,8 +117,8 @@
 			{
 				"aTargets": [6],
 				"mData": null,
-				"mRender": function (data, type, full) {
-					return '<a class="btn btn-success mx-2" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
+				"mRender": function (data, type, full) {                
+					return '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
 					'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
 				}
 			}
@@ -148,7 +153,7 @@
 				llenarModal(dato);
 				$('#md-edicion').modal('show');
 			})
-
+  
 			$('#btnGuardarEdicion').click(function(event) {
 				var registro;
 				registro =
