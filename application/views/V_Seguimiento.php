@@ -28,16 +28,18 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php foreach($periodos as $periodo): ?>
 								<tr>
-									<td><i class="fas fa-pills"></i> Vacunación</td>
-									<td>23/04/18</td>
-									<td>23/09/18</td>
+                                    <td><i class="fas fa-pills"></i> <?= $periodo->tipo_periodo ?></td>
+									<td><?= $periodo->fecha_inicio_periodo ?></td> 
+									<td><?= $periodo->fecha_fin_periodo ?></td>
 								</tr>
-								<tr>
-									<td><i class="fas fa-cut"></i> Castración</td>
-									<td>23/04/18</td>
-									<td>23/09/18</td>
-								</tr>
+								<?php endforeach ?>
+								<!--
+								<td><i class="fas fa-pills"></i> Vacunación</td>
+                                    <td><i class="fas fa-cut"></i> Castración</td>
+                                    <td><i class="fas fa-calendar-check"></i> Seguimiento</td>
+								  -->
 							</tbody>
 						</table>					
 					</div>

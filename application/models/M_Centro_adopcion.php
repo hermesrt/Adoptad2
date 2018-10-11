@@ -79,7 +79,7 @@ class M_Centro_adopcion extends CI_Model {
     //-----> esta funcion trae todas las adopciones relacionadas a los animales que estan este centro de adopcion
     public function getAdopciones()
     {
-        if ( $this -> animales -> sizeof() > 0 ) {
+        if ( $this -> animales  ) {
             $this -> load -> model('M_Adopcion','adopcion');
             foreach ($this -> animales as $animal){
                 $adopciones[] = $this -> adopcion -> obtenerAdopcionPorAnimal($animal -> id_animal);
