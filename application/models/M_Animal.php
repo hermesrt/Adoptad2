@@ -15,6 +15,8 @@ class M_Animal extends CI_Model {
     public $castrado;
     public $adoptado;
     public $nombre_imagen_animal;
+    public $fecha_alta_animal;
+    public $cachorro;
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
     public $vacunas;          //------->  es un array de muchos objetos vacuna_aplicada
@@ -33,6 +35,8 @@ class M_Animal extends CI_Model {
         $this -> castrado = $row -> castrado;
         $this -> adoptado = $row -> adoptado;
         $this -> nombre_imagen_animal = $row -> nombre_imagen_animal;
+        $this -> cachorro = $row -> cachorro;
+        $this -> fecha_alta_animal = $row -> fecha_alta_animal;
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
@@ -123,15 +127,15 @@ class M_Animal extends CI_Model {
 
     }
     
-    //--> Cambia estado "castrado" de 0 a 1
+    
     //--> Si esta castrado = 1
     //--> Si no esta castrado = 0
     function estaCastrado()
     {
         if ($this -> castrado == 0) {
-            return false;   //--> castrado ==0 devuelve false
+            return false;   
         } else {
-            return true;   //--> castrado ==1 devuelve true
+            return true;   
         }
     }
     

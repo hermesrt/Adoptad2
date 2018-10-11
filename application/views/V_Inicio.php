@@ -25,7 +25,7 @@
                   <ul>
                     <li>Raza: <?= $animal -> raza_animal ?></li>
                     <li>Sexo: <?= $animal -> sexo_animal ?></li>
-                    <li>Edad: <?= $animal -> edad_animal ?></li>
+                    <li>Edad: <?= ($animal->cachorro)?$animal -> edad_animal." meses":$animal->edad_animal." años" ?></li>
                   </ul>
                 </p>
                 <center>
