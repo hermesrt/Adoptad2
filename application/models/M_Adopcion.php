@@ -7,6 +7,7 @@ class M_Adopcion extends CI_Model {
     public $id_adopcion;
     public $fecha_adopcion;
     public $detalle_adopcion;
+    public $estado_adopcion;
     public $id_adoptante;
     public $id_animal;
     
@@ -18,6 +19,7 @@ class M_Adopcion extends CI_Model {
         $this -> fecha_adopcion = $row -> fecha_adopcion;
         $this -> detalle_adopcion = $row -> detalle_adopcion;
         $this -> id_adoptante = $row -> id_adoptante;
+        $this -> estado_adopcion = $row -> estado_adopcion;
         $this -> id_animal = $row -> id_animal;
     }
 
