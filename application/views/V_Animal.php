@@ -117,9 +117,21 @@
 			{
 				"aTargets": [6],
 				"mData": null,
-				"mRender": function (data, type, full) {                
-					return '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
+				"mRender": function (data, type, full) {     
+                    var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
 					'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
+                    
+                    if (data.adoptado == 0){
+                       btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';
+                    } else{
+                        btns += '<a class="btn btn-warning btn-revocar mx-2"><i class="fas fa-minus"></i></a>';
+                    }
+                    if(data.estado_animal == 'activo'){
+                        btns+= '<a class="btn btn-danger btn-desactivar"><i class="fas fa-ban"></i></a>';
+                    } else {
+                        btns+= '<a class="btn btn-danger btn-activar"><i class="fas fa-undo"></i></a>'
+                    }
+					return btns;
 				}
 			}
 			],
