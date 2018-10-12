@@ -16,8 +16,8 @@
 		<div class="col-9">
 			<div class="card my-5">
 				<center><h1 class="my-2"><i class="fas fa-question-circle"></i> Formulario de denuncia</center>
-					<div class="card-body">
-						<form>
+    					<div class="card-body">
+			<!--			<form>
 							<fieldset class="form-group">
 								<div class="row">
 									<div class="col-3">
@@ -69,7 +69,7 @@
 									
 								</tr>
 							</tbody>
-						</table>
+						</table>  -->
 						<table class="table table-striped table-dark display" id="table_id">
 						<thead>
 							<tr>
@@ -149,7 +149,7 @@ $(document).ready( function () {
             "info": "Mostrando página _PAGE_ de _PAGES_ páginas",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(Filtrando los _MAX_ registros)",
-            "search": "<i class='fas fa-filter'></i> Buscar por dirección",
+            "search": "<i class='fas fa-filter'></i> Buscar por dirección: ",
             "paginate": {
                 "first": "Primero",
                 "last": "Último",
