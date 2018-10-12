@@ -41,6 +41,13 @@ class M_Revision extends CI_Model {
     }
     
     
+    //-----> obtiene las vacunas de un animal en una revision
+    public function obtenerVacunas($id_animal)
+    {
+        
+    }
+    
+    
     //---> obtiene todas las Revisiones para un animal
     function obtenerRevisiones($id_animal)
     {

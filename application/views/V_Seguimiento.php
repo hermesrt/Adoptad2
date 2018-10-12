@@ -30,8 +30,16 @@
 							<tbody>
 							<?php foreach($periodos as $periodo): ?>
 								<tr>
-                                    <td><i class="fas fa-pills"></i> <?= $periodo->tipo_periodo ?></td>
-									<td><?= $periodo->fecha_inicio_periodo ?></td> 
+                                   <?php switch($periodo->tipo_periodo):
+                                    case 'vacunación': 
+                                        echo '<td><i class="fas fa-pills"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                    case 'castración': 
+                                        echo '<td><i class="fas fa-cut"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                    case 'seguimiento': 
+                                        echo '<td><i class="fas fa-calendar-check"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                    endswitch
+                                    ?>			
+									<td><?= $periodo->fecha_inicio_periodo ?></td> 	
 									<td><?= $periodo->fecha_fin_periodo ?></td>
 								</tr>
 								<?php endforeach ?>

@@ -4,26 +4,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Vacuna_aplicada extends CI_Model {
     
     //------> Atributos
-    public $id_vacuna_aplicada;
-    public $fecha_aplicacion_vacuna;
-    public $id_animal;
+    public $id_revision;
     public $id_vacuna;
-
+    public $fecha_aplicacion_vacuna;
     
     //-------> iniciliza el objeto M_Vacuna aplicada con todos los valores de la columna que trae de la bd
     function init($row)
     {
-        $this -> id_vacuna_aplicada = $row -> id_vacuna_aplicada;
         $this -> fecha_aplicacion_vacuna = $row -> fecha_aplicacion_vacuna;
-        $this -> id_animal = $row -> id_animal;
+        $this -> id_revision = $row -> id_revision;
         $this -> id_vacuna = $row -> id_vacuna;
     }
     
     
-    //-----> obtiene una vacuna aplicada de el id_animal pasado como parametro
-    function obtenerUno($id_animal)
+   
+    function obtenerUno($id_revision)
     {
-        $this->db->from("vacuna_aplicada")->where('id_animal',$id_animal);
+        $this->db->from("vacuna_aplicada")->where('id_revision',$id_revision);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $row = $query->result();
@@ -35,11 +32,11 @@ class M_Vacuna_aplicada extends CI_Model {
         }
     }
     
-    //---> obtiene todas las vacunas_aplicadas a un animal
-    function obtenerTodos($id_animal)
+    
+    function obtenerTodos($id_revision)
     {
         $result = array();
-        $this->db->from("vacuna_aplicada")->where('id_animal',$id_animal);
+        $this->db->from("vacuna_aplicada");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
