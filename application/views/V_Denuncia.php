@@ -70,6 +70,30 @@
 								</tr>
 							</tbody>
 						</table>
+						<table class="table table-striped table-dark display" id="table_id">
+						<thead>
+							<tr>
+                                <th scope="col">#</th>
+								<th scope="col">Nombre y Apellido</th>
+								<th scope="col">Dirección</th>
+								<th scope="col">Email</th>
+								<th scope="col">Teléfono</th>
+								<th scope="col">Acción</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach($adoptantes as $adoptante): ?>
+							<tr>
+                                <th scope="row"><?= $adoptante -> id_adoptante ?></th>
+                                <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
+								<td><?= $adoptante->direccion_adoptante ?></td>
+								<td><?= $adoptante->email_adoptante ?></td>
+								<td><?= $adoptante->telefono_adoptante ?></td>
+								<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
+							</tr>
+							<?php endforeach ?>
+						</tbody>
+					</table>
 					</div>
 				</div>
 			</div>
@@ -111,3 +135,44 @@
     </div>
   </div>
 </div>
+
+
+<!-- Script para activar el datatable en la tabla -->
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable({
+        select: true,  //-----> hace que las filas sean seleccionables
+        paging: true,  //--> habilita el paginado
+        "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
+            "lengthMenu": "Muestra _MENU_ denuncias por página",
+            "zeroRecords": "No se encontro resultados",
+            "info": "Mostrando página _PAGE_ de _PAGES_ páginas",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(Filtrando los _MAX_ registros)",
+            "search": "<i class='fas fa-filter'></i> Buscar por dirección",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "previous": "Anterior",
+                "next": "Siguiente"
+            }
+        },
+        pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
+        lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
+        lengthMenu: [5,10,20],       //--> longitud del menu del paginado
+        searching: true,             //---> habilita la busqueda de registros
+        "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
+            { "searchable": false, "targets": 0, "orderable": false, "visible": false},   //---> columna del id
+            { "searchable": false, "targets": [1,3,4], "orderable": true, "visible": true},      
+            { "searchable": true, "targets": 2, "orderable": true, "visible": true},                   
+        ],
+        "ordering": true,                     //-->  habilita el ordenamiento de columnas
+        "search": {                           // -----> opciones para la busqueda de datos 
+            "caseInsensitive": true,        //----> habilita el caseSensitive
+            "search": " ",               //---> se le puede asignar un filtro por defecto a la busqueda asi los encuentra y ordena por ese filtro
+            "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
+        }
+    });
+} );
+</script>
+

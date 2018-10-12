@@ -28,6 +28,7 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php if ($periodos != false): ?>
 							<?php foreach($periodos as $periodo): ?>
 								<tr>
                                    <?php switch($periodo->tipo_periodo):
@@ -43,6 +44,7 @@
 									<td><?= $periodo->fecha_fin_periodo ?></td>
 								</tr>
 								<?php endforeach ?>
+								<?php endif ?>
 								<!--
 								<td><i class="fas fa-pills"></i> Vacunación</td>
                                     <td><i class="fas fa-cut"></i> Castración</td>

@@ -267,7 +267,7 @@
 			}
 			],
             "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
-            	"lengthMenu": "Muestra _MENU_ revisiones por página",
+            	"lengthMenu": "Muestra _MENU_ animales por página",
             	"zeroRecords": "No se encontro resultados",
             	"info": "Mostrando página _PAGE_ de _PAGES_",
             	"infoEmpty": "No hay registros disponibles",

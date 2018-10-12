@@ -2,20 +2,25 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_Denuncia extends CI_Controller {
-	public function __construct()
+
+    public function __construct()
 	{
 		parent::__construct();
 		if ($this->session->userdata('tipo_usuario')!="veterinario") {
 			redirect(base_url());
 		}
+        $this -> load -> model('M_Adoptante','adoptante');
 	}
 
 	public function index()
 	{
+        $data['adoptantes'] = $this -> adoptante -> obtenerTodos();
 		$this->load->view('Plantillas/V_Header');
-		$this->load->view('V_Denuncia');
+		$this->load->view('V_Denuncia',$data);
 		$this->load->view('Plantillas/V_Footer');
 	}
+    
+    
 
 }
 
