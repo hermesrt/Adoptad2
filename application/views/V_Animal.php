@@ -2,7 +2,7 @@
 	<div class="row my-2">
 		<div class="col">
 			
-			<a class="btn btn-success" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
+			<a class="btn btn-success" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
 		</div>
 	</div>
 	<div class="row my-3">
@@ -15,7 +15,6 @@
 						<th scope="col">Especie</th>
 						<th scope="col">Raza</th>
 						<th scope="col">Sexo</th>
-						<th scope="col">Edad</th>
 						<th scope="col">Accion</th>
 					</tr>
 				</thead>
@@ -27,12 +26,14 @@
 </div>
 
 
+
+
 <!-- Modal para editar el animal  -->
-<div class="modal fade" id="md-edicion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="md-edicion" tabindex="-1" role="dialog" aria-labelledby="labelEditar" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Editar animal</h5>
+				<h5 class="modal-title" id="labelEditar">Editar animal</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -57,14 +58,91 @@
 						<input type="text" class="form-control" id="sexo" placeholder="Sexo">
 					</fieldset>
 					<fieldset class="form-group">
-						<label for="edad">Edad</label>
-						<input type="text" class="form-control" id="edad" placeholder="Edad">
+						<label for="fechaEditar">Fecha de nacimiento</label>
+						<input type="text" class="form-control" id="fechaEditar" placeholder="Fecha de nacimiento">
 					</fieldset>
 				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
+				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
+		</div>
+	</div>
+</div>
+
+<!-- Modal para Alta animal  -->
+<div class="modal fade" id="md-alta" tabindex="-1" role="dialog" aria-labelledby="modalAltaAnimal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" >Alta animal</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="container">
+						<div class="row">
+							<div class="col-6">
+								<fieldset class="form-group">
+									<label for="nombre">Nombre</label>
+									<input type="text" class="form-control" id="nombreAlta" placeholder="Nombre">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="especie">Especie</label>
+									<input type="text" class="form-control" id="especieAlta" placeholder="Especie">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="raza">Raza</label>
+									<input type="text" class="form-control" id="razaAlta" placeholder="Raza">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="sexoAlta">Sexo</label>
+									<select class="form-control" id="sexoAlta" placeholder="Sexo">
+										<option>Masculino</option>
+										<option selected>Femenino</option>
+									</select>
+								</fieldset>
+							</div>
+							<div class="col-6">
+								
+								<fieldset class="form-group">
+									<label for="imagenAlta">Imagen</label>
+									<input type="file" class="form-control" id="imagenAlta" placeholder="Imagen">
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="castradoAlta">Castrado</label>
+									<select class="form-control" id="castradoAlta" placeholder="Castrado">
+										<option>Si</option>
+										<option selected>No</option>
+									</select>
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="fechaAlta">Fecha de Nacimiento</label>
+									<input type="date" class="form-control" id="fechaAlta" placeholder="Fecha de Nacimiento">
+								</fieldset>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<fieldset class="form-group">
+									<label for="descripcionAlta">Descripcion</label>
+									<textarea  class="form-control" id="descripcionAlta" placeholder="Descripcion"></textarea>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="idAnimal">
+					
+					
+
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" id="btnGuardarAlta" onclick="armarRegistroAlta();" class="btn btn-primary">Guardar</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -84,7 +162,6 @@
 			especie: $(trEdicion).find('.especie').html(),
 			raza: $(trEdicion).find('.raza').html(),
 			sexo: $(trEdicion).find('.sexo').html(),
-			edad: $(trEdicion).find('.edad').html()
 		}
 		return registroSeleccionado;
 	}
@@ -94,11 +171,66 @@
 		$('#especie').val(registro.especie)
 		$('#raza').val(registro.raza)
 		$('#sexo').val(registro.sexo)
-		$('#edad').val(registro.edad)
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
-	$(document).ready(function() {		
+	function armarRegistroAlta(){
+		registro ={
+			nombre: $("#nombreAlta").val(),
+			especie: $("#especieAlta").val(),
+			raza: $("#razaAlta").val(),
+			sexo: $("#sexoAlta").val(),
+			castrado: $("#castradoAlta").val(),
+			fecha: $("#fechaAlta").val(),
+			descripcion: $("#descripcionAlta").val(),
+			imagen: $("#imagenAlta").val()
+		}
+		if (registro.nombre && registro.especie && registro.raza && registro.fecha) {
+			$.ajax({
+				url: 'C_Animal/altaAnimal',
+				type: 'POST',
+				data: {
+					nombre: $("#nombreAlta").val(),
+					especie: $("#especieAlta").val(),
+					raza: $("#razaAlta").val(),
+					sexo: $("#sexoAlta").val(),
+					castrado: $("#castradoAlta").val(),
+					fecha: $("#fechaAlta").val(),
+					descripcion: $("#descripcionAlta").val(),
+					imagen: $("#imagenAlta").val()
+				},
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+
+			$("#md-alta").modal("hide");
+			$('#table_id').DataTable().ajax.reload();
+
+		}else{
+			alert("Ingrese todos los campos")
+
+		}
+		console.log(registro)
+	}
+
+	$(document).ready(function() {	
+
+
+
+		$("#btnAlta").click(function(event) {
+			$("#md-alta").modal("show");
+		});	
+
+
+
+
 		/*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 		$('#table_id').DataTable({	
 			ajax: {
@@ -110,12 +242,11 @@
 			{ data: 'nombre_animal',className: "nombre" },
 			{ data: 'especie_animal',className: "especie" },
 			{ data: 'raza_animal',className: "raza" },
-			{ data: 'sexo_animal',className: "sexo" },
-			{ data: 'edad_animal' ,className: "edad"}
+			{ data: 'sexo_animal',className: "sexo" }
 			],
 			"aoColumnDefs": [
 			{
-				"aTargets": [6],
+				"aTargets": [5],
 				"mData": null,
 				"mRender": function (data, type, full) {     
                     var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
@@ -136,23 +267,23 @@
 			}
 			],
             "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
-            "lengthMenu": "Muestra _MENU_ revisiones por página",
-            "zeroRecords": "No se encontro resultados",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(Filtrando los _MAX_ registros)",
-            "search": "<i class='fas fa-filter'></i> Búsqueda",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "previous": "Anterior",
-                "next": "Siguiente"
-            }
-        },
+            	"lengthMenu": "Muestra _MENU_ revisiones por página",
+            	"zeroRecords": "No se encontro resultados",
+            	"info": "Mostrando página _PAGE_ de _PAGES_",
+            	"infoEmpty": "No hay registros disponibles",
+            	"infoFiltered": "(Filtrando los _MAX_ registros)",
+            	"search": "<i class='fas fa-filter'></i> Búsqueda",
+            	"paginate": {
+            		"first": "Primero",
+            		"last": "Último",
+            		"previous": "Anterior",
+            		"next": "Siguiente"
+            	}
+            },
         pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
         lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
         lengthMenu: [5,10,20],       //--> longitud del menu del paginado
-		});
+    });
 		/*--------------</Renderizado de la tabla obteniendo datos con ajax>-----------*/
 
 		var table = $('#table_id').DataTable();
@@ -165,14 +296,13 @@
 				llenarModal(dato);
 				$('#md-edicion').modal('show');
 			})
-  
+
 			$('#btnGuardarEdicion').click(function(event) {
 				var registro;
 				registro =
 				{
 					idAnimal:$('#idAnimal').val(),
 					nombre :$('#nombre').val(),
-					edad :$('#edad').val(),
 					especie :$('#especie').val(),
 					raza :$('#raza').val(),
 					sexo: $('#sexo').val()
@@ -182,7 +312,6 @@
 					type: 'POST',
 					data: {idAnimal:$('#idAnimal').val(),
 					nombre :$('#nombre').val(),
-					edad :$('#edad').val(),
 					especie :$('#especie').val(),
 					raza :$('#raza').val(),
 					sexo: $('#sexo').val()},
@@ -201,4 +330,6 @@
 
 		} );
 	});
+
+	
 </script>

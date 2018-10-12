@@ -9,14 +9,12 @@ class M_Animal extends CI_Model {
     public $raza_animal;
     public $especie_animal;
     public $sexo_animal;
-    public $edad_animal;
     public $descripcion_animal;
     public $estado_animal;
     public $castrado;
     public $adoptado;
     public $nombre_imagen_animal;
-    public $fecha_alta_animal;
-    public $cachorro;
+    public $fechaNacimiento;
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
     public $vacunas;          //------->  es un array de muchos objetos vacuna_aplicada
@@ -31,12 +29,10 @@ class M_Animal extends CI_Model {
         $this -> raza_animal = $row -> raza_animal;
         $this -> especie_animal = $row -> especie_animal;
         $this -> sexo_animal = $row -> sexo_animal;
-        $this -> edad_animal = $row -> edad_animal;
         $this -> castrado = $row -> castrado;
         $this -> adoptado = $row -> adoptado;
         $this -> nombre_imagen_animal = $row -> nombre_imagen_animal;
-        $this -> cachorro = $row -> cachorro;
-        $this -> fecha_alta_animal = $row -> fecha_alta_animal;
+        $this -> fechaNacimiento = $row -> fechaNacimiento;
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
@@ -112,6 +108,7 @@ class M_Animal extends CI_Model {
             return false;
         }
     }
+
     
     //----> Cambia el estado del animal, el estado es un string $estado
     //----> $estado puede ser -> 'Activo','Inactivo',
@@ -149,10 +146,7 @@ class M_Animal extends CI_Model {
         return $this -> sexo_animal;
     }
     
-    function getEdad()
-    {
-        return $this -> edad_animal;
-    }
+   
     
     //--> Cambia estado "castrado" del animal de 0 a 1
     function castrar()
@@ -180,9 +174,27 @@ class M_Animal extends CI_Model {
        $this->db->set('especie_animal', $datos['especie']);
        $this->db->set('raza_animal', $datos['raza']);
        $this->db->set('sexo_animal', $datos['sexo']);
-       $this->db->set('edad_animal', $datos['edad']);
        $this->db->where('id_animal', $datos['idAnimal']);
        return $this->db->update('animal');  //devuelve true on Correcto, false on Error
+}
+
+function guardar($datos)
+{
+    $animal = array();
+    $animal["id_animal"] = "";
+    $animal["nombre_animal"] = $datos["nombre"];
+    $animal["raza_animal"] = $datos["raza"];
+    $animal["especie_animal"] = $datos["especie"];
+    $animal["sexo_animal"] = $datos["sexo"];
+    $animal["descripcion_animal"] = $datos["descripcion"];
+    $animal["estado_animal"] = 1;
+    $animal["castrado"] = $datos["castrado"];
+    $animal["adoptado"] = 0;
+    $animal["nombre_imagen_animal"]= "";
+    $animal["fechaNacimiento"] = $datos["fecha"];
+    $animal["id_centro"] = $datos["id_centro"];
+
+    return $this->db->insert('animal', $animal);
 }
 
 
