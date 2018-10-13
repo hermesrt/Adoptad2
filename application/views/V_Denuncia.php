@@ -126,6 +126,14 @@
                     <option value="4">Otros</option>
 				</select>
         	</fieldset>
+        	<fieldset>
+        	    <label for="nombre">Nombre y Apellido:</label>
+                <input type="text" class="form-control" id="nombreAlta" placeholder="Ingrese nombre y apellido...">
+        	</fieldset>
+        	<fieldset>
+        	    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
+                <textarea  class="form-control" id="descripcionAlta" placeholder="Ingrese un detalle de la denuncia..."></textarea>
+        	</fieldset>
         </form>
       </div>
       <div class="modal-footer">
