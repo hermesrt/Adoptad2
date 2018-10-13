@@ -125,30 +125,18 @@ class M_Animal extends CI_Model {
     }
     
     
-    //--> Si esta castrado = 1
-    //--> Si no esta castrado = 0
+
     function estaCastrado()
     {
         if ($this -> castrado == 0) {
-            return false;   
+            return false;   //--> no esta castrado
         } else {
-            return true;   
+            return true;   //---> esta castrado
         }
     }
+  
     
-    function getEspecie()
-    {
-        return $this -> especie_animal;
-    }
-    
-    function getSexo()
-    {
-        return $this -> sexo_animal;
-    }
-    
-   
-    
-    //--> Cambia estado "castrado" del animal de 0 a 1
+    //--> Cambia estado "castrado" del animal de 0 a 1  y actualiza la informacion en la bd
     function castrar()
     {
         if ($this -> castrado == 0) {
@@ -162,12 +150,14 @@ class M_Animal extends CI_Model {
     function estaAdoptado()
     {
         if ($this -> adoptado == 0) {
-            return false; //--> si adoptado == 0 no esta adoptado
+            return false; //-->  no esta adoptado
         } else {
-            return true;  //--> si adoptado == 1 esta adoptado
+            return true;  //--> esta adoptado
         }
     }
 
+    
+    //---------> Actualiza la informacion de un animal y la guarda en el bd
     function editar($datos)
     {
        $this->db->set('nombre_animal', $datos['nombre']);
@@ -176,27 +166,61 @@ class M_Animal extends CI_Model {
        $this->db->set('sexo_animal', $datos['sexo']);
        $this->db->where('id_animal', $datos['idAnimal']);
        return $this->db->update('animal');  //devuelve true on Correcto, false on Error
-}
+    }
 
-function guardar($datos)
-{
-    $animal = array();
-    $animal["id_animal"] = "";
-    $animal["nombre_animal"] = $datos["nombre"];
-    $animal["raza_animal"] = $datos["raza"];
-    $animal["especie_animal"] = $datos["especie"];
-    $animal["sexo_animal"] = $datos["sexo"];
-    $animal["descripcion_animal"] = $datos["descripcion"];
-    $animal["estado_animal"] = 1;
-    $animal["castrado"] = $datos["castrado"];
-    $animal["adoptado"] = 0;
-    $animal["nombre_imagen_animal"]= "";
-    $animal["fechaNacimiento"] = $datos["fecha"];
-    $animal["id_centro"] = $datos["id_centro"];
+    
+    //------->   La funcion guarda un animal nuevo en la BD
+    function guardar($datos)
+    {
+        $animal = array();
+        $animal["id_animal"] = "";
+        $animal["nombre_animal"] = $datos["nombre"];
+        $animal["raza_animal"] = $datos["raza"];
+        $animal["especie_animal"] = $datos["especie"];
+        $animal["sexo_animal"] = $datos["sexo"];
+        $animal["descripcion_animal"] = $datos["descripcion"];
+        $animal["estado_animal"] = 1;
+        $animal["castrado"] = $datos["castrado"];
+        $animal["adoptado"] = 0;
+        $animal["nombre_imagen_animal"]= "";
+        $animal["fechaNacimiento"] = $datos["fecha"];
+        $animal["id_centro"] = $datos["id_centro"];
 
-    return $this->db->insert('animal', $animal);
-}
+        return $this->db->insert('animal', $animal);
+    }
 
+    
+    //----> La funcion calcula la edad del animal
+    function calculaEdad()
+    {
+        $fecha_nacimiento = $this -> fechaNacimiento;  
+        $hoy = date('Y-m-d');               
+        $diff = abs(strtotime($hoy) - strtotime($fecha_nacimiento));  
+        $anios = floor($diff / (365*60*60*24));      
+        $meses = floor(($diff - $anios * 365*60*60*24) / (30*60*60*24));
+        $dias = floor(($diff - $anios * 365*60*60*24 - $meses*30*60*60*24)/ (60*60*24));
+        if ($anios>0) {
+            return ($anios==1)?$anios." año":$anios." años";
+        } else {
+            if ($meses>0) {
+                return ($meses==1)?$meses." mes":$meses." meses";
+            } else {
+                return ($dias==1)?$dias." día":$dias." días";
+            }
+        }
+    }
+    
+    
+      function getEspecie()
+    {
+        return $this -> especie_animal;
+    }
+    
+    function getSexo()
+    {
+        return $this -> sexo_animal;
+    }
+    
 
 }
 
