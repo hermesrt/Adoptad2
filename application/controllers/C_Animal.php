@@ -42,14 +42,15 @@ function altaAnimal()
     $datos= $this->input->post();
     $datos["id_centro"]= $this->session->userdata('id_centro');
 
-    $config['upload_path']          = base_url('assets/img');
+    $config['upload_path']          = 'assets/img/animales';
     $config['allowed_types']        = 'gif|jpg|png';
-
     $this->load->library('upload', $config);
-    if ($this->upload->do_upload($datos['imagen'])) {
+
+    if ($this->upload->do_upload('imagenAlta')) {
         $datos['imagen']=$this->upload->data('file_name');
     } else {
-        $datos['imagen']=base_url('assets/img/animales/dalmata.jpg');            //setear direccion de una imagen estandar
+          echo $this->upload->display_errors();  
+        $datos['imagen']='dalmata.jpg';            //setear direccion de una imagen estandar
     }
 
 

@@ -182,16 +182,16 @@ function guardar($datos)
 {
     $animal = array();
     $animal["id_animal"] = "";
-    $animal["nombre_animal"] = $datos["nombre"];
-    $animal["raza_animal"] = $datos["raza"];
-    $animal["especie_animal"] = $datos["especie"];
-    $animal["sexo_animal"] = $datos["sexo"];
-    $animal["descripcion_animal"] = $datos["descripcion"];
+    $animal["nombre_animal"] = $datos["nombreAlta"];
+    $animal["raza_animal"] = $datos["razaAlta"];
+    $animal["especie_animal"] = $datos["especieAlta"];
+    $animal["sexo_animal"] = $datos["sexoAlta"];
+    $animal["descripcion_animal"] = $datos["descripcionAlta"];
     $animal["estado_animal"] = 1;
-    $animal["castrado"] = $datos["castrado"];
+    $animal["castrado"] = $datos["castradoAlta"];
     $animal["adoptado"] = 0;
-    $animal["nombre_imagen_animal"]= "";
-    $animal["fechaNacimiento"] = $datos["fecha"];
+    $animal["nombre_imagen_animal"]= $datos["imagen"];
+    $animal["fechaNacimiento"] = $datos["fechaAlta"];
     $animal["id_centro"] = $datos["id_centro"];
 
     return $this->db->insert('animal', $animal);
