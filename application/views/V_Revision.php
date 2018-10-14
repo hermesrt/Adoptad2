@@ -94,6 +94,9 @@ $(document).ready( function () {
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(Filtrando los _MAX_ registros)",
             "search": "<i class='fas fa-filter'></i> Búsqueda",
+            select: {
+                rows: "%d fila seleccionada"
+            },
             "paginate": {
                 "first": "Primero",
                 "last": "Último",

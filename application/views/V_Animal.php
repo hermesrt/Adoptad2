@@ -249,18 +249,21 @@
 				"aTargets": [5],
 				"mData": null,
 				"mRender": function (data, type, full) {     
-                    var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
-					'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
+                    //-----> a la variable btns se le agrega un string con todos los botones que se va a llenar la tabla
+                    var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/')  ?>'+ data.id_animal +'" data-toggle="tooltip" data-placement="right" title="Presione este botón para ver la información del animal" >Ver Animal</a>'+
+					'<a class="btn btn-primary btn-editar" data-toggle="tooltip" data-placement="right" title="Presione este botón para editar la información del animal"><i class="fas fa-edit"></i></a>';
                     
+                    //----> si el perro es adoptado se le cargan botones con opciones diferentes a si no esta adoptado
                     if (data.adoptado == 0){
-                       btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';
+                       btns += '<a class="btn btn-warning btn-adoptar mx-2" data-toggle="tooltip" data-placement="right" title="Presione este botón para Adoptar a el animal" ><i class="fas fa-plus"></i></a>';    //----> este boton le permite adoptar
                     } else{
-                        btns += '<a class="btn btn-warning btn-revocar mx-2"><i class="fas fa-minus"></i></a>';
+                        btns += '<a class="btn btn-warning btn-revocar mx-2" data-toggle="tooltip" data-placement="right" title="Presione este botón para Revocar la adopción de este animal" ><i class="fas fa-minus"></i></a>';   //--> este boton le permite revocar una adopcion
                     }
+                    //-------> si el estado del animal es activo o inactivo se le cargan botones diferentes
                     if(data.estado_animal == 'activo'){
-                        btns+= '<a class="btn btn-danger btn-desactivar"><i class="fas fa-ban"></i></a>';
+                        btns+= '<a class="btn btn-danger btn-desactivar" data-toggle="tooltip" data-placement="right" title="Presione este botón para Dar de Baja este animal" ><i class="fas fa-ban"></i></a>';   //----> este boton le permite Dar de baja un perro
                     } else {
-                        btns+= '<a class="btn btn-danger btn-activar"><i class="fas fa-undo"></i></a>'
+                        btns+= '<a class="btn btn-danger btn-activar" data-toggle="tooltip" data-placement="right" title="Presione este botón para Dar de alta este animal"><i class="fas fa-undo"></i></a>'  //----> este boton le permite dar de alta el perro
                     }
 					return btns;
 				}

@@ -128,7 +128,7 @@
         	</fieldset>
         	<fieldset>
         	    <label for="nombre">Nombre y Apellido:</label>
-                <input type="text" class="form-control" id="nombreAlta" placeholder="Ingrese nombre y apellido...">
+                <input type="text" class="form-control" id="nombreAlta" placeholder="Ingrese nombre y apellido..." required >
         	</fieldset>
         	<fieldset>
         	    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
@@ -138,16 +138,18 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Regsitrar Denuncia</button>
+        <button type="button" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- Script para activar el datatable en la tabla -->
+<!-- Script para activar el datatable en la tabla y hacer validaciones -->
 <script>
 $(document).ready( function () {
+    
+    //------------> seteo las configuraciones de la tabla
     $('#table_id').DataTable({
         select: true,  //-----> hace que las filas sean seleccionables
         paging: true,  //--> habilita el paginado
@@ -158,6 +160,9 @@ $(document).ready( function () {
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(Filtrando los _MAX_ registros)",
             "search": "<i class='fas fa-filter'></i> Buscar por dirección: ",
+            select: {
+                rows: "%d fila seleccionada"
+            },
             "paginate": {
                 "first": "Primero",
                 "last": "Último",
@@ -172,7 +177,8 @@ $(document).ready( function () {
         "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
             { "searchable": false, "targets": 0, "orderable": false, "visible": false},   //---> columna del id
             { "searchable": false, "targets": [1,3,4], "orderable": true, "visible": true},      
-            { "searchable": true, "targets": 2, "orderable": true, "visible": true},                   
+            { "searchable": true, "targets": 2, "orderable": true, "visible": true},
+             { "searchable": false, "targets": 5, "orderable": false, "visible": true}   
         ],
         "ordering": true,                     //-->  habilita el ordenamiento de columnas
         "search": {                           // -----> opciones para la busqueda de datos 
@@ -181,6 +187,23 @@ $(document).ready( function () {
             "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
         }
     });
+    
+    
+    $('.btn-registrar-denuncia').click(function(event){
+        console.log("JEJEJEJJE");
+        var nombreApellido = $('#nombreAlta').val();
+        var tipoDenuncia = $('#selectMotivoDenuncia').val();
+        if ((nombreApellido == "")&&(tipoDenuncia == "Seleccione motivo de la denuncia")){
+            console.log("Rellena todo banana!");
+        }
+    });
+    
+    
+    
+    
 } );
 </script>
+
+
+
 
