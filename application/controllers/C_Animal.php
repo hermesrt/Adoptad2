@@ -28,9 +28,9 @@ class C_Animal extends CI_Controller {
 
     function guardarEdicion()
     {
-     $datos=$this->input->post();
-     $rta = array();
-     if ($this->animal->editar($datos)) {
+       $datos=$this->input->post();
+       $rta = array();
+       if ($this->animal->editar($datos)) {
         $rta['status'] = 'success';
     } else {
         $rta['status'] = 'error';
@@ -49,7 +49,7 @@ function altaAnimal()
     if ($this->upload->do_upload('imagenAlta')) {
         $datos['imagen']=$this->upload->data('file_name');
     } else {
-          echo $this->upload->display_errors();  
+      echo $this->upload->display_errors();  
         $datos['imagen']='dalmata.jpg';            //setear direccion de una imagen estandar
     }
 
@@ -69,11 +69,15 @@ function getAnimales()
     echo $todos;
 }
 
-function prueba()
+function comprobarAdoptado()
 {
-    $this->load->view('Plantillas/V_Header');
-    $this->load->view('prueba');
-    $this->load->view('Plantillas/V_Footer');
+    $animal = $this->animal->obtenerUno($this->input->post('id'));
+    echo $animal->estaAdoptado();
+}
+function deshabilitarAnimal()
+{
+    $animal = $this->animal->obtenerUno($this->input->post('id'));
+    echo $animal->deshabilitar($this->input->post('motivo'));
 }
 
 

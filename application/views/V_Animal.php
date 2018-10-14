@@ -267,7 +267,7 @@ $('#table_id').DataTable({
 	}
 	],
             "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
-            	"lengthMenu": "Muestra _MENU_ revisiones por página",
+            	"lengthMenu": "Muestra _MENU_ animales por página",
             	"zeroRecords": "No se encontro resultados",
             	"info": "Mostrando página _PAGE_ de _PAGES_",
             	"infoEmpty": "No hay registros disponibles",
@@ -288,41 +288,86 @@ $('#table_id').DataTable({
 // --------------------------------<SETEA COMPORTAMIENTOS A LOS BOTONES CADA VEZ QUE SE DIBUJA LA TABLA>----------//
 var table = $('#table_id').DataTable();
 table.on( 'draw', function () {
-
-	$('.btn-editar').click(function(event) {
-		var dato = armarRegistro(this);
-		llenarModal(dato);
-		$('#md-edicion').modal('show');
-	})
-
-	$('#btnGuardarEdicion').click(function(event) {
-		var registro;
-		registro =
-		{
-			idAnimal:$('#idAnimal').val(),
-			nombre :$('#nombre').val(),
-			especie :$('#especie').val(),
-			raza :$('#raza').val(),
-			sexo: $('#sexo').val()
-		}
-		$.ajax({
-			url: '<?= base_url('C_Animal/guardarEdicion') ?>',
-			type: 'POST',
-			data: {idAnimal:$('#idAnimal').val(),
-			nombre :$('#nombre').val(),
-			especie :$('#especie').val(),
-			raza :$('#raza').val(),
-			sexo: $('#sexo').val()},
+		// -----<BTN EDITAR>------//
+		$('.btn-editar').click(function(event) {
+			var dato = armarRegistro(this);
+			llenarModal(dato);
+			$('#md-edicion').modal('show');
 		})
-		.done(function() {
-			$('#table_id').DataTable().ajax.reload();
-		})
-		.fail(function() {
-			console.log("error");
+
+		$('#btnGuardarEdicion').click(function(event) {
+			var registro;
+			registro =
+			{
+				idAnimal:$('#idAnimal').val(),
+				nombre :$('#nombre').val(),
+				especie :$('#especie').val(),
+				raza :$('#raza').val(),
+				sexo: $('#sexo').val()
+			}
+			$.ajax({
+				url: '<?= base_url('C_Animal/guardarEdicion') ?>',
+				type: 'POST',
+				data: {idAnimal:$('#idAnimal').val(),
+				nombre :$('#nombre').val(),
+				especie :$('#especie').val(),
+				raza :$('#raza').val(),
+				sexo: $('#sexo').val()},
+			})
+			.done(function() {
+				$('#table_id').DataTable().ajax.reload();
+			})
+			.fail(function() {
+				console.log("error");
+			});
+			$('#md-edicion').modal('hide');
 		});
-		$('#md-edicion').modal('hide');
+		// -----</BTN EDITAR>------//
+		
+		// -----<BTN DESACTIVAR>------//
+		$(".btn-desactivar").click(function(event) {
+			var r = confirm("Seguro desea desactivar el animal?");
+			if (r) {
+				id = $(this).closest('tr').find('.id').html();
+				$.ajax({
+					url: 'C_Animal/comprobarAdoptado',
+					type: 'POST',
+					data: {id: id},
+				})
+				.done(function(a) {
+					if (a) {
+						alert("No se puede deshabilitar un animal con una adopcion vigente. Revoque la adopcion primero.")
+
+					} else {
+						var motivo = prompt("Por favor ingrese motivo de la deshabilitacion", "Fallecimiento");
+						if (motivo != null) {
+							
+							$.ajax({
+								url: 'C_Animal/deshabilitarAnimal',
+								type: 'POST',
+								data: {
+									id: id,
+									motivo: motivo
+								},
+							})
+							.done(function() {
+								alert("Animal deshabilitado con exito!");
+								$('#table_id').DataTable().ajax.reload();
+
+							});
+							
+						}
+					}
+				})
+				
+				
+			}
+		});
+
+		// -----</BTN DESACTIVAR>------//
+
+
 	});
-});
 // --------------------------------</SETEA COMPORTAMIENTOS A LOS BOTONES CADA VEZ QUE SE DIBUJA LA TABLA>----------//
 
 });
