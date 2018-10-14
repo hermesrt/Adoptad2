@@ -12,7 +12,7 @@
 							<ul>
 								<li>Ver una informacion mas detallada del animal:<br> <center><a class="btn btn-success mx-2" href="#">Ver Animal</a></center></li>
 								<li>Editar la informacion del animal: <br><center><a class="btn btn-primary"><i class="text-white fas fa-edit"></i></a></center></li>
-								<li>Registrar/Revocar una adopcion <br><center><a class="btn btn-warning"><i class="text-white fas fa-plus"></i></a><a class="btn btn-warning btn-revocar mx-2"><i class="text-white fas fa-minus"></i></a></center></li>
+								<li>Registrar/Revocar una adopcion <br><center><a class="btn btn-warning"><i class="text-white fas fa-plus"></i></a><a class="btn btn-warning mx-2"><i class="text-white fas fa-minus"></i></a></center></li>
 								<li>Deshabilitar/Habilitar una animal <br><center><a class="btn btn-danger "><i class="text-white fas fa-ban"></i></a><a class="btn btn-danger mx-2"><i class="text-white fas fa-undo"></i></a></center></li>
 							</ul>				
 						</p>
@@ -502,73 +502,104 @@ table.on( 'draw', function () {
 		$(".btn-adoptar").click(function(event) {
 			$("#md-adopcion").modal("show");
 			id_animal = $(this).closest('tr').find('.id').html();
+			$("#registrarAdopcion").click(function(event) {
+				$("#md-altaAdoptante").modal("show");
+				$("#btnRegistrarAdoptante").click(function(event) {
+					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
+						$.ajax({
+							url: 'C_Animal/registrarAdoptanteYAdopcion',
+							type: 'POST',
+							data: {
+								nombreAdoptante: $("#nombreAdoptante").val(),
+								apellidoAdoptante: $("#apellidoAdoptante").val(),
+								direccionAdoptante:$("#direccionAdoptante").val(),
+								dniAdoptante: $("#dniAdoptante").val(),
+								telefonoAdoptante: $("#telefonoAdoptante").val(),
+								emailAdoptante: $("#emailAdoptante").val(),
+								ciudadAdoptante: $("#ciudadAdoptante").val(),
+								id_animal: id_animal
+							},
+						})
+						.done(function(rta) {
+							alert(rta);
+							$("#md-altaAdoptante").modal("hide");
+							$("#md-adopcion").modal("hide");
 
-			$("#btnRegistrarAdopcion").click(function(event) {
-				dni = $("#dni").val();
-				$.ajax({
-					url: 'C_Animal/buscarAdoptante',
-					type: 'POST',
-					data: {dni: dni},
-				})
-				.done(function(adoptante) {
-					if (adoptante) {
-						var obj = $.parseJSON(adoptante);
-						var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
-						if (a) {
-							$.ajax({
-								url: 'C_Animal/registrarAdopcion',
-								type: 'POST',
-								data: {
-									id_animal: id_animal,
-									id_adoptante: obj.id_adoptante
-								},
-							})
-							.done(function(msg) {
-								alert(msg);
-								$("#md-adopcion").modal("hide");
-								$('#table_id').DataTable().ajax.reload();
-							});
-							
-						}
+							$('#table_id').DataTable().ajax.reload();
+						});
+
 					} else {
-						var conf = confirm("No se encontro el adoptante desea registrarlo?");
-						if (conf) {
-							$("#md-altaAdoptante").modal("show");
-							$("#btnRegistrarAdoptante").click(function(event) {
-								if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
-									$.ajax({
-										url: 'C_Animal/registrarAdoptanteYAdopcion',
-										type: 'POST',
-										data: {
-											nombreAdoptante: $("#nombreAdoptante").val(),
-											apellidoAdoptante: $("#apellidoAdoptante").val(),
-											direccionAdoptante:$("#direccionAdoptante").val(),
-											dniAdoptante: $("#dniAdoptante").val(),
-											telefonoAdoptante: $("#telefonoAdoptante").val(),
-											emailAdoptante: $("#emailAdoptante").val(),
-											ciudadAdoptante: $("#ciudadAdoptante").val(),
-											id_animal: id_animal
-										},
-									})
-									.done(function(rta) {
-										alert(rta);
-										$("#md-altaAdoptante").modal("hide");
-										$("#md-adopcion").modal("hide");
-										
-										$('#table_id').DataTable().ajax.reload();
-									});
-									
-								} else {
-									alert("Ingrese todos los campos!")
-								}
-							});
-
-						}
+						alert("Ingrese todos los campos!")
 					}
-				});
+				})
 			});
-			
-		});
+
+				$("#btnRegistrarAdopcion").click(function(event) {
+					dni = $("#dni").val();
+					$.ajax({
+						url: 'C_Animal/buscarAdoptante',
+						type: 'POST',
+						data: {dni: dni},
+					})
+					.done(function(adoptante) {
+						if (adoptante) {
+							var obj = $.parseJSON(adoptante);
+							var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
+							if (a) {
+								$.ajax({
+									url: 'C_Animal/registrarAdopcion',
+									type: 'POST',
+									data: {
+										id_animal: id_animal,
+										id_adoptante: obj.id_adoptante
+									},
+								})
+								.done(function(msg) {
+									alert(msg);
+									$("#md-adopcion").modal("hide");
+									$('#table_id').DataTable().ajax.reload();
+								});
+
+							}
+						} else {
+							var conf = confirm("No se encontro el adoptante desea registrarlo?");
+							if (conf) {
+								$("#md-altaAdoptante").modal("show");
+								$("#btnRegistrarAdoptante").click(function(event) {
+									if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
+										$.ajax({
+											url: 'C_Animal/registrarAdoptanteYAdopcion',
+											type: 'POST',
+											data: {
+												nombreAdoptante: $("#nombreAdoptante").val(),
+												apellidoAdoptante: $("#apellidoAdoptante").val(),
+												direccionAdoptante:$("#direccionAdoptante").val(),
+												dniAdoptante: $("#dniAdoptante").val(),
+												telefonoAdoptante: $("#telefonoAdoptante").val(),
+												emailAdoptante: $("#emailAdoptante").val(),
+												ciudadAdoptante: $("#ciudadAdoptante").val(),
+												id_animal: id_animal
+											},
+										})
+										.done(function(rta) {
+											alert(rta);
+											$("#md-altaAdoptante").modal("hide");
+											$("#md-adopcion").modal("hide");
+
+											$('#table_id').DataTable().ajax.reload();
+										});
+
+									} else {
+										alert("Ingrese todos los campos!")
+									}
+								});
+
+							}
+						}
+					});
+				});
+
+			});
 		// -----</BTN Registrar Adopcion>------//
 
 		// -----<BTN Revocar Adopcion>------//
