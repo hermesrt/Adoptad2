@@ -234,6 +234,47 @@
 	</div>
 </div>
 
+<!-- Modal para revocar adopcion  -->
+<div class="modal fade" id="md-revocar" tabindex="-1" role="dialog" aria-labelledby="labelEditar" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="labelEditar">Revocar Adopcion</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+
+						<label for="motivo">Seleccione el motivo de la revocacion:</label>
+						<select class="form-control" id="motivo" name="motivo">
+							<option value="Perro agresivo">Perro agresivo</option>
+							<option value="Problemas presonales">Problemas presonales</option>
+							<option value="Falta de espacio">Falta de espacio</option>
+							<option value="Problemas economicos">Problemas economicos</option>
+							<option value="Mal comportamiento">Mal comportamiento</option>
+							<option value="Otro">Otro</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="detalleRevocacion">Detalle de la revocacion:</label>
+						<textarea class="form-control mx-2" name="detalleRevocacion" id="detalleRevocacion" placeholder="Ingrese detalle de revocacion (opcional)..."></textarea>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					
+					<button type="button" id="btnRevocarAdopcion" class="btn btn-primary">Revocar Adopcion</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 
 
 
@@ -529,6 +570,37 @@ table.on( 'draw', function () {
 			
 		});
 		// -----</BTN Registrar Adopcion>------//
+
+		// -----<BTN Revocar Adopcion>------//
+		$(".btn-revocar").click(function(event) {
+			var t = confirm("Seguro que desea revocar la adopcion?");
+			if (t) {
+				$("#md-revocar").modal("show");
+				id_animal = $(this).closest('tr').find('.id').html();
+				$("#btnRevocarAdopcion").click(function(event) {
+					$.ajax({
+						url: 'C_Animal/revocarAdopcion',
+						type: 'POST',
+						data: {
+							id_animal: id_animal,
+							detalle: $("#detalleRevocacion").val(),
+							motivo: $("#motivo").val() 
+						},
+					})
+					.done(function(msg) {
+						alert(msg);
+						$("#md-revocar").modal("hide");
+						$('#table_id').DataTable().ajax.reload();
+
+					});
+
+				});
+			}
+			
+		});
+
+		// -----</BTN Revoacar Adopcion>------//
+
 
 
 

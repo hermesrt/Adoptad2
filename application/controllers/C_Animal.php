@@ -128,6 +128,20 @@ function registrarAdoptanteYAdopcion()
     echo 'El adoptatne y la adopcion fueron registradas exitosamente!';
 }
 
+function revocarAdopcion()
+{
+    $this->load->model('M_Adopcion');
+    $adopcion = $this->M_Adopcion->obtenerAdopcionPorAnimal($this->input->post('id_animal'));
+    if ($adopcion->cambiarEstado($this->input->post())) {
+        $this->load->model('M_Animal');
+        $animal = $this->M_Animal->obtenerUno($this->input->post('id_animal'));
+        $animal->cambiarEstadoAdoptado();
+        echo 'Revocacion exitosa!';
+    } else {
+        echo 'Error al revocar adopcion, intente nuevamente!';
+    }
+}
+
 
 }
 

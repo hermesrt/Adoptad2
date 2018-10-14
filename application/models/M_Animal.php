@@ -240,7 +240,7 @@ function activar()
         }
     }
 // si se le pasa true cambia a "adoptado" sino cambia a "no adoptado"
-function cambiarEstadoAdoptado($value)
+function cambiarEstadoAdoptado($value=false)
 {
     if ($value) {
         $this->db->set('adoptado', true);

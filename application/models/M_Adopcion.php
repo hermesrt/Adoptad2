@@ -131,6 +131,21 @@ class M_Adopcion extends CI_Model {
     {
         return $this;
     }
+
+    function cambiarEstado($datos){
+        $this->db->set('estado_adopcion', "inactiva");
+        $this->db->where('id_adopcion',$this->id_adopcion);
+        $this->db->update('adopcion'); 
+
+        $revocacion = array(
+            'id_animal' => $this->id_animal,
+            'fecha_revocacion' => $date = date('Y-m-d'),
+            'motivo_revocacion' => $datos['motivo'],
+            'detalle_revocacion' => $datos['detalle']
+        );
+        return $this->db->insert('revocaciones', $revocacion);
+
+    }
     
     
     
