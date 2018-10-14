@@ -211,6 +211,28 @@ class M_Animal extends CI_Model {
 
     return $this->db->insert('animal', $animal);
 }
+function activar()
+{
+    $this->db->set('estado_animal', "activo");
+    $this->db->where('id_animal', $this->id_animal);
+    return $this->db->update('animal');
+}
+
+// si se le pasa true cambia a "adoptado" sino cambia a "no adoptado"
+function cambiarEstadoAdoptado($value)
+{
+    if ($value) {
+        $this->db->set('adoptado', true);
+        $this->db->where('id_animal', $this->id_animal);
+        return $this->db->update('animal');
+    } else {
+        $this->db->set('adoptado', false);
+        $this->db->where('id_animal', $this->id_animal);
+        return $this->db->update('animal');
+    }
+
+}
+
 
 
 }

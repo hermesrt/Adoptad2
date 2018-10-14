@@ -28,9 +28,9 @@ class C_Animal extends CI_Controller {
 
     function guardarEdicion()
     {
-       $datos=$this->input->post();
-       $rta = array();
-       if ($this->animal->editar($datos)) {
+     $datos=$this->input->post();
+     $rta = array();
+     if ($this->animal->editar($datos)) {
         $rta['status'] = 'success';
     } else {
         $rta['status'] = 'error';
@@ -78,6 +78,54 @@ function deshabilitarAnimal()
 {
     $animal = $this->animal->obtenerUno($this->input->post('id'));
     echo $animal->deshabilitar($this->input->post('motivo'));
+}
+function habilitarAnimal()
+{
+    $animal = $this->animal->obtenerUno($this->input->post('id'));
+    echo $animal->activar();
+}
+function buscarAdoptante()
+{
+    $this->load->model('M_Adoptante');
+    $adoptante = $this->M_Adoptante->getAdoptantePorDni($this->input->post('dni'));
+    if ($adoptante) {
+        echo json_encode($adoptante);
+    } else {
+        echo false;
+    }
+}
+function registrarAdopcion()
+{
+    $this->load->model('M_Adoptante');
+    $adoptante = $this->M_Adoptante->obtenerUno($this->input->post('id_adoptante'));
+    if ($adoptante->aptoAdoptar()) {
+        $this->load->model('M_Adopcion');
+        if ($this->M_Adopcion->registrarAdopcion($this->input->post('id_adoptante'),$this->input->post('id_animal'))) {
+            $this->load->model('M_Animal');
+            $animal= $this->M_Animal->obtenerUno($this->input->post('id_animal'));
+            $animal->cambiarEstadoAdoptado(true);
+            echo 'Adopcion registrada con exito!';
+        } else {
+            echo 'Error al registrar la adopcion, intente nuevamente!';
+        }        
+    } else {
+        echo "El adoptante cuenta con 3 o mas denuncias, por lo tanto no esta apto para adoptar!";
+    }
+}
+function registrarAdoptanteYAdopcion()
+{
+    $datos = $this->input->post();
+    $this->load->model('M_Adoptante');
+    $id_adoptante = $this->M_Adoptante->registrarAdoptante($datos);
+    $id_animal = $this->input->post('id_animal');
+
+    $this->load->model('M_Adopcion');
+    $this->M_Adopcion->registrarAdopcion($id_adoptante,$id_animal);
+
+    $this->load->model('M_Animal');
+    $animal = $this->M_Animal->obtenerUno($id_animal);
+    $animal->cambiarEstadoAdoptado(true);
+    echo 'El adoptatne y la adopcion fueron registradas exitosamente!';
 }
 
 

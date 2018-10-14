@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Adoptante extends CI_Model {
-    
+
     //------> atributos
     public $id_adoptante;
     public $dni_adoptante;
@@ -65,29 +65,61 @@ class M_Adoptante extends CI_Model {
     
     function getAdoptantePorDni($dni)
     {
-        
+        $this->db->from('adoptante');
+        $this->db->where('dni_adoptante', $dni);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $row = $query->result();
+            $new_object = new self();
+            $new_object->init($row[0]);
+            return $new_object;
+        } else {
+            return false;
+        }
+    }
+
+    function aptoAdoptar(){
+        $query = $this->db->get_where('denuncia', array('id_adoptante' => $this->id_adoptante));
+        if ($query->num_rows() > 2) {
+            return false;
+        } else {
+            return true;
+        }
     }
     
     
-    function registrarAdoptante()
+    function registrarAdoptante($datos)
     {
-        
+        $adoptante= array();
+        $adoptante['id_adoptante'] = "";
+        $adoptante['nombre_adoptante'] = $datos['nombreAdoptante'];
+        $adoptante['apellido_adoptante'] = $datos['apellidoAdoptante'];
+        $adoptante["dni_adoptante"] = $datos['dniAdoptante'];
+        $adoptante["direccion_adoptante"] = $datos['direccionAdoptante'];
+        $adoptante['telefono_adoptante'] = $datos['telefonoAdoptante'];
+        $adoptante['email_adoptante'] = $datos['emailAdoptante'];
+        $adoptante['ciudad_adoptante'] = $datos['ciudadAdoptante'];
+        $adoptante['estado_adoptante'] =1;
+
+        $this->db->insert('adoptante', $adoptante);
+        return $this->db->insert_id();
+
     }
     
     function validaDatosAdoptante()
     {
-        
+
     }
 
     function creaAdoptante()
     {
-        
+
     }
     
     
     function buscarPorDomicilio()
     {
-        
+
     }
     
     

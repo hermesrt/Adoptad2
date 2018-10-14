@@ -87,6 +87,77 @@
 	</div>
 </div>
 
+<!-- Modal para registrar adopcion  -->
+<div class="modal fade" id="md-adopcion" tabindex="-1" role="dialog" aria-labelledby="labelEditar" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="labelEditar">Registrar Adopcion</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<center><p>Ingrese el DNI del adoptatne para buscarlo, u oprima <button type="button" class="mx-2 my-2 btn btn-success" id="registrarAdopcion">Registrar <br> Adoptante</button> para registrar uno nuevo</p></center>					
+					<div class="form-group">
+						<input type="text" class="form-control mx-2" name="dni" id="dni" placeholder="Ingrese DNI del adoptante...">
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					
+					<button type="button" id="btnRegistrarAdopcion" class="btn btn-primary">Registrar Adopcion</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal para registrar adoptante  -->
+<div class="modal fade" id="md-altaAdoptante" tabindex="-1" role="dialog" aria-labelledby="labelEditar" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="labelEditar">Registrar Adoptante</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+						<input type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control mx-2" name="direccionAdoptante" id="direccionAdoptante" placeholder="Ingrese direccion del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="number" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese telefono del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante...">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control mx-2" name="ciudadAdoptante" id="ciudadAdoptante" placeholder="Ingrese ciudad del adoptante...">
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					
+					<button type="button" id="btnRegistrarAdoptante" class="btn btn-primary">Registrar Adoptante</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Modal para Alta animal  -->
 <div class="modal fade" id="md-alta" tabindex="-1" role="dialog" aria-labelledby="modalAltaAnimal" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
@@ -252,15 +323,16 @@ $('#table_id').DataTable({
 			var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
 			'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
 
-			if (data.adoptado == 0){
-				btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';
-			} else{
-				btns += '<a class="btn btn-warning btn-revocar mx-2"><i class="fas fa-minus"></i></a>';
-			}
+
 			if(data.estado_animal == 'activo'){
-				btns+= '<a class="btn btn-danger btn-desactivar"><i class="fas fa-ban"></i></a>';
+				if (data.adoptado == 0){
+					btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';
+				} else{
+					btns += '<a class="btn btn-warning btn-revocar mx-2"><i class="fas fa-minus"></i></a>';
+				}
+				btns+= '<a class="btn btn-danger btn-desactivar mx-2"><i class="fas fa-ban"></i></a>';
 			} else {
-				btns+= '<a class="btn btn-danger btn-activar"><i class="fas fa-undo"></i></a>'
+				btns+= '<a class="btn btn-danger btn-activar mx-2"><i class="fas fa-undo"></i></a>'
 			}
 			return btns;
 		}
@@ -285,6 +357,7 @@ $('#table_id').DataTable({
         lengthMenu: [5,10,20],       //--> longitud del menu del paginado
     });
 /*--------------</Renderizado de la tabla obteniendo datos con ajax>-----------*/
+
 // --------------------------------<SETEA COMPORTAMIENTOS A LOS BOTONES CADA VEZ QUE SE DIBUJA LA TABLA>----------//
 var table = $('#table_id').DataTable();
 table.on( 'draw', function () {
@@ -341,7 +414,7 @@ table.on( 'draw', function () {
 					} else {
 						var motivo = prompt("Por favor ingrese motivo de la deshabilitacion", "Fallecimiento");
 						if (motivo != null) {
-							
+
 							$.ajax({
 								url: 'C_Animal/deshabilitarAnimal',
 								type: 'POST',
@@ -355,7 +428,7 @@ table.on( 'draw', function () {
 								$('#table_id').DataTable().ajax.reload();
 
 							});
-							
+
 						}
 					}
 				})
@@ -363,8 +436,101 @@ table.on( 'draw', function () {
 				
 			}
 		});
-
 		// -----</BTN DESACTIVAR>------//
+
+		// -----<BTN ACTIVAR>------//
+		$(".btn-activar").click(function(event) {
+			var r = confirm("Seguro que quiere activar este animal?");
+			if (r) {
+				id = $(this).closest('tr').find('.id').html();
+				$.ajax({
+					url: 'C_Animal/habilitarAnimal',
+					type: 'post',
+					dataType: 'json',
+					data: {id: id},
+				})
+				.done(function() {
+					alert("Animal habilitado con exito!");
+					$('#table_id').DataTable().ajax.reload();;
+				});
+			}
+		});
+		// -----</BTN ACTIVAR>------//
+
+		// -----<BTN Registrar Adopcion>------//
+		$(".btn-adoptar").click(function(event) {
+			$("#md-adopcion").modal("show");
+			id_animal = $(this).closest('tr').find('.id').html();
+
+			$("#btnRegistrarAdopcion").click(function(event) {
+				dni = $("#dni").val();
+				$.ajax({
+					url: 'C_Animal/buscarAdoptante',
+					type: 'POST',
+					data: {dni: dni},
+				})
+				.done(function(adoptante) {
+					if (adoptante) {
+						var obj = $.parseJSON(adoptante);
+						var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
+						if (a) {
+							$.ajax({
+								url: 'C_Animal/registrarAdopcion',
+								type: 'POST',
+								data: {
+									id_animal: id_animal,
+									id_adoptante: obj.id_adoptante
+								},
+							})
+							.done(function(msg) {
+								alert(msg);
+								$("#md-adopcion").modal("hide");
+								$('#table_id').DataTable().ajax.reload();
+							});
+							
+						}
+					} else {
+						var conf = confirm("No se encontro el adoptante desea registrarlo?");
+						if (conf) {
+							$("#md-altaAdoptante").modal("show");
+							$("#btnRegistrarAdoptante").click(function(event) {
+								if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
+									$.ajax({
+										url: 'C_Animal/registrarAdoptanteYAdopcion',
+										type: 'POST',
+										data: {
+											nombreAdoptante: $("#nombreAdoptante").val(),
+											apellidoAdoptante: $("#apellidoAdoptante").val(),
+											direccionAdoptante:$("#direccionAdoptante").val(),
+											dniAdoptante: $("#dniAdoptante").val(),
+											telefonoAdoptante: $("#telefonoAdoptante").val(),
+											emailAdoptante: $("#emailAdoptante").val(),
+											ciudadAdoptante: $("#ciudadAdoptante").val(),
+											id_animal: id_animal
+										},
+									})
+									.done(function(rta) {
+										alert(rta);
+										$("#md-altaAdoptante").modal("hide");
+										$("#md-adopcion").modal("hide");
+										
+										$('#table_id').DataTable().ajax.reload();
+									});
+									
+								} else {
+									alert("Ingrese todos los campos!")
+								}
+							});
+
+						}
+					}
+				});
+			});
+			
+		});
+		// -----</BTN Registrar Adopcion>------//
+
+
 
 
 	});

@@ -103,9 +103,15 @@ class M_Adopcion extends CI_Model {
         
     }
     
-    function registrarAdopcion()
+    function registrarAdopcion($idAdoptante,$idAnimal)
     {
-        
+         $datos = array(
+            'id_animal' => $idAnimal,
+            'fecha_adopcion' => $date = date('Y-m-d'),
+            'id_adoptante' => $idAdoptante,
+            'estado_adopcion' => "activa"
+        );
+        return $this->db->insert('adopcion', $datos);
     }
     
     function listarAdopciones()
