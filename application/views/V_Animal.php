@@ -1,12 +1,28 @@
-<div class="container border my-3">
-	<div class="row my-2">
-		<div class="col">
-			
-			<a class="btn btn-success" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
-		</div>
-	</div>
+<div class="container-fluid border mx-3 my-3">
+	
 	<div class="row my-3">
-		<div class="col-12">			
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			<div class="card">
+				<div class="card-body">
+					<center><h1><i class="fas fa-paw"></i></h1></center>
+					<center><h4 class="card-title">Gestion de Animales</h4></center>
+					<p class="card-text">En este sección podras realizar tadas aquellas acciones relacionadas a la gestion de los animales, cada boton corresponde a una accion determinada:</p>
+					<div class="alert alert-warning" role="alert">
+						<p class="font-italic">
+							<ul>
+								<li>Ver una informacion mas detallada del animal:<br> <center><a class="btn btn-success mx-2" href="#">Ver Animal</a></center></li>
+								<li>Editar la informacion del animal: <br><center><a class="btn btn-primary"><i class="text-white fas fa-edit"></i></a></center></li>
+								<li>Registrar/Revocar una adopcion <br><center><a class="btn btn-warning"><i class="text-white fas fa-plus"></i></a><a class="btn btn-warning btn-revocar mx-2"><i class="text-white fas fa-minus"></i></a></center></li>
+								<li>Deshabilitar/Habilitar una animal <br><center><a class="btn btn-danger "><i class="text-white fas fa-ban"></i></a><a class="btn btn-danger mx-2"><i class="text-white fas fa-undo"></i></a></center></li>
+							</ul>				
+						</p>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-9">	
+			<a class="btn btn-success my-2" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
+
 			<table class="table table-striped table-dark display" id="table_id">
 				<thead>
 					<tr>
@@ -136,11 +152,10 @@
 					</div>
 					<input type="hidden" id="idAnimal">
 					
-					<input type="submit" value="Enviar">
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" id="btnGuardarAlta" onclick="armarRegistroAlta();" class="btn btn-primary">Guardar</button>
+						<input type="submit"  class="btn btn-primary"value="Enviar">
 					</div>
 				</form>
 			</div>
