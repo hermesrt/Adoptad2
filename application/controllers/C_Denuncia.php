@@ -20,6 +20,17 @@ class C_Denuncia extends CI_Controller {
 		$this->load->view('Plantillas/V_Footer');
 	}
     
+    public function registraDenuncia()
+    {
+        $datos['nombreApellido'] = $this -> input -> post('nombreApellido');
+        $datos['motivo'] = $this -> input -> post('selectMotivoDenuncia');
+        $datos['descripcion'] = $this -> input -> post('descripcionDenuncia');
+        $data['datos_denuncia'] = $datos;
+        $data['adoptantes'] = $this -> adoptante -> obtenerTodos();
+        $this -> load -> view('Plantillas/V_Header');
+        $this->load->view('V_Denuncia',$data);
+		$this->load->view('Plantillas/V_Footer');
+    }
     
 
 }

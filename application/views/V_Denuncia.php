@@ -1,3 +1,4 @@
+
 <div class="container">
 	<div class="row">
 		<div class="col-3">
@@ -16,60 +17,7 @@
 		<div class="col-9">
 			<div class="card my-5">
 				<center><h1 class="my-2"><i class="fas fa-question-circle"></i> Formulario de denuncia</center>
-    					<div class="card-body">
-			<!--			<form>
-							<fieldset class="form-group">
-								<div class="row">
-									<div class="col-3">
-										<label for="direccion">Buscar por Dirección:</label>
-									</div>
-									<div class="col-9">
-										<input type="text" class="form-control" id="direccion" placeholder="Ingrese dirección...">
-
-									</div>
-								</div>
-							</fieldset>
-						</form>
-						<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Nombre y Apellido</th>
-									<th scope="col">Dirección</th>
-									<th scope="col">Email</th>
-									<th scope="col">Teléfono</th>
-									<th scope="col">Acción</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>mark@gmail.com</td>
-									<td>1550145798</td>
-									<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>jacob@Gmail.com</td>
-									<td>154789878</td>
-									<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
-									
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>LarryTB@Hotmail.com</td>
-									<td>156258741</td>
-									<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
-									
-								</tr>
-							</tbody>
-						</table>  -->
+    				<div class="card-body">
 						<table class="table table-striped table-dark display" id="table_id">
 						<thead>
 							<tr>
@@ -115,10 +63,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form class="formDenuncia" id="formDenuncia" method="post" action="<?= base_url('/C_Denuncia/registraDenuncia') ?>">
         	<fieldset class="form-group">
         		<label for="formGroupExampleInput">Motivo de la denuncia</label>
-        		<select class="custom-select" id="selectMotivoDenuncia">
+        		<select class="custom-select selectDenuncia" id="selectMotivoDenuncia" >
                     <option selected>Seleccione motivo de la denuncia</option>
                     <option value="1">Maltrato</option>
                     <option value="2">Abandono</option>
@@ -128,24 +76,25 @@
         	</fieldset>
         	<fieldset>
         	    <label for="nombre">Nombre y Apellido:</label>
-                <input type="text" class="form-control" id="nombreAlta" placeholder="Ingrese nombre y apellido..." required >
+                <input type="text" class="form-control nombreApellido" id="nombreApellido" placeholder="Ingrese nombre y apellido..." required >
         	</fieldset>
         	<fieldset>
         	    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
-                <textarea  class="form-control" id="descripcionAlta" placeholder="Ingrese un detalle de la denuncia..."></textarea>
+                <textarea  class="form-control" id="descripcionDenuncia" placeholder="Ingrese un detalle de la denuncia..."></textarea>
         	</fieldset>
+        	<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
+            </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- Script para activar el datatable en la tabla y hacer validaciones -->
+
+<!-- Script para activar el datatable en la tabla -->
 <script>
 $(document).ready( function () {
     
@@ -187,23 +136,37 @@ $(document).ready( function () {
             "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
         }
     });
-    
-    
-    $('.btn-registrar-denuncia').click(function(event){
-        console.log("JEJEJEJJE");
-        var nombreApellido = $('#nombreAlta').val();
-        var tipoDenuncia = $('#selectMotivoDenuncia').val();
-        if ((nombreApellido == "")&&(tipoDenuncia == "Seleccione motivo de la denuncia")){
-            console.log("Rellena todo banana!");
-        }
-    });
-    
-    
-    
+ 
     
 } );
 </script>
 
 
-
+<script>
+    
+    function validoNombreApellido(){
+        var nombreApellido = $('#nombreAlta').val();
+        if((nombreApellido!="")&&(isNaN(nombreApellido))){
+           alert('Ingrese el nombre y apellido del adoptante');
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    $('.btn-registrar-denuncia').click(function(event){
+        var tipoDenuncia = $('#selectMotivoDenuncia').val();
+        //----> si el motivo de la denuncia es correcto pasa al otro if
+        if (tipoDenuncia != "Seleccione motivo de la denuncia"){
+            //----> si el nombre y apellido es valido envia el formulario
+            if (validoNombreApellido()){
+                var formulario = document.forms['formDenuncia'];
+                formulario.submit();
+            }
+        }else{
+            alert('Seleccione un tipo de denuncia!');
+        }
+    });
+    
+</script>
 

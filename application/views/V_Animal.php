@@ -215,7 +215,7 @@
 						<div class="row">
 							<div class="col-12">
 								<fieldset class="form-group">
-									<label for="descripcionAlta">Descripcion</label>
+									<label for="descripcionAlta">Descripión</label>
 									<textarea  class="form-control" id="descripcionAlta" name="descripcionAlta" placeholder="Descripcion"></textarea>
 								</fieldset>
 							</div>
@@ -234,12 +234,13 @@
 	</div>
 </div>
 
+
 <!-- Modal para revocar adopcion  -->
 <div class="modal fade" id="md-revocar" tabindex="-1" role="dialog" aria-labelledby="labelEditar" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="labelEditar">Revocar Adopcion</h5>
+				<h5 class="modal-title" id="labelEditar">Revocar Adopción</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
