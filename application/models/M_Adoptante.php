@@ -13,11 +13,15 @@ class M_Adoptante extends CI_Model {
     public $email_adoptante;
     public $ciudad_adoptante;
     public $estado_adoptante;
+    public $denuncias;
     
     
     //-------> iniciliza el objeto M_Adopcion con todos los valores de la columna que trae de la bd
     function init($row)
     {
+        //-----> Cargo el modelo denuncia
+        $this -> load -> model('M_Denuncia','denuncia');
+        
         $this -> id_adoptante = $row -> id_adoptante;
         $this -> dni_adoptante = $row -> dni_adoptante;
         $this -> nombre_adoptante = $row -> nombre_adoptante;
@@ -27,6 +31,8 @@ class M_Adoptante extends CI_Model {
         $this -> email_adoptante = $row -> email_adoptante;
         $this -> ciudad_adoptante = $row -> ciudad_adoptante;
         $this -> estado_adoptante = $row -> estado_adoptante;
+        
+        $this -> denuncias = $this -> denuncia -> obtenerDenuncias($this -> id_adoptante);
     }
 
     //-----> obtiene un Adoptante
@@ -105,6 +111,13 @@ class M_Adoptante extends CI_Model {
         return $this->db->insert_id();
 
     }
+    
+    //---> cuenta las denuncias del adoptante y las devuelve
+    public function countDenuncias()
+    {
+        return ($this -> denuncias != false) ? count($this -> denuncias) : 0 ;
+    }
+    
     
     function validaDatosAdoptante()
     {

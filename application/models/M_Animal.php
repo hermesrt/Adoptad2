@@ -155,7 +155,6 @@ class M_Animal extends CI_Model {
         );
         $this->db->insert('historial_baja_animal', $datos);
 
-
         $this->db->set('estado_animal', "inactivo");
         $this->db->where('id_animal', $this->id_animal);
         return $this->db->update('animal');

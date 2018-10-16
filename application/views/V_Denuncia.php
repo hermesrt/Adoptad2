@@ -32,7 +32,7 @@
 						<tbody>
 						<?php foreach($adoptantes as $adoptante): ?>
 							<tr>
-                                <input id="id_adoptante" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
+                                <input id="id_adoptante" class="oculto" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
                                 <th scope="row"><?= $adoptante -> id_adoptante ?></th>
                                 <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
 								<td><?= $adoptante->direccion_adoptante ?></td>
@@ -64,7 +64,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="formDenuncia" id="formDenuncia" method="post" action="<?= base_url('/C_Denuncia/registraDenuncia') ?>">
+        <form class="formDenuncia" id="formDenuncia" method="post" >
         	<fieldset class="form-group">
         		<label for="formGroupExampleInput">Motivo de la denuncia</label>
         		<select class="custom-select selectDenuncia" id="selectMotivoDenuncia" >
@@ -89,7 +89,7 @@
         	</fieldset>
         	<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
+                <button type="submit" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
             </div>
         </form>
       </div>
@@ -200,11 +200,14 @@ $(document).ready( function () {
         }
     }
     
-    //------> Si presiona el boton Registrar Denuncia
-    $('.btn-registrar-denuncia').click(function(event){
+    //------> Si manda el formulario entonces pasa esto
+    $('#formDenuncia').on('submit',function(event){
         
         event.preventDefault();
         var tipoDenuncia = $('#selectMotivoDenuncia').val();
+        var id_adoptante = $('.selected').find('.oculto').val();   
+        console.log("elegido: "+id_adoptante);
+        
         //----> si el motivo de la denuncia es correcto pasa al otro if
         if (tipoDenuncia != "Seleccione motivo de la denuncia"){
             //----> si el nombre y apellido es valido envia el formulario
@@ -213,11 +216,11 @@ $(document).ready( function () {
                 $.ajax({
                     url: "<?= base_url('/C_Denuncia/registraDenuncia') ?>",     // The URL for the request
                     data: {              // The data to send (will be converted to a query string)
-                        tipoDenuncia: $('#selectMotivoDenuncia').val(),
+                        tipoDenuncia: tipoDenuncia,
                         nombre: $('#nombre').val(),
                         apellido: $('#apellido').val(),
                         descripcionDenuncia: $('#descripcionDenuncia').val(),
-                        id_adoptante: $('#id_adoptante').val()
+                        id_adoptante: id_adoptante
                     },
                     type: "POST",         // Whether this is a POST or GET request
                     'beforeSend': function (data)
@@ -230,7 +233,6 @@ $(document).ready( function () {
                     },
                     'success': function (data) {
                         console.log(data);
-                        json = data;
                         var arr = JSON.parse(data);
                         $('#nomApe').html("<h5>Nombre y apellido persona que registro la denuncia: </h5>"+ arr['nombre'] +" "+ arr['apellido']);
                         $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['tipoDenuncia']);
@@ -258,8 +260,6 @@ $(document).ready( function () {
                     console.log( "The request is complete!" );
                 });
             }
-            
-            
             
             
         }else{

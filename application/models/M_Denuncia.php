@@ -25,15 +25,18 @@ class M_Denuncia extends CI_Model {
 
     
     //-----> obtiene una Denuncia
-    function obtenerUno($id)
+    function obtenerDenuncias($id_adoptante)
     {
-        $this->db->from("denuncia")->where('id_denuncia',$id);
+        $result = array();
+        $this->db->from("denuncia")->where('id_adoptante',$id_adoptante);
         $query = $this->db->get();
-        if ($query->num_rows() == 1) {
-            $row = $query->result();
-            $new_object = new self();
-            $new_object->init($row[0]);
-            return $new_object;
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $new_object = new self();
+                $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Denuncia
+            }
+            return $result;
         }else {
             return false;
         }
@@ -58,8 +61,21 @@ class M_Denuncia extends CI_Model {
         }
     }
     
-    function registrarDenuncia()
+    //------------ Guarda una nueva denuncia en la bd
+    function registrarDenuncia($nombre_apellido,$id_motivo,$detalle,$id_adoptante)
     {
+        $datos = array(
+            'id_adoptante' => $id_adoptante,
+            'nombre_persona_registro_denuncia' => $nombre_apellido,
+            'detalle_denuncia' => $detalle,
+            'id_motivo' => $id_motivo,
+            'fecha_denuncia' => date('Y-m-d')
+        );
+        $this -> db -> insert('denuncia',$datos);
+        
+        //-----> ACA TENGO QUE ENVIAR EL MAIL
+        //  $this -> load -> model('M_Correo','correo');
+        //  return enviarCorreo($email_destino,$encabezado,$mensaje);
         
     }
     
@@ -74,7 +90,7 @@ class M_Denuncia extends CI_Model {
     //-------> Funcion que devuelve el motivo de la denuncia
     function getMotivo()
     {
-        $this->db->select('motivo_denuncia.id_motivo,motivo');
+        $this->db->select('motivo_denuncia.id_motivo,motivo_denuncia');
         $this->db->from('motivo_denuncia');
         $this->db->join('denuncia', 'motivo_denuncia.id_motivo = denuncia.id_motivo');
         $query = $this->db->get();
@@ -83,6 +99,7 @@ class M_Denuncia extends CI_Model {
         }else{
             return false;
         }
+         
     }
     
     
