@@ -31,13 +31,14 @@
 						</thead>
 						<tbody>
 						<?php foreach($adoptantes as $adoptante): ?>
+						<input id="id_adoptante" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
 							<tr>
                                 <th scope="row"><?= $adoptante -> id_adoptante ?></th>
                                 <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
 								<td><?= $adoptante->direccion_adoptante ?></td>
 								<td><?= $adoptante->email_adoptante ?></td>
 								<td><?= $adoptante->telefono_adoptante ?></td>
-								<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
+								<td><button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
 							</tr>
 							<?php endforeach ?>
 						</tbody>
@@ -75,8 +76,12 @@
 				</select>
         	</fieldset>
         	<fieldset>
-        	    <label for="nombre">Nombre y Apellido:</label>
-                <input type="text" class="form-control nombreApellido" id="nombreApellido" placeholder="Ingrese nombre y apellido..." required >
+        	    <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control nombreApellido" id="nombre" placeholder="Ingrese nombre..." required >
+        	</fieldset>
+        	<fieldset>
+        	    <label for="nombre">Apellido: </label>
+                <input type="text" class="form-control nombreApellido" id="apellido" placeholder="Ingrese apellido..." required >
         	</fieldset>
         	<fieldset>
         	    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
@@ -91,6 +96,42 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal para mostrar que la denuncia fue registrada --> 
+<div class="modal registro_denuncia" id="registro_denuncia" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Denuncia registrada</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <h5><p>La denuncia fue registrada exitosamente!</p></h5>
+        <form>
+            <fieldset >
+                <div class="form-group  mb-4">
+                    <label class="col-form-label" id="nomApe"></label>
+                </div>
+                <div class="form-group  mb-4">
+                    <label class=" col-form-label" id="motivoD"></label>
+                </div>
+                <div class="form-group  mb-4">
+                    <label class=" col-form-label" id="descr"></label>
+                </div>
+            </fieldset>
+        </form>
+      </div>
+      <div id="divMuestra"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -137,7 +178,6 @@ $(document).ready( function () {
         }
     });
  
-    
 } );
 </script>
 
@@ -145,24 +185,79 @@ $(document).ready( function () {
 <script>
     
     function validoNombreApellido(){
-        var nombreApellido = $('#nombreAlta').val();
-        if((nombreApellido!="")&&(isNaN(nombreApellido))){
-           alert('Ingrese el nombre y apellido del adoptante');
-            return false;
-        } else {
+        var nombre = $('#nombre').val();
+        var apellido = $('#apellido').val();
+        if((nombre!="")&&(isNaN(nombre))&&(apellido)&&(isNaN(apellido))){
             return true;
+        } else {
+            alert('Ingrese el nombre y apellido del adoptante');
+            return false;
         }
     }
     
     $('.btn-registrar-denuncia').click(function(event){
+        event.preventDefault();
+        
         var tipoDenuncia = $('#selectMotivoDenuncia').val();
         //----> si el motivo de la denuncia es correcto pasa al otro if
         if (tipoDenuncia != "Seleccione motivo de la denuncia"){
             //----> si el nombre y apellido es valido envia el formulario
             if (validoNombreApellido()){
-                var formulario = document.forms['formDenuncia'];
-                formulario.submit();
+                // creo un nuevo Ajax
+                $.ajax({
+                    url: "<?= base_url('/C_Denuncia/registraDenuncia') ?>",     // The URL for the request
+                    data: {              // The data to send (will be converted to a query string)
+                        tipoDenuncia: $('#selectMotivoDenuncia').val(),
+                        nombre: $('#nombre').val(),
+                        apellido: $('#apellido').val(),
+                        descripcionDenuncia: $('#descripcionDenuncia').val()
+                    },
+                    type: "POST",         // Whether this is a POST or GET request
+                    //dataType : "json",   // The type of data we expect back
+                    //"global": false,
+                    //"async": false,
+                    'beforeSend': function (data)
+                    {
+                        console.log('... cargando...');
+                    },
+                    'error': function (data) {
+                        //si hay un error mostramos un mensaje
+                        console.log('Tenemos problemas Houston ' + data);
+                    },
+                    'success': function (data) {
+                        console.log(data);
+                        json = data;
+                        var arr = JSON.parse(data);
+                        $('#nomApe').html("<h5>Nombre y Apellido:   </h5>"+ arr['nombre'] +" "+ arr['apellido']);
+                        $('#motivoD').html("<h5>Motivo de la denuncia:   </h5>"+ arr['tipoDenuncia']);
+                        $('#descr').html("<h5>Detalle de denuncia:   </h5>"+ arr['descripcionDenuncia']);
+                    }
+                })
+                // Code to run if the request succeeds (is done);
+                // The response is passed to the function
+                .done(function( json ) {    
+                    // si todo anda bien
+                    alert( "The request is good!" );
+                    $('#exampleModal').modal('hide');
+                    $('#registro_denuncia').modal('show');
+                })
+                // Code to run if the request fails; the raw request and
+                // status codes are passed to the function
+                .fail(function( xhr, status, errorThrown ) {
+                    alert( "Sorry, there was a problem!" );
+                    console.log( "Error: " + errorThrown );
+                    console.log( "Status: " + status );
+                    console.dir( xhr );
+                })
+                // Code to run regardless of success or failure;
+                .always(function( xhr, status ) {
+                    alert( "The request is complete!" );
+                });
             }
+            
+            
+            
+            
         }else{
             alert('Seleccione un tipo de denuncia!');
         }

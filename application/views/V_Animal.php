@@ -226,7 +226,7 @@
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<input type="submit"  class="btn btn-primary"value="Enviar">
+						<input type="submit"  class="btn btn-primary" value="Enviar">
 					</div>
 				</form>
 			</div>
@@ -302,7 +302,8 @@
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
-	$(document).ready(function() {	
+$(document).ready(function() {	
+    
 // -------------------------<AJAX ALTA ANIMAL>------------------------//
 $("#formuploadajax").on("submit", function(e){
 	e.preventDefault();
