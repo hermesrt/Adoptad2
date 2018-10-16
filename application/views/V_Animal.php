@@ -277,9 +277,7 @@
 
 
 
-
-
-
+<!-- Script con todo el comportamiento de los modales de la vista  --> 
 <script type="text/javascript">
 
 	function armarRegistro(dato){
@@ -642,6 +640,5 @@ table.on( 'draw', function () {
 // --------------------------------</SETEA COMPORTAMIENTOS A LOS BOTONES CADA VEZ QUE SE DIBUJA LA TABLA>----------//
 
 });
-
 
 </script>

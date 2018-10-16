@@ -31,8 +31,8 @@
 						</thead>
 						<tbody>
 						<?php foreach($adoptantes as $adoptante): ?>
-						<input id="id_adoptante" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
 							<tr>
+                                <input id="id_adoptante" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
                                 <th scope="row"><?= $adoptante -> id_adoptante ?></th>
                                 <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
 								<td><?= $adoptante->direccion_adoptante ?></td>
@@ -53,7 +53,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal para completar con los datos de la denuncia -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -96,6 +96,11 @@
     </div>
   </div>
 </div>
+
+
+
+
+
 
 
 <!-- Modal para mostrar que la denuncia fue registrada --> 
@@ -195,9 +200,10 @@ $(document).ready( function () {
         }
     }
     
+    //------> Si presiona el boton Registrar Denuncia
     $('.btn-registrar-denuncia').click(function(event){
-        event.preventDefault();
         
+        event.preventDefault();
         var tipoDenuncia = $('#selectMotivoDenuncia').val();
         //----> si el motivo de la denuncia es correcto pasa al otro if
         if (tipoDenuncia != "Seleccione motivo de la denuncia"){
@@ -210,12 +216,10 @@ $(document).ready( function () {
                         tipoDenuncia: $('#selectMotivoDenuncia').val(),
                         nombre: $('#nombre').val(),
                         apellido: $('#apellido').val(),
-                        descripcionDenuncia: $('#descripcionDenuncia').val()
+                        descripcionDenuncia: $('#descripcionDenuncia').val(),
+                        id_adoptante: $('#id_adoptante').val()
                     },
                     type: "POST",         // Whether this is a POST or GET request
-                    //dataType : "json",   // The type of data we expect back
-                    //"global": false,
-                    //"async": false,
                     'beforeSend': function (data)
                     {
                         console.log('... cargando...');
@@ -228,16 +232,16 @@ $(document).ready( function () {
                         console.log(data);
                         json = data;
                         var arr = JSON.parse(data);
-                        $('#nomApe').html("<h5>Nombre y Apellido:   </h5>"+ arr['nombre'] +" "+ arr['apellido']);
-                        $('#motivoD').html("<h5>Motivo de la denuncia:   </h5>"+ arr['tipoDenuncia']);
-                        $('#descr').html("<h5>Detalle de denuncia:   </h5>"+ arr['descripcionDenuncia']);
+                        $('#nomApe').html("<h5>Nombre y apellido persona que registro la denuncia: </h5>"+ arr['nombre'] +" "+ arr['apellido']);
+                        $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['tipoDenuncia']);
+                        $('#descr').html("<h5>Detalle de denuncia: </h5>"+ arr['descripcionDenuncia']);
                     }
                 })
                 // Code to run if the request succeeds (is done);
                 // The response is passed to the function
                 .done(function( json ) {    
                     // si todo anda bien
-                    alert( "The request is good!" );
+                    console.log( "The request is good!" );
                     $('#exampleModal').modal('hide');
                     $('#registro_denuncia').modal('show');
                 })
@@ -251,7 +255,7 @@ $(document).ready( function () {
                 })
                 // Code to run regardless of success or failure;
                 .always(function( xhr, status ) {
-                    alert( "The request is complete!" );
+                    console.log( "The request is complete!" );
                 });
             }
             
