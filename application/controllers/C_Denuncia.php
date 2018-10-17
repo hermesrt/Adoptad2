@@ -24,21 +24,21 @@ class C_Denuncia extends CI_Controller {
     
     public function registraDenuncia()
     {
-        $datos = $this->input->post();
-        $motivo = $this -> motivo -> obtenerUno($datos('tipoDenuncia')); 
-    
-        $adoptante = $this -> adoptante -> obtenerUno($datos['id_adoptante']);
-        $datos['cantidad_denuncias'] = $adoptante -> countDenuncias();
-        $datos['adoptante'] = $adoptante; 
+        $datos = $this->input->post();   //---> traigo los datos de post 
+        $id_motivo = $datos['tipoDenuncia'];   //--> recupero el id_motivo de denuncia
+        $motivo = $this -> motivo -> obtenerUno($id_motivo);       //--> obtengo el objeto motivo denuncia con ese id_motivo
+        $datos['motivo_denuncia'] = $motivo -> motivo_denuncia;    //---> le asigna el motivo_denuncia de ese objeto con ese id_motivo
+        
+        $adoptante = $this -> adoptante -> obtenerUno($datos['id_adoptante']);   //---> obtengo a el adoptante con el id_adoptante
+        $datos['cantidad_denuncias'] = $adoptante -> countDenuncias();        //--> cuenta las denuncias y se las asigna al arrreglo post
+        $datos['adoptante'] = $adoptante;    //----> envia tambien datos del adoptante 
         //-----> guarda en la base de datos
         $this -> denuncia -> registrarDenuncia(    //----> registra la denuncia a ese adoptante
-            $datos['nombre']." ".$datos['apellido'],
-            $datos['tipoDenuncia'],
-            $datos['descripcionDenuncia'],
-            $datos['id_adoptante']
+                $adoptante->nombre_adoptante." ".$adoptante->apellido_adoptante,
+                $id_motivo,
+                $datos['descripcionDenuncia'],
+                $adoptante -> id_adoptante
             ); 
-        
-        $datos['tipoDenuncia'] = $motivo -> motivo_denuncia;    //---> le asigna el string a el array
         
         echo json_encode($datos);   
     }

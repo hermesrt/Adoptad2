@@ -235,7 +235,7 @@ $(document).ready( function () {
                         console.log(data);
                         var arr = JSON.parse(data);
                         $('#nomApe').html("<h5>Nombre y apellido persona que registro la denuncia: </h5>"+ arr['nombre'] +" "+ arr['apellido']);
-                        $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['tipoDenuncia']);
+                        $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['motivo_denuncia']);
                         $('#descr').html("<h5>Detalle de denuncia: </h5>"+ arr['descripcionDenuncia']);
                     }
                 })
