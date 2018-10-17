@@ -45,11 +45,6 @@
 								</tr>
 								<?php endforeach ?>
 								<?php endif ?>
-								<!--
-								<td><i class="fas fa-pills"></i> Vacunación</td>
-                                    <td><i class="fas fa-cut"></i> Castración</td>
-                                    <td><i class="fas fa-calendar-check"></i> Seguimiento</td>
-								  -->
 							</tbody>
 						</table>					
 					</div>
@@ -71,7 +66,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form id="formSeguimiento" method="post" > 
 						<fieldset class="form-group">
 							<label for="inputGroupSelect01">Tipo de Periodo</label>
 							<select class="custom-select" id="inputGroupSelect01">
@@ -93,8 +88,62 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary">Iniciar Periodo</button>
+					<button type="submit" class="btn btn-primary btn-iniciar-periodo">Iniciar Periodo</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+<script>
+
+    
+    $('#formSeguimiento').on('submit',function(event){
+        
+        event.preventDefault();
+        // creo un nuevo Ajax
+        $.ajax({
+            url: "post.php",     // The URL for the request
+            data: {              // The data to send (will be converted to a query string)
+                
+            },
+            type: "POST",         // Whether this is a POST or GET request
+            'beforeSend': function (data)
+            {
+                console.log('... cargando...');
+            },
+            'error': function (data) {
+                //si hay un error mostramos un mensaje
+                console.log('Tenemos problemas Houston ' + data);
+            },
+            'success': function (data) {
+                var datos = JSON.parse(data);
+            }
+        })
+        // Code to run if the request succeeds (is done);
+        // The response is passed to the function
+        .done(function( json ) {         
+            //  si hizo lo del ajax 
+        })
+        // Code to run if the request fails; the raw request and
+        // status codes are passed to the function
+        .fail(function( xhr, status, errorThrown ) {
+            alert( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+        })
+        // Code to run regardless of success or failure;
+        .always(function( xhr, status ) {
+            alert( "The request is complete!" );
+        });
+        
+    });
+    
+</script>
+
+
+
+
+
+
+
