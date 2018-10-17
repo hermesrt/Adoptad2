@@ -95,20 +95,32 @@
 	</div>
 	
 <script>
-
+    
     
     $('#formSeguimiento').on('submit',function(event){
+    
+        function validoFechas() {
+            $('#fechaDesde').val();
+            $('#fehcaHasta').val();
+        }
+
+        function recuperoFecha(dato) {
+            var fecha = Date(2018,10,17);
+            console.log(fecha);
+        }
+        
         
         event.preventDefault();
         // creo un nuevo Ajax
         $.ajax({
-            url: "post.php",     // The URL for the request
+            url: "<?= base_url() ?>/C_Seguimiento/validaFechas",     // The URL for the request
             data: {              // The data to send (will be converted to a query string)
                 
             },
             type: "POST",         // Whether this is a POST or GET request
             'beforeSend': function (data)
             {
+                recuperoFecha();
                 console.log('... cargando...');
             },
             'error': function (data) {
