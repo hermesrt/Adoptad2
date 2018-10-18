@@ -111,6 +111,21 @@ class M_Adoptante extends CI_Model {
         return $this->db->insert_id();
 
     }
+
+    function getTodosJson()
+    {
+        $result = array();
+        $this->db->from("adoptante");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $result[] = $row;  
+            }
+            return json_encode($result);
+        }else {
+            return false;
+        }
+    }
     
     //---> cuenta las denuncias del adoptante y las devuelve
     public function countDenuncias()

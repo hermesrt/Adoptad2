@@ -2,14 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Adopcion extends CI_Model {
-    
+
     //------> atributos
     public $id_adopcion;
     public $fecha_adopcion;
     public $detalle_adopcion;
     public $estado_adopcion;
-    public $id_adoptante;
-    public $id_animal;
+    public $adoptante;
+    public $animal;
     
     
     //-------> iniciliza el objeto M_Adopcion con todos los valores de la columna que trae de la bd
@@ -18,11 +18,12 @@ class M_Adopcion extends CI_Model {
         $this -> id_adopcion = $row -> id_adopcion;
         $this -> fecha_adopcion = $row -> fecha_adopcion;
         $this -> detalle_adopcion = $row -> detalle_adopcion;
-        $this -> id_adoptante = $row -> id_adoptante;
         $this -> estado_adopcion = $row -> estado_adopcion;
-        $this -> id_animal = $row -> id_animal;
+        $this->load->model('M_Adoptante');
+        $this -> adoptante = $this->M_Adoptante->obtenerUno($row -> id_adoptante);
+        $this->load->model('M_Animal');
+        $this -> animal = $this->M_Animal->obtenerUno($row -> id_animal);
     }
-
     
     //---------> Recupera la adopcion con el id pasado como parametro de la BD
     function obtenerUno($id)
@@ -55,6 +56,25 @@ class M_Adopcion extends CI_Model {
             $new_object = new self();
             $new_object->init($row[0]);
             $result = $new_object;  //----> el resultado seria un objeto M_Adopcion
+            return $result;
+        }else {
+            return false;
+        }
+    }
+
+    function obtenerAdopcionesPorAdoptante($idAdoptante)
+    {
+     $result = array();
+     $this->db->from("adopcion");
+     $this->db->where("id_adoptante", $idAdoptante);
+     $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+        foreach ($query->result() as $row) {
+            $new_object = new self();
+            $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Adopcion
+            }
             return $result;
         }else {
             return false;
@@ -100,55 +120,57 @@ class M_Adopcion extends CI_Model {
     
     function registrar()
     {
-        
+
     }
     
     function registrarAdopcion($idAdoptante,$idAnimal)
     {
-         $datos = array(
-            'id_animal' => $idAnimal,
-            'fecha_adopcion' => $date = date('Y-m-d'),
-            'id_adoptante' => $idAdoptante,
-            'estado_adopcion' => "activa"
-        );
-        return $this->db->insert('adopcion', $datos);
-    }
-    
-    function listarAdopciones()
-    {
-        
-    }
-    
-   
-    function fechaAdopcion()
-    {
-        
-    }
-    
-    
+     $datos = array(
+        'id_animal' => $idAnimal,
+        'fecha_adopcion' => $date = date('Y-m-d'),
+        'id_adoptante' => $idAdoptante,
+        'estado_adopcion' => "activa"
+    );
+     return $this->db->insert('adopcion', $datos);
+ }
+
+ function listarAdopciones()
+ {
+
+ }
+
+
+
+
+ function fechaAdopcion()
+ {
+
+ }
+
+
     //-----> Devuelve el objeto M_Adopcion
-    function getAdopcion()
-    {
-        return $this;
-    }
+ function getAdopcion()
+ {
+    return $this;
+}
 
-    function cambiarEstado($datos){
-        $this->db->set('estado_adopcion', "inactiva");
-        $this->db->where('id_adopcion',$this->id_adopcion);
-        $this->db->update('adopcion'); 
+function cambiarEstado($datos){
+    $this->db->set('estado_adopcion', "inactiva");
+    $this->db->where('id_adopcion',$this->id_adopcion);
+    $this->db->update('adopcion'); 
 
-        $revocacion = array(
-            'id_animal' => $this->id_animal,
-            'fecha_revocacion' => $date = date('Y-m-d'),
-            'motivo_revocacion' => $datos['motivo'],
-            'detalle_revocacion' => $datos['detalle']
-        );
-        return $this->db->insert('revocaciones', $revocacion);
+    $revocacion = array(
+        'id_animal' => $this->animal->id_animal,
+        'fecha_revocacion' => $date = date('Y-m-d'),
+        'motivo_revocacion' => $datos['motivo'],
+        'detalle_revocacion' => $datos['detalle']
+    );
+    return $this->db->insert('revocaciones', $revocacion);
 
-    }
-    
-    
-    
+}
+
+
+
 }
 
 /* End of file M_Adopcion.php */
