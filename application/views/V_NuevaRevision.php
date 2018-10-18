@@ -149,7 +149,10 @@
 						alert(msg);
 						$("#modalRevision").modal("hide");
 
-					});
+					})
+					.error(function(a) {
+						alert(a);
+					});;
 				} else {
 					alert("Ingrese una fecha valida!");
 
