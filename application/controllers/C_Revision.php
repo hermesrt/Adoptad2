@@ -20,6 +20,11 @@ class C_Revision extends CI_Controller {
 		$this->load->view('V_Revision',$data);
 		$this->load->view('Plantillas/V_Footer.php');
 	}
+	function getAdoptantes()
+	{
+		$this->load->model('M_Adoptante');
+		echo $this->M_Adoptante->getTodosJson();
+	}
 
 	public function NuevaRevision()
 	{

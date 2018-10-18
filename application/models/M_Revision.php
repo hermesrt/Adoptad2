@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Revision extends CI_Model {
-    
+
     //------> atributos
     public $id_revision;
     public $fecha_revision;
@@ -44,7 +44,7 @@ class M_Revision extends CI_Model {
     //-----> obtiene las vacunas de un animal en una revision
     public function obtenerVacunas($id_animal)
     {
-        
+
     }
     
     
@@ -102,12 +102,12 @@ class M_Revision extends CI_Model {
             foreach ($query as $obj){
                 $adoptante = $this -> adoptante -> obtenerUno($obj->id_adoptante);
                 $data[] = ['tipo_revision' => $obj -> tipo_revision,
-                          'fecha_revision' => $obj-> fecha_revision,
-                          'nombre_adoptante' => $adoptante -> nombre_adoptante,
-                           'apellido_adoptante' => $adoptante -> apellido_adoptante,
-                           'id_animal' => $obj -> id_animal
-                          ]; 
-            }
+                'fecha_revision' => $obj-> fecha_revision,
+                'nombre_adoptante' => $adoptante -> nombre_adoptante,
+                'apellido_adoptante' => $adoptante -> apellido_adoptante,
+                'id_animal' => $obj -> id_animal
+            ]; 
+        }
             return $data;  //----> devuelve un array asociativo con todos los datos necesarios para armar la tabla Revisiones
         } else {
             return false;
@@ -117,23 +117,40 @@ class M_Revision extends CI_Model {
     
     function fechaUltimaRevision()
     {
-        
+
     }
     
     
     function getFecha()
     {
-        
+
     }
     
-    function registrarRevision()
+    function registrarRevision($datos)
     {
-        
+        $revision = array(
+            'fecha_revision' => $datos['fecha'],
+            'tipo_revision' => $datos['TipoRevision'],
+            'detalle_revision' => $datos['detalle'],
+            'id_animal' => $datos['id_animal'],
+            'id_usuario' => $datos['id_usuario']
+        );
+        if ($datos['TipoRevision'] == "Vacunacion") {
+            $this->db->insert('revision', $revision);
+            $vacuna = array(
+                'fecha_aplicacion_vacuna' => $datos['fecha'],
+                'id_vacuna' => $datos['tipoVacuna'],
+                'id_revision' => $this->db->insert_id(),
+            );
+            return $this->db->insert('vacuna_aplicada', $vacuna);
+        }else{
+            return $this->db->insert('revision', $revision);
+        }
     }
     
     function crearRevision()
     {
-        
+
     }
     
 

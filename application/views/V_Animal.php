@@ -75,7 +75,7 @@
 					</fieldset>
 					<fieldset class="form-group">
 						<label for="fechaEditar">Fecha de nacimiento</label>
-						<input type="text" class="form-control" id="fechaEditar" placeholder="Fecha de nacimiento">
+						<input type="date" class="form-control" id="fechaEditar" placeholder="Fecha de nacimiento">
 					</fieldset>
 				</form>
 				<div class="modal-footer">
