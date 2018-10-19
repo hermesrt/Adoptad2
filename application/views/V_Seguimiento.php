@@ -32,11 +32,11 @@
 							<?php foreach($periodos as $periodo): ?>
 								<tr>
                                    <?php switch($periodo->tipo_periodo):
-                                    case 'vacunación': 
+                                    case 'Vacunacion': 
                                         echo '<td><i class="fas fa-pills"></i> '.$periodo->tipo_periodo.'</td>';break;
-                                    case 'castración': 
+                                    case 'Castracion': 
                                         echo '<td><i class="fas fa-cut"></i> '.$periodo->tipo_periodo.'</td>';break;
-                                    case 'seguimiento': 
+                                    case 'Seguimiento': 
                                         echo '<td><i class="fas fa-calendar-check"></i> '.$periodo->tipo_periodo.'</td>';break;
                                     endswitch
                                     ?>			
@@ -44,7 +44,7 @@
 									<td><?= $periodo->fecha_fin_periodo ?></td>
 								</tr>
 								<?php endforeach ?>
-								<?php endif ?>
+								<?php  endif ?>
 							</tbody>
 						</table>					
 					</div>
@@ -66,14 +66,14 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="formSeguimiento" method="post" > 
+					<form id="formulario" class="formulario" method="post"> 
 						<fieldset class="form-group">
 							<label for="inputGroupSelect01">Tipo de Periodo</label>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Seleccione un tipo de periodo de seguimiento</option>
-								<option value="1">Vacunación</option>
-								<option value="2">Castración</option>
-								<option value="3">Seguimiento</option>
+							<select class="custom-select" id="tipoPeriodo">
+								<option selected >Seleccione un tipo de periodo de seguimiento</option>
+								<option value="Vacunacion">Vacunación</option>
+								<option value="Castracion">Castración</option>
+								<option value="Seguimiento">Seguimiento</option>
 							</select>
 						</fieldset>
 						<fieldset class="form-group">
@@ -88,7 +88,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-primary btn-iniciar-periodo">Iniciar Periodo</button>
+					<input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
 				</div>
 			</div>
 		</div>
@@ -96,60 +96,96 @@
 	
 <script>
     
-    
-    $('#formSeguimiento').on('submit',function(event){
-    
-        function validoFechas() {
-            $('#fechaDesde').val();
-            $('#fehcaHasta').val();
+    //------> validacion de fechas para mandar por el formulario
+    function validoSeleccionFechas() {
+        //------> obtengo el valor de las fechas que elige
+        var fechaHasta = $('#fechaHasta').val();
+        var fechaDesde = $('#fechaDesde').val();
+        
+        if(fechaDesde == fechaHasta){  //-----> si las cadenas son iguales entonces la validacion es invalida
+            console.log('son iguales');
+            return false;
         }
-
-        function recuperoFecha(dato) {
-            var fecha = Date(2018,10,17);
-            console.log(fecha);
+        // fechaHasta = fechaHasta.split('-',3).reverse().join('-'); //---> esto da vuelta la cadena y la vuelve a unir con '-'
+        fechaHasta = fechaHasta.split('-',3);   //--> la fecha esta devuelta como un array separado con -
+        console.log(fechaHasta); 
+        fechaDesde = fechaDesde.split('-',3);    //--> la fecha esta devuelta como un array separado con -
+        console.log(fechaDesde);
+        
+        //---> creo dos objetos Date con los datos de los array fechas
+        fechaHasta = new Date(fechaHasta[0],fechaHasta[1],fechaHasta[2]);
+        fechaDesde = new Date(fechaDesde[0],fechaDesde[1],fechaDesde[2]);
+        
+        if(fechaDesde<fechaHasta){   //----> si la fechaDesde es menor que hasta sale del validar sino no
+            console.log('estan bien');
+            return true;
+        } else {
+            console.log('estan mal');
+            return false;
         }
         
+    }
+    
+    
+    //-------> Comportamiento cuando clickea el boton de iniciar periodo
+    $('#btn_periodo').click(function(event){
         
         event.preventDefault();
-        // creo un nuevo Ajax
-        $.ajax({
-            url: "<?= base_url() ?>/C_Seguimiento/validaFechas",     // The URL for the request
-            data: {              // The data to send (will be converted to a query string)
-                
-            },
-            type: "POST",         // Whether this is a POST or GET request
-            'beforeSend': function (data)
-            {
-                recuperoFecha();
-                console.log('... cargando...');
-            },
-            'error': function (data) {
-                //si hay un error mostramos un mensaje
-                console.log('Tenemos problemas Houston ' + data);
-            },
-            'success': function (data) {
-                var datos = JSON.parse(data);
-            }
-        })
-        // Code to run if the request succeeds (is done);
-        // The response is passed to the function
-        .done(function( json ) {         
-            //  si hizo lo del ajax 
-        })
-        // Code to run if the request fails; the raw request and
-        // status codes are passed to the function
-        .fail(function( xhr, status, errorThrown ) {
-            alert( "Sorry, there was a problem!" );
-            console.log( "Error: " + errorThrown );
-            console.log( "Status: " + status );
-            console.dir( xhr );
-        })
-        // Code to run regardless of success or failure;
-        .always(function( xhr, status ) {
-            alert( "The request is complete!" );
-        });
+        var tipo = $('#tipoPeriodo').val();
+        var fechaHasta = $('#fechaHasta').val();
+        var fechaDesde = $('#fechaDesde').val();
+        console.log("algo loco "+tipo+" fecha hasta: "+fechaHasta+" fecha desde: "+fechaHasta);
         
-    });
+        if(tipo != "Seleccione un tipo de periodo de seguimiento"){
+            if (validoSeleccionFechas()){
+                // creo un nuevo Ajax
+                $.ajax({
+                    url: "<?= base_url('/C_Seguimiento/validaFechas') ?>",     // The URL for the request
+                    data: {              // The data to send (will be converted to a query string)
+                        tipoPeriodo: tipo,
+                        fechaDesde: fechaDesde,
+                        fechaHasta: fechaHasta
+                    },
+                    type: "POST",         // Whether this is a POST or GET request
+                    'beforeSend': function (data)
+                    {
+                        console.log('... cargando...');
+                    },
+                    'error': function (data) {
+                        //si hay un error mostramos un mensaje
+                        console.log('Tenemos problemas Houston ' + data);
+                    },
+                    'success': function (data) {
+                        datos = JSON.parse(data);
+                        console.log(datos);
+                    }
+                })
+                // Code to run if the request succeeds (is done);
+                // The response is passed to the function
+                .done(function( json ) {         
+                    console.log('se hizo bien man 👏👏');
+                    $('#modalPeriodo').modal('hide');
+                })
+                // Code to run if the request fails; the raw request and
+                // status codes are passed to the function
+                .fail(function( xhr, status, errorThrown ) {
+                    alert( "Sorry, there was a problem!" );
+                    console.log( "Error: " + errorThrown );
+                    console.log( "Status: " + status );
+                    console.dir( xhr );
+                })
+                // Code to run regardless of success or failure;
+                .always(function( xhr, status ) {
+                    console.log( "The request is complete!" );
+                });
+            } else {
+                alert('Seleccione las fechas correctamente!');
+            }
+        } else {
+            alert('Seleccion un tipo de periodo de seguimiento!');
+        }
+        
+    });  
     
 </script>
 

@@ -30,6 +30,7 @@
 							</tr>
 						</thead>
 						<tbody>
+						<?php if ($adoptantes != false): ?>
 						<?php foreach($adoptantes as $adoptante): ?>
 							<tr>
                                 <input id="id_adoptante" class="oculto" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
@@ -40,7 +41,8 @@
 								<td><?= $adoptante->telefono_adoptante ?></td>
 								<td><button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
 							</tr>
-							<?php endforeach ?>
+                        <?php endforeach ?>
+                        <?php endif ?>
 						</tbody>
 					</table>
 					</div>
@@ -76,16 +78,7 @@
 				</select>
         	</fieldset>
         	<fieldset>
-        	    <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control nombreApellido" id="nombre" placeholder="Ingrese nombre..." required >
-        	</fieldset>
-        	<fieldset>
-        	    <label for="nombre">Apellido: </label>
-                <input type="text" class="form-control nombreApellido" id="apellido" placeholder="Ingrese apellido..." required >
-        	</fieldset>
-        	<fieldset>
         	    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
-                <textarea  class="form-control" id="descripcionDenuncia" placeholder="Ingrese un detalle de la denuncia..."></textarea>
         	</fieldset>
         	<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -217,8 +210,6 @@ $(document).ready( function () {
                     url: "<?= base_url('/C_Denuncia/registraDenuncia') ?>",     // The URL for the request
                     data: {              // The data to send (will be converted to a query string)
                         tipoDenuncia: tipoDenuncia,
-                        nombre: $('#nombre').val(),
-                        apellido: $('#apellido').val(),
                         descripcionDenuncia: $('#descripcionDenuncia').val(),
                         id_adoptante: id_adoptante
                     },

@@ -10,7 +10,7 @@ class M_Denuncia extends CI_Model {
     public $nombre_persona_registro_denuncia;
     public $id_adoptante;
     public $id_motivo;
-    
+    public $id_centro;
     
     //-------> iniciliza el objeto M_Denuncia con todos los valores de la columna que trae de la bd
     function init($row)
@@ -21,6 +21,7 @@ class M_Denuncia extends CI_Model {
         $this -> id_motivo = $row -> id_motivo;
         $this -> nombre_persona_registro_denuncia = $row -> nombre_persona_registro_denuncia;
         $this -> detalle_denuncia = $row -> detalle_denuncia;
+        $this -> id_centro = $row -> id_centro;
     }
 
     
@@ -62,14 +63,15 @@ class M_Denuncia extends CI_Model {
     }
     
     //------------ Guarda una nueva denuncia en la bd
-    function registrarDenuncia($nombre_apellido,$id_motivo,$detalle,$id_adoptante)
+    function registrarDenuncia($id_motivo,$detalle,$id_adoptante,$id_usuario,$id_centro)
     {
         $datos = array(
             'id_adoptante' => $id_adoptante,
-            'nombre_persona_registro_denuncia' => $nombre_apellido,
             'detalle_denuncia' => $detalle,
             'id_motivo' => $id_motivo,
-            'fecha_denuncia' => date('Y-m-d')
+            'fecha_denuncia' => date('Y-m-d'),
+            'id_usuario' => $id_usuario,
+            'id_centro' => $id_centro
         );
         $this -> db -> insert('denuncia',$datos);
         
@@ -88,18 +90,16 @@ class M_Denuncia extends CI_Model {
     
     
     //-------> Funcion que devuelve el motivo de la denuncia
-    function getMotivo()
+    function getMotivo($id_motivo)
     {
-        $this->db->select('motivo_denuncia.id_motivo,motivo_denuncia');
         $this->db->from('motivo_denuncia');
-        $this->db->join('denuncia', 'motivo_denuncia.id_motivo = denuncia.id_motivo');
+        $this -> db -> where('id_motivo',$id_motivo);
         $query = $this->db->get();
         if ($query -> num_rows() > 0){
             return $query;   //----> devuelve un array con el id_motivo y el motivo_denuncia
         }else{
             return false;
         }
-         
     }
     
     

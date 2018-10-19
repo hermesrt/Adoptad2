@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2018 a las 20:50:52
+-- Tiempo de generación: 19-10-2018 a las 23:12:39
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.6.15
 
@@ -32,7 +32,8 @@ CREATE TABLE `adopcion` (
   `detalle_adopcion` text NOT NULL,
   `estado_adopcion` varchar(8) NOT NULL,
   `id_adoptante` int(11) NOT NULL,
-  `id_animal` int(11) NOT NULL
+  `id_animal` int(11) NOT NULL,
+  `id_centro` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -52,15 +53,6 @@ CREATE TABLE `adoptante` (
   `ciudad_adoptante` varchar(50) NOT NULL,
   `estado_adoptante` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `adoptante`
---
-
-INSERT INTO `adoptante` (`id_adoptante`, `dni_adoptante`, `nombre_adoptante`, `apellido_adoptante`, `direccion_adoptante`, `telefono_adoptante`, `email_adoptante`, `ciudad_adoptante`, `estado_adoptante`) VALUES
-(1, 40209836, 'Juanfer', 'Quinteros', 'Av. Libertador 4865', 155798465, 'estamosMelos@gmail.com', 'Bs As', '1'),
-(2, 17495635, 'Carola', 'Estevez', 'Granaderos 487', 155487956, 'caritoooo@gmail.com', 'Comodoro Rivadavia', '1'),
-(3, 16489158, 'Guillermo', 'Barros Schelotto', 'Hirigoyen 1586', 112486579, 'lloron@gmail.com', 'Bs As', '1');
 
 -- --------------------------------------------------------
 
@@ -139,7 +131,8 @@ CREATE TABLE `denuncia` (
   `id_adoptante` int(11) NOT NULL,
   `id_motivo` int(11) NOT NULL,
   `detalle_denuncia` varchar(180) NOT NULL,
-  `id_usuario` int(11) NOT NULL
+  `id_usuario` int(11) NOT NULL,
+  `id_centro` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,19 +194,9 @@ CREATE TABLE `revision` (
   `tipo_revision` varchar(15) NOT NULL,
   `detalle_revision` varchar(150) NOT NULL,
   `id_animal` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL
+  `id_usuario` int(11) NOT NULL,
+  `id_vacuna` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `revision`
---
-
-INSERT INTO `revision` (`id_revision`, `fecha_revision`, `tipo_revision`, `detalle_revision`, `id_animal`, `id_usuario`) VALUES
-(1, '2018-09-10', 'seguimiento', 'Se realizo un seguimiento y el animal estaba en perfectas condiciones de salud.', 2, 2),
-(2, '2018-07-10', 'castración', 'El animal no estaba castrado. Se le informo a el adoptante que debe castrarlo.', 6, 2),
-(3, '2018-10-04', 'Castración', 'sdasd', 3, 1),
-(4, '2018-10-12', 'Vacunacion', 'sadasd', 3, 1),
-(5, '2018-10-10', 'Vacunacion', 'dsadas', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -273,32 +256,9 @@ CREATE TABLE `vacuna` (
 
 INSERT INTO `vacuna` (`id_vacuna`, `nombre_vacuna`) VALUES
 (1, 'Antirrábica'),
-(2, 'Parvovirus y moquillo'),
 (3, 'Polivalente'),
 (4, 'Trivalente'),
-(5, 'Pentavalente'),
-(6, 'Tos de las perreras');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `vacuna_aplicada`
---
-
-CREATE TABLE `vacuna_aplicada` (
-  `id_vacuna_aplicada` int(11) NOT NULL,
-  `fecha_aplicacion_vacuna` date NOT NULL,
-  `id_revision` int(11) NOT NULL,
-  `id_vacuna` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `vacuna_aplicada`
---
-
-INSERT INTO `vacuna_aplicada` (`id_vacuna_aplicada`, `fecha_aplicacion_vacuna`, `id_revision`, `id_vacuna`) VALUES
-(1, '2018-10-12', 4, 3),
-(2, '2018-10-10', 5, 3);
+(5, 'Pentavalente');
 
 --
 -- Índices para tablas volcadas
@@ -310,7 +270,8 @@ INSERT INTO `vacuna_aplicada` (`id_vacuna_aplicada`, `fecha_aplicacion_vacuna`, 
 ALTER TABLE `adopcion`
   ADD PRIMARY KEY (`id_adopcion`),
   ADD KEY `id_adoptante` (`id_adoptante`,`id_animal`),
-  ADD KEY `id_animal` (`id_animal`);
+  ADD KEY `id_animal` (`id_animal`),
+  ADD KEY `id_centro` (`id_centro`);
 
 --
 -- Indices de la tabla `adoptante`
@@ -338,7 +299,8 @@ ALTER TABLE `denuncia`
   ADD PRIMARY KEY (`id_denuncia`),
   ADD KEY `id_adoptante` (`id_adoptante`,`id_motivo`),
   ADD KEY `id_motivo` (`id_motivo`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_centro` (`id_centro`);
 
 --
 -- Indices de la tabla `historial_baja_animal`
@@ -365,7 +327,8 @@ ALTER TABLE `periodo_seguimiento`
 ALTER TABLE `revision`
   ADD PRIMARY KEY (`id_revision`),
   ADD KEY `id_animal` (`id_animal`,`id_usuario`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_vacuna` (`id_vacuna`);
 
 --
 -- Indices de la tabla `revocaciones`
@@ -387,14 +350,6 @@ ALTER TABLE `vacuna`
   ADD PRIMARY KEY (`id_vacuna`);
 
 --
--- Indices de la tabla `vacuna_aplicada`
---
-ALTER TABLE `vacuna_aplicada`
-  ADD PRIMARY KEY (`id_vacuna_aplicada`),
-  ADD KEY `id_animal` (`id_revision`,`id_vacuna`),
-  ADD KEY `id_vacuna` (`id_vacuna`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -402,7 +357,7 @@ ALTER TABLE `vacuna_aplicada`
 -- AUTO_INCREMENT de la tabla `adopcion`
 --
 ALTER TABLE `adopcion`
-  MODIFY `id_adopcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_adopcion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `adoptante`
 --
@@ -422,7 +377,7 @@ ALTER TABLE `centro_adopcion`
 -- AUTO_INCREMENT de la tabla `denuncia`
 --
 ALTER TABLE `denuncia`
-  MODIFY `id_denuncia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_denuncia` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `motivo_denuncia`
 --
@@ -432,7 +387,7 @@ ALTER TABLE `motivo_denuncia`
 -- AUTO_INCREMENT de la tabla `periodo_seguimiento`
 --
 ALTER TABLE `periodo_seguimiento`
-  MODIFY `id_periodo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_periodo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `revision`
 --
@@ -449,11 +404,6 @@ ALTER TABLE `usuario`
 ALTER TABLE `vacuna`
   MODIFY `id_vacuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `vacuna_aplicada`
---
-ALTER TABLE `vacuna_aplicada`
-  MODIFY `id_vacuna_aplicada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
 -- Restricciones para tablas volcadas
 --
 
@@ -462,7 +412,8 @@ ALTER TABLE `vacuna_aplicada`
 --
 ALTER TABLE `adopcion`
   ADD CONSTRAINT `adopcion_ibfk_1` FOREIGN KEY (`id_adoptante`) REFERENCES `adoptante` (`id_adoptante`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `adopcion_ibfk_2` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id_animal`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `adopcion_ibfk_2` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id_animal`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `adopcion_ibfk_3` FOREIGN KEY (`id_centro`) REFERENCES `centro_adopcion` (`id_centro`);
 
 --
 -- Filtros para la tabla `animal`
@@ -476,7 +427,8 @@ ALTER TABLE `animal`
 ALTER TABLE `denuncia`
   ADD CONSTRAINT `denuncia_ibfk_1` FOREIGN KEY (`id_motivo`) REFERENCES `motivo_denuncia` (`id_motivo`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `denuncia_ibfk_2` FOREIGN KEY (`id_adoptante`) REFERENCES `adoptante` (`id_adoptante`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `denuncia_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `denuncia_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `denuncia_ibfk_4` FOREIGN KEY (`id_centro`) REFERENCES `centro_adopcion` (`id_centro`);
 
 --
 -- Filtros para la tabla `periodo_seguimiento`
@@ -489,7 +441,8 @@ ALTER TABLE `periodo_seguimiento`
 --
 ALTER TABLE `revision`
   ADD CONSTRAINT `revision_ibfk_1` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id_animal`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `revision_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `revision_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `revision_ibfk_3` FOREIGN KEY (`id_vacuna`) REFERENCES `vacuna` (`id_vacuna`);
 
 --
 -- Filtros para la tabla `revocaciones`
@@ -502,13 +455,6 @@ ALTER TABLE `revocaciones`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_centro`) REFERENCES `centro_adopcion` (`id_centro`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `vacuna_aplicada`
---
-ALTER TABLE `vacuna_aplicada`
-  ADD CONSTRAINT `vacuna_aplicada_ibfk_2` FOREIGN KEY (`id_vacuna`) REFERENCES `vacuna` (`id_vacuna`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `vacuna_aplicada_ibfk_3` FOREIGN KEY (`id_revision`) REFERENCES `revision` (`id_revision`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

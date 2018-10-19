@@ -83,9 +83,18 @@ class M_Periodo_seguimiento extends CI_Model {
     
     // ---> verifica que la fecha desde no sea mayor a la fecha hasta y verifica que el periodo seleccionado
     //--> no se pise con otro periodo de seguimiento activo
-    function verificarPeriodo()
+    function verificarPeriodo($fechaDesde, $fechaHasta, $tipoPeriodo)
     {
-        
+        $this -> db -> from('periodo_seguimiento');
+        $this -> db -> where('fecha_inicio_periodo >',$fechaDesde);
+        $this -> db -> where('fecha_fin_periodo <',$fechaHasta);
+        $this -> db -> where('tipo_periodo',$tipoPeriodo);
+        $query = $this -> db -> get();
+        if ($query -> num_rows() > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
     
     
