@@ -112,7 +112,7 @@ class C_Animal extends CI_Controller {
         $adoptante = $this->M_Adoptante->obtenerUno($this->input->post('id_adoptante'));
         if ($adoptante->aptoAdoptar()) {
             $this->load->model('M_Adopcion');
-            if ($this->M_Adopcion->registrarAdopcion($this->input->post('id_adoptante'),$this->input->post('id_animal'))) {
+            if ($this->M_Adopcion->registrarAdopcion($this->input->post('id_adoptante'),$this->input->post('id_animal'),$this->session->userdata('id_centro'))) {
                 $this->load->model('M_Animal');
                 $animal= $this->M_Animal->obtenerUno($this->input->post('id_animal'));
                 $animal->cambiarEstadoAdoptado(true);
@@ -134,8 +134,8 @@ class C_Animal extends CI_Controller {
         $id_animal = $this->input->post('id_animal');
 
         $this->load->model('M_Adopcion');
-        $this->M_Adopcion->registrarAdopcion($id_adoptante,$id_animal);
 
+        $this->M_Adopcion->registrarAdopcion($id_adoptante,$id_animal,$this->session->userdata('id_centro'));
         $this->load->model('M_Animal');
         $animal = $this->M_Animal->obtenerUno($id_animal);
         $animal->cambiarEstadoAdoptado(true);

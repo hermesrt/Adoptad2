@@ -25,40 +25,41 @@
 
 					<h4 class="card-title"><i class="fas fa-user-circle"></i> Animales:</h4>
 					<ul class="list-group">
-						<?php foreach ($adopciones as $adopcion): ?>
-							
-							<li class="list-group-item">
-								<div class="row">
-									<div class="col-6">
-										<img src="<?= base_url('assets/img/animales/').$adopcion->animal->nombre_imagen_animal ?>">
-									</div>
-									<div class="col-6">
-										<h4><?= $adopcion->animal->nombre_animal ?></h4>
-										<ul>
-											<li>Especie: <?= $adopcion->animal->especie_animal ?></li>
-											<li>Raza: <?= $adopcion->animal->raza_animal ?></li>
-											<li>Edad: <?= $adopcion->animal->fechaNacimiento ?></li>
-											<li>Sexo: <?= $adopcion->animal->sexo_animal ?></li>
-											<li>Castrado:
-												<?php if ($adopcion->animal->castrado==1): ?>
-													Si
-													<?php else: ?>
-														No
-													<?php endif ?>
-
-												</li>
-											</ul>
+						<?php if ($adopciones): ?>							
+							<?php foreach ($adopciones as $adopcion): ?>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-6">
+											<img src="<?= base_url('assets/img/animales/').$adopcion->animal->nombre_imagen_animal ?>">
 										</div>
-									</div>
-									<br>
-									<center>
-										<button type="button" class="btn btn-success btn-registrar" id="<?=  $adopcion->animal->id_animal ?>">
-											Registrar Revisión
-										</button>
-									</center>
-								</li>
-								<input type="hidden" id="id_usuario" value="<?= $this->session->userdata('id_usuario') ?>">
-							<?php endforeach ?>
+										<div class="col-6">
+											<h4><?= $adopcion->animal->nombre_animal ?></h4>
+											<ul>
+												<li>Especie: <?= $adopcion->animal->especie_animal ?></li>
+												<li>Raza: <?= $adopcion->animal->raza_animal ?></li>
+												<li>Edad: <?= $adopcion->animal->fechaNacimiento ?></li>
+												<li>Sexo: <?= $adopcion->animal->sexo_animal ?></li>
+												<li>Castrado:
+													<?php if ($adopcion->animal->castrado==1): ?>
+														Si
+														<?php else: ?>
+															No
+														<?php endif ?>
+
+													</li>
+												</ul>
+											</div>
+										</div>
+										<br>
+										<center>
+											<button type="button" class="btn btn-success btn-registrar" id="<?=  $adopcion->animal->id_animal ?>">
+												Registrar Revisión
+											</button>
+										</center>
+									</li>
+									<input type="hidden" id="id_usuario" value="<?= $this->session->userdata('id_usuario') ?>">
+								<?php endforeach ?>
+							<?php endif ?>
 						</ul>
 					</div>
 				</div>
@@ -86,7 +87,7 @@
 						<div class="form-group">
 							<label for="TipoRevision">Tipo de revisión</label>
 							<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
-								<option value="Castración">Castración</option>
+								<option value="Castracion">Castración</option>
 								<option value="Seguimiento">Seguimiento</option>
 								<option value="Vacunacion">Vacunación</option>						
 							</select>
@@ -130,7 +131,7 @@
 			$("#modalRevision").modal("show");
 			var idAnimal = this.closest('button').id;
 			$("#formRevision").on("submit",function(e) {
-				// e.preventDefault();
+				e.preventDefault();
 				//var fechaActual = Date();
 				if ($("#fecha").val()) {
 					$.ajax({
@@ -148,6 +149,10 @@
 					.done(function(msg) {
 						alert(msg);
 						$("#modalRevision").modal("hide");
+						window.location = "";
+						// probar en IE (agregar window.location.href )
+						// no se deberia refrescar la pagina
+
 
 					})
 					.error(function(a) {
@@ -155,7 +160,6 @@
 					});;
 				} else {
 					alert("Ingrese una fecha valida!");
-
 				}
 			});
 

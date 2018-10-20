@@ -49,6 +49,7 @@ class M_Adopcion extends CI_Model {
         $result = array();
         $this->db->from("adopcion");
         $this->db->where("id_animal", $id_animal);
+        $this->db->where('estado_adopcion', "activa");
         $query = $this->db->get();
         
         if ($query->num_rows() > 0) {
@@ -67,6 +68,7 @@ class M_Adopcion extends CI_Model {
      $result = array();
      $this->db->from("adopcion");
      $this->db->where("id_adoptante", $idAdoptante);
+     $this->db->where('estado_Adopcion', "activa");
      $query = $this->db->get();
 
      if ($query->num_rows() > 0) {
@@ -123,13 +125,14 @@ class M_Adopcion extends CI_Model {
 
     }
     
-    function registrarAdopcion($idAdoptante,$idAnimal)
+    function registrarAdopcion($idAdoptante,$idAnimal,$idCentro)
     {
      $datos = array(
         'id_animal' => $idAnimal,
         'fecha_adopcion' => $date = date('Y-m-d'),
         'id_adoptante' => $idAdoptante,
-        'estado_adopcion' => "activa"
+        'estado_adopcion' => "activa",
+        'id_centro' => $idCentro
     );
      return $this->db->insert('adopcion', $datos);
  }
@@ -156,11 +159,11 @@ class M_Adopcion extends CI_Model {
 
 function cambiarEstado($datos){
     $this->db->set('estado_adopcion', "inactiva");
-    $this->db->where('id_adopcion',$this->id_adopcion);
+    $this->db->where('id_adopcion', $this->id_adopcion);
     $this->db->update('adopcion'); 
 
     $revocacion = array(
-        'id_animal' => $this->animal->id_animal,
+        'id_adopcion' => $this->id_adopcion,
         'fecha_revocacion' => $date = date('Y-m-d'),
         'motivo_revocacion' => $datos['motivo'],
         'detalle_revocacion' => $datos['detalle']

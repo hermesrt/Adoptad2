@@ -23,7 +23,6 @@ class M_Animal extends CI_Model {
     function init($row)
     {
         $this -> load -> model('M_Revision','revision'); //---> cargo el modelo M_Revision 
-        $this -> load -> model('M_Vacuna_aplicada','vacuna_aplicada');  //---> cargo el modelo M_Vacuna_aplicada
         $this -> id_animal = $row -> id_animal;
         $this -> nombre_animal = $row -> nombre_animal;
         $this -> raza_animal = $row -> raza_animal;
@@ -36,8 +35,7 @@ class M_Animal extends CI_Model {
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
-        //-----> obtengo todas las vacunas aplicadas para un animal
-        $this -> vacunas = $this -> vacuna_aplicada -> obtenerTodos($this -> id_animal);
+        $this-> vacunas = $this-> revision-> obtenerVacunas($this-> id_animal);
     }
 
     
@@ -121,7 +119,6 @@ class M_Animal extends CI_Model {
     
     function agregarVacunaAnimal()
     {
-
     }
     
     
@@ -167,8 +164,17 @@ class M_Animal extends CI_Model {
     {
         if ($this -> castrado == 0) {
             $this->db->set('castrado',1);
-            $this->db->where('id', $this->id_animal);
-            $this->db->update('animal'); 
+            $this->db->where('id_animal', $this->id_animal);
+           return $this->db->update('animal'); 
+        }
+    }
+
+    function vacunasAplicadas($nombreVacuna)
+    {
+        if ($this->vacunas[$nombreVacuna]) {
+            return true;//si devuelve true quiere decir que la vacuna ya esta aplicada
+        } else {
+            return false;//vacuna no aplicada
         }
     }
     

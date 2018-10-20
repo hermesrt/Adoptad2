@@ -26,13 +26,41 @@ class C_Adoptante extends CI_Controller {
 	function registrarRevision()
 	{
 		$this->load->model('M_Revision');
+		$this->load->model('M_Animal');
 		$datos=$this->input->post();
 		$datos["id_usuario"] = $this->session->userdata('id_usuario');
-		if ($this->M_Revision->registrarRevision($datos)) {
-			echo 'Revision registrada correctamente';
-		} else {
-			echo 'Error al registrar la revision';
+		switch ($datos['TipoRevision']) {
+			case "Seguimiento":
+			if ($this->M_Revision->registrarRevision($datos)) {
+				echo 'Revision registrada correctamente';
+			} else {
+				echo 'Error al registrar la revision';
+			}
+			break;
+			
+			case "Castracion":
+			$animal = $this->M_Animal->obtenerUno($datos['id_animal']);
+			if ($animal->estaCastrado()) {
+				echo 'El animal ya esta castrado!';
+			}else{
+				if ($this->M_Revision->registrarRevision($datos)) {
+					echo 'Revision registrada correctamente';
+				} else {
+					echo 'Error al registrar la revision';
+				}
+			}
+			break;
+			case "vacunacion": //------pendienteVacunas
+			$animal = $this->M_Animal->obtenerUno($datos['id_animal']);
+			if ($animal->vacunasAplicadas($datos['tipoVacuna'])) {
+				echo 'La vacuna ya esta aplicada';
+			} else {
+				//hacer el metodo para que aplique la vacuna
+			}
+			break;
 		}
+
+		
 	}
 
 

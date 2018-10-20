@@ -55,7 +55,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form>
+				<form id="formEditar">
 					<input type="hidden" id="idAnimal">
 					<fieldset class="form-group">
 						<label for="nombre">Nombre</label>
@@ -77,11 +77,11 @@
 						<label for="fechaEditar">Fecha de nacimiento</label>
 						<input type="date" class="form-control" id="fechaEditar" placeholder="Fecha de nacimiento">
 					</fieldset>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
+					</div>
 				</form>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -246,7 +246,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form">
+				<form id="formRevocar">
 					<div class="form-group">
 
 						<label for="motivo">Seleccione el motivo de la revocacion:</label>
@@ -263,11 +263,11 @@
 						<label for="detalleRevocacion">Detalle de la revocacion:</label>
 						<textarea class="form-control mx-2" name="detalleRevocacion" id="detalleRevocacion" placeholder="Ingrese detalle de revocacion (opcional)..."></textarea>
 					</div>
-				</form>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					
-					<button type="button" id="btnRevocarAdopcion" class="btn btn-primary">Revocar Adopcion</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+						<button type="submit" id="btnRevocarAdopcion" class="btn btn-primary">Revocar Adopcion</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -300,8 +300,8 @@
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
-$(document).ready(function() {	
-    
+	$(document).ready(function() {	
+
 // -------------------------<AJAX ALTA ANIMAL>------------------------//
 $("#formuploadajax").on("submit", function(e){
 	e.preventDefault();
@@ -407,18 +407,11 @@ table.on( 'draw', function () {
 			var dato = armarRegistro(this);
 			llenarModal(dato);
 			$('#md-edicion').modal('show');
-		})
+		});
 
-		$('#btnGuardarEdicion').click(function(event) {
+		$('#formEditar').off().on("submit", function(event) {
+			event.preventDefault();
 			var registro;
-			registro =
-			{
-				idAnimal:$('#idAnimal').val(),
-				nombre :$('#nombre').val(),
-				especie :$('#especie').val(),
-				raza :$('#raza').val(),
-				sexo: $('#sexo').val()
-			}
 			$.ajax({
 				url: '<?= base_url('C_Animal/guardarEdicion') ?>',
 				type: 'POST',
@@ -429,12 +422,12 @@ table.on( 'draw', function () {
 				sexo: $('#sexo').val()},
 			})
 			.done(function() {
+				$('#md-edicion').modal('hide');
 				$('#table_id').DataTable().ajax.reload();
 			})
 			.fail(function() {
 				console.log("error");
 			});
-			$('#md-edicion').modal('hide');
 		});
 		// -----</BTN EDITAR>------//
 		
@@ -534,72 +527,72 @@ table.on( 'draw', function () {
 				})
 			});
 
-				$("#btnRegistrarAdopcion").click(function(event) {
-					dni = $("#dni").val();
-					$.ajax({
-						url: 'C_Animal/buscarAdoptante',
-						type: 'POST',
-						data: {dni: dni},
-					})
-					.done(function(adoptante) {
-						if (adoptante) {
-							var obj = $.parseJSON(adoptante);
-							var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
-							if (a) {
-								$.ajax({
-									url: 'C_Animal/registrarAdopcion',
-									type: 'POST',
-									data: {
-										id_animal: id_animal,
-										id_adoptante: obj.id_adoptante
-									},
-								})
-								.done(function(msg) {
-									alert(msg);
-									$("#md-adopcion").modal("hide");
-									$('#table_id').DataTable().ajax.reload();
-								});
+			$("#btnRegistrarAdopcion").off().click(function(event) {
+				dni = $("#dni").val();
+				$.ajax({
+					url: 'C_Animal/buscarAdoptante',
+					type: 'POST',
+					data: {dni: dni},
+				})
+				.done(function(adoptante) {
+					if (adoptante) {
+						var obj = $.parseJSON(adoptante);
+						var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
+						if (a) {
+							$.ajax({
+								url: 'C_Animal/registrarAdopcion',
+								type: 'POST',
+								data: {
+									id_animal: id_animal,
+									id_adoptante: obj.id_adoptante
+								},
+							})
+							.done(function(msg) {
+								alert(msg);
+								$("#md-adopcion").modal("hide");
+								$('#table_id').DataTable().ajax.reload();
+							});
 
-							}
-						} else {
-							var conf = confirm("No se encontro el adoptante desea registrarlo?");
-							if (conf) {
-								$("#md-altaAdoptante").modal("show");
-								$("#btnRegistrarAdoptante").click(function(event) {
-									if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
-										$.ajax({
-											url: 'C_Animal/registrarAdoptanteYAdopcion',
-											type: 'POST',
-											data: {
-												nombreAdoptante: $("#nombreAdoptante").val(),
-												apellidoAdoptante: $("#apellidoAdoptante").val(),
-												direccionAdoptante:$("#direccionAdoptante").val(),
-												dniAdoptante: $("#dniAdoptante").val(),
-												telefonoAdoptante: $("#telefonoAdoptante").val(),
-												emailAdoptante: $("#emailAdoptante").val(),
-												ciudadAdoptante: $("#ciudadAdoptante").val(),
-												id_animal: id_animal
-											},
-										})
-										.done(function(rta) {
-											alert(rta);
-											$("#md-altaAdoptante").modal("hide");
-											$("#md-adopcion").modal("hide");
-
-											$('#table_id').DataTable().ajax.reload();
-										});
-
-									} else {
-										alert("Ingrese todos los campos!")
-									}
-								});
-
-							}
 						}
-					});
-				});
+					} else {
+						var conf = confirm("No se encontro el adoptante desea registrarlo?");
+						if (conf) {
+							$("#md-altaAdoptante").modal("show");
+							$("#btnRegistrarAdoptante").click(function(event) {
+								if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
+									$.ajax({
+										url: 'C_Animal/registrarAdoptanteYAdopcion',
+										type: 'POST',
+										data: {
+											nombreAdoptante: $("#nombreAdoptante").val(),
+											apellidoAdoptante: $("#apellidoAdoptante").val(),
+											direccionAdoptante:$("#direccionAdoptante").val(),
+											dniAdoptante: $("#dniAdoptante").val(),
+											telefonoAdoptante: $("#telefonoAdoptante").val(),
+											emailAdoptante: $("#emailAdoptante").val(),
+											ciudadAdoptante: $("#ciudadAdoptante").val(),
+											id_animal: id_animal
+										},
+									})
+									.done(function(rta) {
+										alert(rta);
+										$("#md-altaAdoptante").modal("hide");
+										$("#md-adopcion").modal("hide");
 
+										$('#table_id').DataTable().ajax.reload();
+									});
+
+								} else {
+									alert("Ingrese todos los campos!")
+								}
+							});
+
+						}
+					}
+				});
 			});
+
+		});
 		// -----</BTN Registrar Adopcion>------//
 
 		// -----<BTN Revocar Adopcion>------//
@@ -608,7 +601,8 @@ table.on( 'draw', function () {
 			if (t) {
 				$("#md-revocar").modal("show");
 				id_animal = $(this).closest('tr').find('.id').html();
-				$("#btnRevocarAdopcion").click(function(event) {
+				$("#formRevocar").off().on("submit", function(event) {
+					event.preventDefault();
 					$.ajax({
 						url: 'C_Animal/revocarAdopcion',
 						type: 'POST',
