@@ -44,7 +44,17 @@ class M_Revision extends CI_Model {
     //-----> obtiene las vacunas de un animal en una revision
     public function obtenerVacunas($id_animal)
     {
-
+   $this->db->from("revision")->where('id_animal',$id_animal);
+   $this->db->from("revision")->where('id_vacuna > ',0);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $row = $query->result();
+            $new_object = new self();
+            $new_object->init($row[0]);
+            return $new_object;
+        }else {
+            return false;
+        }
     }
     
     
@@ -135,6 +145,29 @@ class M_Revision extends CI_Model {
             'id_animal' => $datos['id_animal'],
             'id_usuario' => $datos['id_usuario']
         );
+        switch ($datos['TipoRevision']) {
+            case 'Vacunacion':
+
+            $this->db->insert('revision', $revision);
+            $vacuna = array(
+                'fecha_aplicacion_vacuna' => $datos['fecha'],
+                'id_vacuna' => $datos['tipoVacuna'],
+                'id_revision' => $this->db->insert_id(),
+            );
+            return $this->db->insert('vacuna_aplicada', $vacuna);
+            break;
+            case 'Castracion':
+
+            $this->db->insert('revision', $revision);
+            $this->load->model('M_Animal');
+            $animal=$this->M_Animal->obtenerUno($datos['id_animal']);
+            return $animal->castrar();
+            break;
+            case 'Seguimiento':
+
+            return $this->db->insert('revision', $revision);
+            break;
+        }
         if ($datos['TipoRevision'] == "Vacunacion") {
             $this->db->insert('revision', $revision);
             $vacuna = array(

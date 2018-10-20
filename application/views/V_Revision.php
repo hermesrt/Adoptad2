@@ -22,7 +22,6 @@
 				<div class="card-body">
 
 					<h4 class="card-title"><i class="fas fa-notes-medical"></i> Revisiones:</h4>
-
 					<table class="table table-striped table-dark display" id="table_id">
 						<thead>
 							<tr>
@@ -34,15 +33,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <?php foreach($revisiones as $revision): ?>
-                             <tr>
-                                <th scope="row"><?= $revision -> id_revision ?></th>
-                                <td><?= $revision -> tipo_revision ?></td>
-                                <td><?= $revision -> fecha_revision ?></td>
-                                <td><a href="#">Nombre adoptante</a></td>
-                                <td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
-                            </tr>
-                        <?php endforeach ?>
+                            <?php if ($revisiones): ?>                                
+                              <?php foreach($revisiones as $revision): ?>
+                                 <tr>
+                                    <th scope="row"><?= $revision -> id_revision ?></th>
+                                    <td><?= $revision -> tipo_revision ?></td>
+                                    <td><?= $revision -> fecha_revision ?></td>
+                                    <td><a href="#">Nombre adoptante</a></td>
+                                    <td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
+                                </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </tbody>
                 </table>
 
