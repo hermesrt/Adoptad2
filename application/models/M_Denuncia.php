@@ -7,7 +7,7 @@ class M_Denuncia extends CI_Model {
     public $id_denuncia;
     public $fecha_denuncia;
     public $detalle_denuncia;
-    public $nombre_persona_registro_denuncia;
+    public $id_usuario;
     public $id_adoptante;
     public $id_motivo;
     public $id_centro;
@@ -19,7 +19,7 @@ class M_Denuncia extends CI_Model {
         $this -> fecha_denuncia = $row -> fecha_denuncia;
         $this -> id_adoptante = $row -> id_adoptante;
         $this -> id_motivo = $row -> id_motivo;
-        $this -> nombre_persona_registro_denuncia = $row -> nombre_persona_registro_denuncia;
+        $this -> id_usuario = $row -> id_usuario;
         $this -> detalle_denuncia = $row -> detalle_denuncia;
         $this -> id_centro = $row -> id_centro;
     }
