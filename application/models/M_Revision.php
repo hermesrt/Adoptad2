@@ -45,7 +45,7 @@ class M_Revision extends CI_Model {
     public function obtenerVacunas($id_animal)
     {
    $this->db->from("revision")->where('id_animal',$id_animal);
-   $this->db->from("revision")->where('id_vacuna > ',0);
+   $this-> db ->where('id_vacuna >',0);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $row = $query->result();

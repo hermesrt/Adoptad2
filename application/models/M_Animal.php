@@ -27,6 +27,7 @@ class M_Animal extends CI_Model {
         $this -> nombre_animal = $row -> nombre_animal;
         $this -> raza_animal = $row -> raza_animal;
         $this -> especie_animal = $row -> especie_animal;
+        $this -> descripcion_animal = $row -> descripcion_animal;
         $this -> sexo_animal = $row -> sexo_animal;
         $this -> castrado = $row -> castrado;
         $this -> adoptado = $row -> adoptado;

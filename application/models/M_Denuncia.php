@@ -94,9 +94,9 @@ class M_Denuncia extends CI_Model {
     {
         $this->db->from('motivo_denuncia');
         $this -> db -> where('id_motivo',$id_motivo);
-        $query = $this->db->get();
+        $query = $this-> db -> get();
         if ($query -> num_rows() > 0){
-            return $query;   //----> devuelve un array con el id_motivo y el motivo_denuncia
+            return $query;
         }else{
             return false;
         }
