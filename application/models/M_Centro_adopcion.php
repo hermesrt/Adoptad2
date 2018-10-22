@@ -13,13 +13,16 @@ class M_Centro_adopcion extends CI_Model {
     public $estado_ca;
     public $animales;          //----> array de objeto M_Animal
     public $periodos_seguimientos; //-----> el centro de adopcion tiene muchos periodos de seguimiento
-    
+    public $adopciones;
+    public $denuncias;
     
     function init($row)
     {
         //----> Cargo los modelos que voy a usar
         $this -> load -> model('M_Animal','animal');
         $this -> load -> model('M_Periodo_seguimiento','periodo');
+        $this -> load -> model('M_Adopcion','adopcion');
+        $this -> load -> model('M_Denuncia','denuncia');
         
         $this -> id_centro = $row -> id_centro;
         $this -> nombre_ca = $row -> nombre_ca;
@@ -32,6 +35,10 @@ class M_Centro_adopcion extends CI_Model {
         $this -> animales = $this -> animal -> obtenerPorCentro($this -> id_centro);
         //------> obtengo todos los periodos de seguimiento para un centro de adopcion
         $this -> periodos_seguimientos = $this ->  periodo -> obtenerPorCentro($this -> id_centro);
+        //-----> obtengo todas las adopciones para ese centro de adopcion
+        $this -> adopciones = $this -> adopcion -> obtenerAdopcionesPorCentro($this -> id_centro);
+        //---->  obtengo todas las denuncias por centro
+        $this -> denuncias = $this -> denuncia -> obtenerDenunciasPorCentro($this -> id_centro);
     }
     
     
@@ -79,21 +86,13 @@ class M_Centro_adopcion extends CI_Model {
     //-----> esta funcion trae todas las adopciones relacionadas a los animales que estan este centro de adopcion
     public function getAdopciones()
     {
-        if ( $this -> animales  ) {
-            $this -> load -> model('M_Adopcion','adopcion');
-            foreach ($this -> animales as $animal){
-                $adopciones[] = $this -> adopcion -> obtenerAdopcionPorAnimal($animal -> id_animal);
-            }
-            return $adopciones;
-        }else{
-            return false;
-        }
+        return $this -> adopciones;
     }
     
     //------> funcion que obtiene un array de denuncias registradas a adoptantes que pertenecen en ese centro
     public function getDenuncias()
     {
-        
+        return $this -> denuncias;
     }
     
     //----- get Animales, devuelve el array de animales asociado a ese centro

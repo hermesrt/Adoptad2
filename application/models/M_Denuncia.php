@@ -43,6 +43,25 @@ class M_Denuncia extends CI_Model {
         }
     }
     
+    //---> obtiene todas las Denuncias por centro
+    function obtenerDenunciasPorCentro($id_centro)
+    {
+        $result = array();
+        $this->db->from("denuncia");
+        $this -> db -> where('id_centro',$id_centro);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $new_object = new self();
+                $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Denuncia
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
+    
     
     //---> obtiene todas las Denuncias
     function obtenerTodos()

@@ -55,45 +55,74 @@
 
 
 
-	<!-- Modal -->
-	<div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Nuevo Periodo de Seguimiento</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="formulario" class="formulario" method="post"> 
-						<fieldset class="form-group">
-							<label for="inputGroupSelect01">Tipo de Periodo</label>
-							<select class="custom-select" id="tipoPeriodo">
-								<option selected >Seleccione un tipo de periodo de seguimiento</option>
-								<option value="Vacunacion">Vacunación</option>
-								<option value="Castracion">Castración</option>
-								<option value="Seguimiento">Seguimiento</option>
-							</select>
-						</fieldset>
-						<fieldset class="form-group">
-							<label for="fechaDesde">Fecha Inicio Periodo</label>
-							<input type="date" class="form-control" name="" id="fechaDesde">
-						</fieldset>
-						<fieldset class="form-group">
-							<label for="fechaHasta">Fecha Fin Periodo</label>
-							<input type="date" name="" class="form-control" id="fechaHasta">
-						</fieldset>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- Modal -->
+<div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Periodo de Seguimiento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formulario" class="formulario" method="post"> 
+                    <fieldset class="form-group">
+                        <label for="inputGroupSelect01">Tipo de Periodo</label>
+                        <select class="custom-select" id="tipoPeriodo">
+                            <option selected >Seleccione un tipo de periodo de seguimiento</option>
+                            <option value="Vacunacion">Vacunación</option>
+                            <option value="Castracion">Castración</option>
+                            <option value="Seguimiento">Seguimiento</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="fechaDesde">Fecha Inicio Periodo</label>
+                        <input type="date" class="form-control" name="" id="fechaDesde">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="fechaHasta">Fecha Fin Periodo</label>
+                        <input type="date" name="" class="form-control" id="fechaHasta">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
+            </div>
+        </div>
+    </div>
+</div>
 	
+	
+	
+<!-- Modal que se muestra cuando se registro correctamente el periodo de seguimiento -->
+<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Periodo registrado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form>
+                <fieldset>
+                    <label id="mensaje"></label>
+                </fieldset>
+            </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Script para hacer el ajax y las validaciones --> 	
 <script>
     
     //------> validacion de fechas para mandar por el formulario
@@ -158,6 +187,11 @@
                     'success': function (data) {
                         datos = JSON.parse(data);
                         console.log(datos);
+                        if (datos['periodo_valido']){
+                            $('#mensaje').html('El periodo se registro exitosamente!');
+                        } else {
+                            $('#mensaje').html('El periodo ingresado no es valido porque se superpone con otros periodos de seguimiento.');
+                        }
                     }
                 })
                 // Code to run if the request succeeds (is done);
@@ -165,6 +199,7 @@
                 .done(function( json ) {         
                     console.log('se hizo bien man 👏👏');
                     $('#modalPeriodo').modal('hide');
+                    $('#modalMensaje').modal('show');
                 })
                 // Code to run if the request fails; the raw request and
                 // status codes are passed to the function
