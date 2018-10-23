@@ -101,7 +101,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <h5 class="modal-title" id="cartelModal"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -224,10 +224,10 @@ $(document).ready( function () {
                         datos = JSON.parse(data);
                         console.log(datos);
                         if (datos['periodo_valido']){
-                            $('#exampleModalLabel').html('<i class="fas fa-check-circle"> Periodo registrado');
+                            $('#cartelModal').html('<i class="fas fa-check-circle"> Periodo registrado');
                             $('#mensaje').html('El periodo creado se registro exitosamente!');
                         } else {
-                            $('#exampleModalLabel').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
+                            $('#cartelModal').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
                             $('#mensaje').html('El periodo ingresado no es valido porque se superpone con otros periodos de seguimiento.');
                         }
                     }
