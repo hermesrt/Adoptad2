@@ -58,10 +58,30 @@ class M_Animal extends CI_Model {
     }
     
     //---------> Recupera todos los animales de la bd
-    function obtenerTodos()
+    function obtenerTodos($filtro=false)
     {
         $result = array();
         $this->db->from("animal");
+
+        // APLICA FILTROS SI HAY (-1 cuando no importa ese filtro) //
+        if ($filtro) {
+            if ($filtro['centro'] != -1) {
+                $this->db->where('id_centro', $filtro['centro']);
+            }
+            if ($filtro['especie']!=-1) {
+                $this->db->where('especie_animal', $filtro['especie']);
+            }
+            if ($filtro['raza']!=-1) {
+                $this->db->where('raza_animal', $filtro['raza']);
+            }
+            if ($filtro['sexo']!=-1) {
+                $this->db->where('sexo_animal', $filtro['sexo']);
+            }
+            if ($filtro['castrado']!=-1) {
+                $this->db->where('castrado', $filtro['castrado']);
+            }
+        }
+
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -264,7 +284,24 @@ function cambiarEstadoAdoptado($value=false)
 
 }
 
+/*CREO QUE SERIA MEJOR QUE ESTO TENER UNAS TABLAS EN DB SOLO CON LAS ESPECIES/RAZAS QUE SE USEN PARA CARGAR LOS SELECT'S, (SIN ID, SOLO NOMBRE)*/
+function especieDistinct()
+{
+    $this->db->distinct();
+    $this->db->select('especie_animal');
+    $this->db->from('animal');
+    $query = $this->db->get();
+    return $query->result();
+}
 
+function razaDistinct()
+{
+    $this->db->distinct();
+    $this->db->select('raza_animal');
+    $this->db->from('animal');
+    $query = $this->db->get();
+    return $query->result();
+}
 
 }
 
