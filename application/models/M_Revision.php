@@ -28,9 +28,10 @@ class M_Revision extends CI_Model {
     //-----> obtiene una Revision
     function obtenerUno($id)
     {
-        $this->db->from("revision")->where('id_revision',$id);
+        $this->db->from('revision');
+        $this->db->where('id_revision',$id);
         $query = $this->db->get();
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() == 1) {
             $row = $query->result();
             $new_object = new self();
             $new_object->init($row[0]);
@@ -44,8 +45,8 @@ class M_Revision extends CI_Model {
     //-----> obtiene las vacunas de un animal en una revision
     public function obtenerVacunas($id_animal)
     {
-   $this->db->from("revision")->where('id_animal',$id_animal);
-   $this->db->from("revision")->where('id_vacuna > ',0);
+   $this->db->from("revision");
+   //$this->db->from("revision")->where('id_vacuna > ',0);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             $row = $query->result();
