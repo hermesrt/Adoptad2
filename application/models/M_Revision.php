@@ -10,6 +10,7 @@ class M_Revision extends CI_Model {
     public $detalle_revision;
     public $id_animal;
     public $id_usuario;
+    public $id_vacuna;
     
     
     //-------> iniciliza el objeto M_Revision con todos los valores de la columna que trae de la bd
@@ -21,6 +22,7 @@ class M_Revision extends CI_Model {
         $this -> detalle_revision = $row -> detalle_revision;
         $this -> id_animal = $row -> id_animal;
         $this -> id_usuario = $row -> id_usuario;
+        $this -> id_vacuna = $row -> id_vacuna;
     }
 
     
@@ -44,19 +46,28 @@ class M_Revision extends CI_Model {
     //-----> obtiene las vacunas de un animal en una revision
     public function obtenerVacunas($id_animal)
     {
-   $this->db->from("revision")->where('id_animal',$id_animal);
-   $this-> db ->where('id_vacuna >',0);
+        //---> Cargo el modelo vacuna asi cuando devuelvo ya devuelvo objetos vacuna
+        $this -> load -> model('M_Vacuna','vacuna');
+        //----> Hago la consulta para que traiga el join de las vacunas de la revisiones de ese animal
+        $this -> db -> select('vacuna.id_vacuna,vacuna.nombre_vacuna');  //--> solo trae del join a los atributos de la vacuna
+        $this-> db ->from("revision");
+        $this -> db ->where('revision.id_animal',$id_animal);
+        $this-> db ->where('revision.id_vacuna >',0);
+        $this -> db -> join('vacuna','vacuna.id_vacuna = revision.id_vacuna','inner');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-            $row = $query->result();
-            $new_object = new self();
-            $new_object->init($row[0]);
-            return $new_object;
+            $result = array();
+            foreach ($query->result() as $row) {
+                $vacuna = $this -> vacuna -> obtenerUno($row -> id_vacuna); //-----> obtengo la vacuna
+                $result[] = $vacuna;   
+            }
+            return $result;  //-----> devuelve un array de objetos Vacuna
         }else {
             return false;
         }
     }
     
+
     
     //---> obtiene todas las Revisiones para un animal
     function obtenerRevisiones($id_animal)

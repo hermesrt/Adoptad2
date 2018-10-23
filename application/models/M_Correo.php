@@ -13,11 +13,11 @@ class M_correo extends CI_Model {
             'smt_host' => 'ssl://smtp.googlemail.com',  // El servidor de correo que utilizaremos
             'smtp_port' => '465',  //---> el puertoque utilizara el servidor smtp
             'smtp_user' => 'nombre_email_que_creamos@gmail.com', // aca colocamos el mail que creamos para enviar
-            'smtp_pass' => 'password'   // aca va la contraseña que le puse al mail de arriba
+            'smtp_pass' => 'password',   // aca va la contraseña que le puse al mail de arriba
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'wordwrap' => TRUE,
-            'validate' => TRUE;   ///----> El email debe ser valido
+            'validate' => TRUE   ///----> El email debe ser valido
         );
         try{
             //---> inicializo el mail con la configuracion de arriba

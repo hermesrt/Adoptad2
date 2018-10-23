@@ -19,7 +19,7 @@
 					<center><h1 class="my-2"><i class="fas fa-check"></i></center>						
 						<center><h4 class="card-title">Periodos de Seguimiento Activos:</h4></center>
 						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo" data-placement="right" title="Presione para agregar un nuevo periodo de seguimiento"><i class="far fa-calendar-plus"></i> Agregar Nuevo</button>
-						<table class="table table-striped table-dark">
+						<table class="table table-striped table-dark display" id="table_id">
 							<thead>
 								<tr>
 									<th>Tipo de Periodo</th>
@@ -122,8 +122,49 @@
 
 
 
-<!-- Script para hacer el ajax y las validaciones --> 	
+<!-- Script para hacer el ajax y las validaciones y cargar la tabla --> 	
 <script>
+    
+    
+$(document).ready( function () {
+    
+    //------------> seteo las configuraciones de la tabla
+    $('#table_id').DataTable({
+        select: true,  //-----> hace que las filas sean seleccionables
+        paging: true,  //--> habilita el paginado
+        "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
+            "lengthMenu": "Muestra _MENU_ períodos por página",
+            "zeroRecords": "No se encontro resultados",
+            "info": "Mostrando página _PAGE_ de _PAGES_ páginas",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(Filtrando los _MAX_ registros)",
+            select: {
+                rows: "%d fila seleccionada"
+            },
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "previous": "Anterior",
+                "next": "Siguiente"
+            }
+        },
+        pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
+        lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
+        lengthMenu: [5,10,20],       //--> longitud del menu del paginado
+        searching: false,             //---> habilita la busqueda de registros
+        "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
+            { "orderable": true, "visible": true,"targets": [0,1,2]}
+        ],
+        "ordering": true,                     //-->  habilita el ordenamiento de columnas
+        "search": {                           // -----> opciones para la busqueda de datos 
+            "caseInsensitive": true,        //----> habilita el caseSensitive
+            "search": " ",               //---> se le puede asignar un filtro por defecto a la busqueda asi los encuentra y ordena por ese filtro
+            "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
+        }
+    });
+});
+    
+    
     
     //------> validacion de fechas para mandar por el formulario
     function validoSeleccionFechas() {

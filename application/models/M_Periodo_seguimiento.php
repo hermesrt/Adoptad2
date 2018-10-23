@@ -134,13 +134,16 @@ class M_Periodo_seguimiento extends CI_Model {
     {
         $listado = array();
         foreach ($this -> adopciones as $adopcion){
-           $listado[] = $adopcion -> getAnimal();
-            // $animal = $adopcion -> getAnimal() -> vacunas;
-            //if (count($animal -> vacunas) < 1){  
-            //    $listado[] = $adopcion -> getAdoptante();
-            //}
+            $animal = $adopcion -> getAnimal();
+            if ($animal -> vacunas){   //---> si vieine por este camino es porque el animal tiene vacunas
+                if (count($animal -> vacunas) < 4){   //--> compruebo cantidad de vacunas
+                    $listado[] = $adopcion -> getAdoptante();
+                }
+            } else {  //-----> si viene por este camino entonces no tiene vacunas y lo agrego sin comprobar nada mas
+                $listado[] = $adopcion -> getAdoptante();  
+            }
         }
-        return $listado;
+        return $listado;  //----> devuelvo el listado de los adoptantes
     }
     
     //-----------> funcion que hace las comprobaciones si la fecha de la ultima revision del animal fue hace 6 meses o mas
