@@ -127,10 +127,11 @@
 	}
 
 	$(document).ready(function() {
-		$(".btn-registrar").click(function(event) {
+
+		$(".btn-registrar").off().click(function(event) {
 			$("#modalRevision").modal("show");
 			var idAnimal = this.closest('button').id;
-			$("#formRevision").on("submit",function(e) {
+			$("#formRevision").off().on("submit",function(e) {
 				e.preventDefault();
 
 				var fechaActual = new Date();
@@ -156,7 +157,7 @@
 						// probar en IE (agregar window.location.href )
 						// no se deberia refrescar la pagina
 					})
-					.error(function(msg) {
+					.fail(function(msg) {
 						alert(msg);
 					});
 				} else {
