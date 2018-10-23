@@ -36,7 +36,7 @@ class M_Animal extends CI_Model {
         $this -> id_centro = $row -> id_centro;
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
-        $this-> vacunas = $this-> revision-> obtenerVacunas($this-> id_animal);
+        $this-> vacunas = $this-> revision -> obtenerVacunas($this-> id_animal);
     }
 
     

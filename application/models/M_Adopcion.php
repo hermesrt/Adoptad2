@@ -109,7 +109,7 @@ class M_Adopcion extends CI_Model {
      $result = array();
      $this->db->from("adopcion");
      $this->db->where("id_centro", $id_centro);
-     $this -> db -> where('estado_adopcion','activa');
+     $this -> db -> where('estado_adopcion',1);
      $query = $this->db->get();
 
      if ($query->num_rows() > 0) {
@@ -128,16 +128,14 @@ class M_Adopcion extends CI_Model {
     //----> Este metodo devuelve el animal asociado a esta adopcion
     function getAnimal()
     {
-        $this -> load -> model('M_Animal','animal');
-        return $this -> animal -> obtenerUno($this -> id_animal);  //---> esto devuelve un objeto M_Animal
+        return $this -> animal;  //---> esto devuelve un objeto M_Animal
     }
     
     
     //----> Este metodo devuelve el adoptante asociado a esta adopcion
     function getAdoptante()
     {
-        $this -> load -> model('M_Adoptante','adoptante');
-        return $this -> adoptante -> obtenerUno($this -> id_adoptante); //---> esto devuelve un objeto M_Adoptante
+        return $this -> adoptante;  //---> esto devuelve un objeto M_Adoptante
     }
     
     

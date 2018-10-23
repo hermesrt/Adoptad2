@@ -46,9 +46,10 @@ class M_Periodo_seguimiento extends CI_Model {
     function obtenerPorCentro($id_centro)
     {
         $result = array();
-        $this->db->from("periodo_seguimiento")->where('id_centro',$id_centro);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
+        $this->db->from("periodo_seguimiento");
+        $this -> db -> where('id_centro',$id_centro);
+        $query = $this -> db -> get();
+        if ($query -> num_rows() > 0) {
             foreach ($query->result() as $row){
                 $new_object = new self();
                 $new_object->init($row);
@@ -60,6 +61,24 @@ class M_Periodo_seguimiento extends CI_Model {
         }
     }
     
+    function obtenerPorCentroTipo($id_centro,$tipoPeriodo)
+    {
+        $result = array();
+        $this->db->from("periodo_seguimiento");
+        $this -> db -> where('id_centro',$id_centro);
+        $this -> db -> where('tipo_periodo',$tipoPeriodo);
+        $query = $this -> db -> get();
+        if ($query -> num_rows() > 0) {
+            foreach ($query->result() as $row){
+                $new_object = new self();
+                $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos 
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
     
     
     //-----> Obtiene todas los periodos de seguimiento
@@ -97,20 +116,75 @@ class M_Periodo_seguimiento extends CI_Model {
         }
     }
     
+    //------> funcion que hace las comprobaciones para obtener los animales no castrados de los adoptantes
+    function escenarioCastracion()
+    {
+        $listado = array();
+        foreach ($this -> adopciones as $adopcion){
+            $animal = $adopcion -> getAnimal();
+            if (!$animal->estaCastrado()){
+                $listado[] = $adopcion -> getAdoptante();  //---> obtiene el adoptante y lo añade a el listado de adoptantes
+            }
+        }
+        return $listado;
+    }
+    
+    //-------> funcion que hace las comprobaciones para obtener los animales que le faltan vacunas de los adoptantes
+    function escenarioVacunacion()
+    {
+        $listado = array();
+        foreach ($this -> adopciones as $adopcion){
+           $listado[] = $adopcion -> getAnimal();
+            // $animal = $adopcion -> getAnimal() -> vacunas;
+            //if (count($animal -> vacunas) < 1){  
+            //    $listado[] = $adopcion -> getAdoptante();
+            //}
+        }
+        return $listado;
+    }
+    
+    //-----------> funcion que hace las comprobaciones si la fecha de la ultima revision del animal fue hace 6 meses o mas
+    function escenarioSeguimiento()
+    {
+        $listado = array();
+        foreach ($this -> adopciones as $adopcion){
+            $animal = $adopcion -> getAnimal();
+            if ($animal -> revisiones != false){  //----> si viene por aca entonces quiere decir que tiene una o mas revisiones
+                $ultima_revision = end($animal->revisiones);  //--> obtengo la ultima revision de ese animal
+                $fecha_ultima_revision = $ultima_revision -> getFecha();   //---> obtengo la fecha de es  revision
+                if ($ultima_revision -> compararFechas($fecha_ultima_revision)){   //---> si da true entonces la revision fue hace mas de 6 meses
+                    $listado[] = $adopcion -> getAdoptante();
+                }
+            } else {  //----> si viene por aca es porque no tiene revisiones aun
+                $listado[] = $adopcion -> getAdoptante(); 
+            } 
+        } 
+        return $listado;
+    }
+    
     
     //----> Genera un listado con objetos M_Adoptante y lo devuelve como parametro
-    function generarListaEmail()
+    function generarListaEmail($tipoPeriodo)
     {
-        if ($this -> adopciones -> sizeof() > 0) {
-            foreach ($this -> adopciones as $adopcion){
-                $listado[] = $adopcion -> getAdopante() ;
+        if (count($this -> adopciones) > 0) {
+            switch ($tipoPeriodo)
+            {
+                case 'Seguimiento':
+                    $listado = $this -> escenarioSeguimiento();   
+                    break;
+                case 'Vacunacion':
+                    $listado = $this -> escenarioVacunacion();
+                    break;
+                default:
+                    $listado = $this -> escenarioCastracion();
+                    break;
             }
             return $listado;
         }else{
             return false;
         }
     }
-    
+
     
     //------> Inserta en la tabla periodo un nuevo periodo de seguimiento
     function registrarPeriodo($tipo,$fecha_inicio,$fecha_fin,$id_centro)

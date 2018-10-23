@@ -28,10 +28,16 @@ class C_Seguimiento extends CI_Controller {
         $periodo_valido = $this -> periodo -> verificarPeriodo($fechaDesde,$fechaHasta,$tipoPeriodo);
         $datos['periodo_valido'] = $periodo_valido;
         if ($periodo_valido){
-            //-----> guarda el periodo nuevo en la base de datos
-            $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
-            
+            $periodos = $this -> periodo -> obtenerPorCentro($id_centro); //--> obtiene todos los periodos de ese centro
+            $periodo = end($periodos); //---> obtiene el ultimo periodo
+            //----> genera el listado de adoptantes para enviar el mail
+            $datos['listado'] = $periodo -> generarListaEmail($tipoPeriodo); //-> generarListaEmail($tipoPeriodo);
             //-----> falta enviar el mail a todos los adoptantes a los que los animales les falte lo del periodo de castracion
+            //-----> aca tiene que enviar el mail
+            
+            //-----> guarda el periodo nuevo en la base de datos
+            // $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
+        
         }
         
         echo json_encode($datos);   //---> devuelve los datos en json para la vista

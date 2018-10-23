@@ -124,16 +124,29 @@ class M_Revision extends CI_Model {
         }
     }
     
-    
+    //---- este metodo me parece que no se necesita para nada ...
     function fechaUltimaRevision()
     {
-
+        
     }
     
+    //-------> Compara las fechas de la ultima revision y la fecha actual
+    function compararFechas($fecha_ultima_revision)
+    {
+        $hoy = date('Y-m-d');  //----> fecha actual
+        $diff = abs(strtotime($hoy) - strtotime($fecha_ultima_revision)); //---> calcula la diferencia entre ambas fechas
+        $anios = floor($diff / (365*60*60*24));      
+        $meses = floor(($diff - $anios * 365*60*60*24) / (30*60*60*24));
+        if ($meses > 6){
+            return true;  
+        } else {
+            return false;
+        }
+    }
     
     function getFecha()
     {
-
+        return $this -> fecha_revision;
     }
     
     function registrarRevision($datos)
