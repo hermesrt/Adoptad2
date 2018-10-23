@@ -44,11 +44,12 @@ class C_Seguimiento extends CI_Controller {
             //----> genera el listado de adoptantes para enviar el mail
             $datos['listado'] = $periodo -> generarListaEmail($tipoPeriodo);   
             
+            //-----> guarda el periodo nuevo en la base de datos
+            $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
+            
             //-----> falta enviar el mail a todos los adoptantes a los que los animales les falte lo del periodo de castracion
             //-----> $this -> correo -> enviarCorreo();
             
-            //-----> guarda el periodo nuevo en la base de datos
-            $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
         }
         
         echo json_encode($datos);   //---> devuelve los datos en json para la vista

@@ -8,41 +8,37 @@ class M_correo extends CI_Model {
     //--------- funcion para enviar el mail
     public function enviarCorreo ($email_destino,$encabezado,$mensaje)
     {
-        $configGmail = array(
+        $config = array(
             'protocol' => 'smtp',
-            'smt_host' => 'ssl://smtp.googlemail.com',  // El servidor de correo que utilizaremos
-            'smtp_port' => '465',  //---> el puertoque utilizara el servidor smtp
-            'smtp_user' => 'nombre_email_que_creamos@gmail.com', // aca colocamos el mail que creamos para enviar
-            'smtp_pass' => 'password',   // aca va la contraseña que le puse al mail de arriba
+            'smtp_host' => 'smtp.googlemail.com', 
+            'smtp_user' => 'XXXXXXXX', //Su Correo de Gmail Aqui
+            'smtp_pass' => 'XXXXX', // Su Password de Gmail aqui
+            'smtp_port' => '465',
+            'smtp_crypto' => 'ssl',
             'mailtype' => 'html',
-            'charset' => 'utf-8',
             'wordwrap' => TRUE,
-            'validate' => TRUE   ///----> El email debe ser valido
+            'charset' => 'utf-8',
+            'validate' => TRUE
         );
-        try{
-            //---> inicializo el mail con la configuracion de arriba
-            $this-> email -> initialize($configGmail);
-            
-            $this->email->from('nombre_email_que_creamos');
-            $this->email->to($email_destino);
-            $this->email->cc('another@another-example.com'); 
-            $this->email->bcc('them@their-example.com');  
-
-            $this->email->subject($encabezado);   //--------> titulo 
-            $this->email->message($mensaje);   //----> mensaje 
-
-            //----> si se pudo enviar devuelve true 
-            if ($this->email->send())  //---> se envia
-            {
-                return true;
-            } else {
-                return false;
-            }
-        }catch(Exception $e){
-            //-----> Si algo anda mal devuelve false
-            $e -> getMessage();  //----> obtiene el error de la excepcion
+       // $this->load->library('email');//, $config);
+        $this -> email -> initialize($config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('correo@gmail.com','Nombre del chabon'); //----> el correo de google del que se envia
+        $this->email->to($email_destino);
+        $this->email->subject($encabezado);
+        $this->email->message($mensaje);
+        //----> Lo que esta comentado es por si falla, muestra los datos del mail y errores si es que se envio mal
+        if ($this -> email -> send(FALSE)){
+            /*echo "enviado<br/>";
+            echo $this->email->print_debugger(array('headers'));*/
+            return true;
+        }else{
+            /*echo "fallo <br/>";
+            echo "error: ".$this->email->print_debugger(array('headers'));*/
             return false;
         }
+        
+        
     
     }
     
@@ -115,7 +111,6 @@ class M_correo extends CI_Model {
 
     }
 
-    
     
 }
 

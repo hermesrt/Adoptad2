@@ -10,6 +10,7 @@ class C_Denuncia extends CI_Controller {
         $this -> load -> model('M_Denuncia','denuncia');
         $this -> load -> model('M_Motivo_denuncia','motivo');
         $this -> load -> model('M_Usuario','usuario');
+        $this -> load -> model('M_Correo','correo');
 	}
 
 	public function index()
@@ -40,6 +41,9 @@ class C_Denuncia extends CI_Controller {
                 $this->session->userdata('id_usuario'),
                 $this->session->userdata('id_centro')
             ); 
+        
+        //-----> ACA TENGO QUE ENVIAR EL MAIL
+        //  $this -> correo -> enviarCorreo($email_destino,$encabezado,$mensaje);
         
         echo json_encode($datos);   
     }

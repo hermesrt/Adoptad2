@@ -101,7 +101,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Periodo registrado</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -155,12 +155,7 @@ $(document).ready( function () {
         "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
             { "orderable": true, "visible": true,"targets": [0,1,2]}
         ],
-        "ordering": true,                     //-->  habilita el ordenamiento de columnas
-        "search": {                           // -----> opciones para la busqueda de datos 
-            "caseInsensitive": true,        //----> habilita el caseSensitive
-            "search": " ",               //---> se le puede asignar un filtro por defecto a la busqueda asi los encuentra y ordena por ese filtro
-            "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
-        }
+        "ordering": true                     //-->  habilita el ordenamiento de columnas
     });
 });
     
@@ -229,8 +224,10 @@ $(document).ready( function () {
                         datos = JSON.parse(data);
                         console.log(datos);
                         if (datos['periodo_valido']){
-                            $('#mensaje').html('El periodo se registro exitosamente!');
+                            $('#exampleModalLabel').html('<i class="fas fa-check-circle"> Periodo registrado');
+                            $('#mensaje').html('El periodo creado se registro exitosamente!');
                         } else {
+                            $('#exampleModalLabel').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
                             $('#mensaje').html('El periodo ingresado no es valido porque se superpone con otros periodos de seguimiento.');
                         }
                     }

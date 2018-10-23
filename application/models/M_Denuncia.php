@@ -93,11 +93,6 @@ class M_Denuncia extends CI_Model {
             'id_centro' => $id_centro
         );
         $this -> db -> insert('denuncia',$datos);
-        
-        //-----> ACA TENGO QUE ENVIAR EL MAIL
-        //  $this -> load -> model('M_Correo','correo');
-        //  return enviarCorreo($email_destino,$encabezado,$mensaje);
-        
     }
     
     
