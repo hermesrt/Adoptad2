@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Vacuna extends CI_Model {
-    
+
     //------> Atributos
     public $id_vacuna;
     public $nombre_vacuna;
@@ -41,7 +41,24 @@ class M_Vacuna extends CI_Model {
             foreach ($query->result() as $row) {
                 $new_object = new self();
                 $new_object->init($row);
-                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Animal
+                $result[] = $new_object;  
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
+
+    function obtenerPorAnimal($idAnimal)
+    {   
+        $result = array();
+        $this->db->from("revision");
+        $this->db->where("id_vacuna IS NOT NULL");
+        $this->db->where("id_animal", $idAnimal);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $result[]= $this->obtenerUno($row->id_vacuna);
             }
             return $result;
         }else {
@@ -52,12 +69,12 @@ class M_Vacuna extends CI_Model {
     
     function buscarVacuna()
     {
-        
+
     }
     
     function newVacuna()
     {
-        
+
     }
     
     

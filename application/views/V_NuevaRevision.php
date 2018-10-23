@@ -149,11 +149,9 @@
 					.done(function(msg) {
 						alert(msg);
 						$("#modalRevision").modal("hide");
-						window.location = "";
+						//window.location = "";
 						// probar en IE (agregar window.location.href )
 						// no se deberia refrescar la pagina
-
-
 					})
 					.error(function(a) {
 						alert(a);

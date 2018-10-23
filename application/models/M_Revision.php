@@ -43,32 +43,32 @@ class M_Revision extends CI_Model {
     
     
     //-----> obtiene las vacunas de un animal en una revision
-    public function obtenerVacunas($id_animal)
+    public function obtenerVacunas($id_animal) 
     {
-   $this->db->from("revision");
-   //$this->db->from("revision")->where('id_vacuna > ',0);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            $row = $query->result();
-            $new_object = new self();
-            $new_object->init($row[0]);
-            return $new_object;
-        }else {
-            return false;
-        }
+     $this->db->from("revision");
+     $this->db->where("id_vacuna IS NOT NULL");
+     $query = $this->db->get();
+     if ($query->num_rows() > 0) {
+        $row = $query->result();
+        $new_object = new self();
+        $new_object->init($row[0]);
+        return $new_object;
+    }else {
+        return false;
     }
-    
-    
+}
+
+
     //---> obtiene todas las Revisiones para un animal
-    function obtenerRevisiones($id_animal)
-    {
-        $result = array();
-        $this->db->from("revision")->where('id_animal',$id_animal);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
-                $new_object = new self();
-                $new_object->init($row);
+function obtenerRevisiones($id_animal)
+{
+    $result = array();
+    $this->db->from("revision")->where('id_animal',$id_animal);
+    $query = $this->db->get();
+    if ($query->num_rows() > 0) {
+        foreach ($query->result() as $row) {
+            $new_object = new self();
+            $new_object->init($row);
                 $result[] = $new_object;  //----> el resultado seria un array de objetos M_Revision para el animal $id_animal
             }
             return $result;
@@ -147,38 +147,22 @@ class M_Revision extends CI_Model {
             'id_usuario' => $datos['id_usuario']
         );
         switch ($datos['TipoRevision']) {
+
             case 'Vacunacion':
-
-            $this->db->insert('revision', $revision);
-            $vacuna = array(
-                'fecha_aplicacion_vacuna' => $datos['fecha'],
-                'id_vacuna' => $datos['tipoVacuna'],
-                'id_revision' => $this->db->insert_id(),
-            );
-            return $this->db->insert('vacuna_aplicada', $vacuna);
+            $revision['id_vacuna'] = $datos['tipoVacuna'];         
+            return $this->db->insert('revision', $revision);
             break;
-            case 'Castracion':
 
+            case 'Castracion':
             $this->db->insert('revision', $revision);
             $this->load->model('M_Animal');
             $animal=$this->M_Animal->obtenerUno($datos['id_animal']);
             return $animal->castrar();
             break;
-            case 'Seguimiento':
 
+            case 'Seguimiento':
             return $this->db->insert('revision', $revision);
             break;
-        }
-        if ($datos['TipoRevision'] == "Vacunacion") {
-            $this->db->insert('revision', $revision);
-            $vacuna = array(
-                'fecha_aplicacion_vacuna' => $datos['fecha'],
-                'id_vacuna' => $datos['tipoVacuna'],
-                'id_revision' => $this->db->insert_id(),
-            );
-            return $this->db->insert('vacuna_aplicada', $vacuna);
-        }else{
-            return $this->db->insert('revision', $revision);
         }
     }
     

@@ -50,12 +50,17 @@ class C_Adoptante extends CI_Controller {
 				}
 			}
 			break;
-			case "vacunacion": //------pendienteVacunas
+
+			case "Vacunacion":
 			$animal = $this->M_Animal->obtenerUno($datos['id_animal']);
 			if ($animal->vacunasAplicadas($datos['tipoVacuna'])) {
 				echo 'La vacuna ya esta aplicada';
 			} else {
-				//hacer el metodo para que aplique la vacuna
+				if ($this->M_Revision->registrarRevision($datos)) {
+					echo 'Revision registrada correctamente';
+				} else {
+					echo 'Error al registrar la revision';
+				}
 			}
 			break;
 		}
