@@ -132,8 +132,11 @@
 			var idAnimal = this.closest('button').id;
 			$("#formRevision").on("submit",function(e) {
 				e.preventDefault();
-				//var fechaActual = Date();
-				if ($("#fecha").val()) {
+
+				var fechaActual = new Date();
+				var fechaElegida = new Date($("#fecha").val());
+				fechaActual.setHours(0,0,0,0);
+				if ($("#fecha").val() && fechaActual.getTime()>=fechaElegida.getTime()) {
 					$.ajax({
 						url: '<?= base_url('C_Adoptante/registrarRevision') ?>',
 						type: 'POST',
@@ -153,9 +156,9 @@
 						// probar en IE (agregar window.location.href )
 						// no se deberia refrescar la pagina
 					})
-					.error(function(a) {
-						alert(a);
-					});;
+					.error(function(msg) {
+						alert(msg);
+					});
 				} else {
 					alert("Ingrese una fecha valida!");
 				}
@@ -163,4 +166,5 @@
 
 		});
 	});	
+
 </script>
