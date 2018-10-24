@@ -26,7 +26,7 @@ class C_Inicio extends CI_Controller {
     $this->load->view('Plantillas/V_Footer');		
 }
 
-public function getAnimales()
+ function getAnimales()
 {
     if ($this->input->post()) {
         echo json_encode($this -> animal -> obtenerTodos($this->input->post()));
