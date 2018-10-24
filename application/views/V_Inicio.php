@@ -151,14 +151,14 @@
     for (var i = 0, len = animales.length; i < len; i++) {
       var html ='<div class="my-2 col-xs-12 col-sm-6 col-md-4 ">';
       html +='<div class="card" style="width: 18rem;">';        
-      html +='<img class="card-img-top" src="'+window.location.origin+'/adopta2/assets/img/animales/'+animales[i].nombre_imagen_animal+'">';
+      html +='<img class="card-img-top" src="<?php echo base_url() ?>assets/img/animales/'+animales[i].nombre_imagen_animal+'">';
       html +='<div class="card-body">';        
       html +=' <h5 class="card-title">'+animales[i].nombre_animal+'</h5>';        
       html +='<p class="card-text">';        
       html +='<ul><li>Raza:'+animales[i].raza_animal+'</li>';        
       html +='<li>Sexo:'+animales[i].sexo_animal+'</li></ul>';        
       html +='</p>';        
-      html +='<a href="'+window.location.origin+'/Adopta2/C_Animal/verAnimal/'+animales[i].id_animal+'" class="btn btn-primary" ><i class="fas fa-plus"></i> Ver Animal</a></center></div></div></div>';
+      html +='<a href="<?php echo base_url() ?>/C_Animal/verAnimal/'+animales[i].id_animal+'" class="btn btn-primary" ><i class="fas fa-plus"></i> Ver Animal</a></center></div></div></div>';
       $("#fila").append(html);        
 
     }
