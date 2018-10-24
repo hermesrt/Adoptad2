@@ -6,20 +6,20 @@ class C_Inicio extends CI_Controller {
    public function __construct()
    {
        parent::__construct();
-       $this -> load -> model ('M_Animal','animal');
+       $this -> load -> model ('M_Animal');
    }
 
    public function index()
    {
     if ($this->session->userdata('id_centro')){
-        $data['animales'] = $this -> animal -> obtenerPorCentro($this->session->userdata('id_centro')); 
+        $data['animales'] = $this->M_Animal-> obtenerPorCentro($this->session->userdata('id_centro')); 
     } else {
-        $data['animales'] = $this -> animal -> obtenerTodos();
+        $data['animales'] = $this->M_Animal-> obtenerTodos();
     }
     $this->load->model('M_Centro_adopcion','CA');
     $data['centros']=$this->CA->obtenerTodos();
-    $data['especies'] = $this->animal->especieDistinct();
-    $data['razas'] = $this->animal->razaDistinct();
+    $data['especies'] = $this->M_Animal->especieDistinct();
+    $data['razas'] = $this->M_Animal->razaDistinct();
 
     $this->load->view('Plantillas/V_Header',$data);
     $this->load->view('V_Inicio');
@@ -29,10 +29,10 @@ class C_Inicio extends CI_Controller {
  function getAnimales()
 {
     if ($this->input->post()) {
-        echo json_encode($this -> animal -> obtenerTodos($this->input->post()));
+        echo json_encode($this ->M_Animal-> obtenerTodos($this->input->post()));
 
     } else {
-       echo json_encode($this -> animal -> obtenerTodos());
+       echo json_encode($this ->M_Animal-> obtenerTodos());
    }
 
 }
