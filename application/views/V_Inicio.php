@@ -166,7 +166,7 @@
 
   function busquedaFiltrada() {
     $.ajax({
-      url: 'getAnimales',
+      url: '<?php echo base_url('C_Inicio/getAnimales') ?>',
       type: 'POST',
       dataType: 'json',
       data: {
@@ -201,7 +201,7 @@
 
   $(document).ready(function() {
    $.ajax({
-    url: 'getAnimales',
+    url: '<?php echo base_url('C_Inicio/getAnimales') ?>',
     type: 'POST',
     dataType: 'json',
   })
