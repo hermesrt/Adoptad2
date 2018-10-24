@@ -69,7 +69,7 @@
      <table class="table table-striped table-dark display" id="tablaAdoptantes">
         <thead>
             <tr>
-                <th scope="col">Id Adoptante</th>              
+                <th scope="col"></th>              
                 <th scope="col">Apellido</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Telefono</th>

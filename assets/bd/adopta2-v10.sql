@@ -89,9 +89,9 @@ CREATE TABLE `animal` (
 
 INSERT INTO `animal` (`id_animal`, `nombre_animal`, `raza_animal`, `especie_animal`, `sexo_animal`, `descripcion_animal`, `estado_animal`, `castrado`, `adoptado`, `nombre_imagen_animal`, `fechaNacimiento`, `id_centro`) VALUES
 (1, 'Boby', 'Manto Negro', 'Perro', 'Masculino', '', 'activo', 1, 0, 'mantoNegro.jpg', '2018-10-09', 1),
-(2, 'Manchitas									', 'Dalmata', 'Perro', 'Masculino', 'Tiene una mancha grande en la pata izquierda', 'activo', 0, 1, 'dalmata.jpg', '2018-10-11', 1),
-(3, 'Botones									', 'Siames', 'Gato', 'Masculino', '', 'activo', 0, 1, 'gatoSiames.jpg', '2018-06-05', 1),
-(4, 'Blanca									', 'Gato Napoleon', 'Gato', 'Femenino', 'No le gusta que la acaricien', 'activo', 0, 0, 'gatoNapoleon.jgp.jpg', '2018-05-26', 1),
+(2, 'Manchitas', 'Dalmata', 'Perro', 'Masculino', 'Tiene una mancha grande en la pata izquierda', 'activo', 0, 1, 'dalmata.jpg', '2018-10-11', 1),
+(3, 'Botones', 'Siames', 'Gato', 'Masculino', '', 'activo', 0, 1, 'gatoSiames.jpg', '2018-06-05', 1),
+(4, 'Blanca', 'Gato Napoleon', 'Gato', 'Femenino', 'No le gusta que la acaricien', 'activo', 0, 0, 'gatoNapoleon.jgp.jpg', '2018-05-26', 1),
 (5, 'Olivia', 'Pastor Aleman', 'Perro', 'Femenino', 'Tiene un collar rosa con un cascabel', 'activo', 0, 0, 'pastorAleman.jpg', '2018-02-23', 1),
 (6, 'Lola', 'Caniche', 'Perro', 'Femenino', 'Tiene una marca rosada en la nariz', 'activo', 0, 0, 'caniche.jpg', '2016-12-12', 1),
 (7, 'Bolt', 'Beagle', 'Perro', 'Masculino', 'Le tiene miedo a las palomas', 'inactivo', 0, 0, 'beagle.jpg', '2017-06-19', 1),

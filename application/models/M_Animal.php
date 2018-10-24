@@ -17,7 +17,7 @@ class M_Animal extends CI_Model {
     public $fechaNacimiento;
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
-    public $vacunas;          //------->  es un array de muchos objetos vacuna_aplicada
+    public $vacunas;          //------->  es un array de muchos objetos Vacuna
     
     //-------> iniciliza el objeto M_Animal con todos los valores de la columna que trae de la bd
     function init($row)
@@ -28,6 +28,7 @@ class M_Animal extends CI_Model {
         $this -> nombre_animal = $row -> nombre_animal;
         $this -> raza_animal = $row -> raza_animal;
         $this -> especie_animal = $row -> especie_animal;
+        $this -> descripcion_animal = $row -> descripcion_animal;
         $this -> sexo_animal = $row -> sexo_animal;
         $this -> castrado = $row -> castrado;
         $this -> adoptado = $row -> adoptado;
@@ -159,10 +160,12 @@ class M_Animal extends CI_Model {
         return $this -> especie_animal;
     }
     
+    
     function getSexo()
     {
         return $this -> sexo_animal;
     }
+    
     
     function deshabilitar($motivo)
     {
@@ -227,29 +230,32 @@ class M_Animal extends CI_Model {
 
    function guardar($datos)
    {
-    $animal = array();
-    $animal["id_animal"] = "";
-    $animal["nombre_animal"] = $datos["nombreAlta"];
-    $animal["raza_animal"] = $datos["razaAlta"];
-    $animal["especie_animal"] = $datos["especieAlta"];
-    $animal["sexo_animal"] = $datos["sexoAlta"];
-    $animal["descripcion_animal"] = $datos["descripcionAlta"];
-    $animal["estado_animal"] = "activo";
-    $animal["castrado"] = $datos["castradoAlta"];
-    $animal["adoptado"] = 0;
-    $animal["nombre_imagen_animal"]= $datos["imagen"];
-    $animal["fechaNacimiento"] = $datos["fechaAlta"];
-    $animal["id_centro"] = $datos["id_centro"];
+        $animal = array();
+        $animal["id_animal"] = "";
+        $animal["nombre_animal"] = $datos["nombreAlta"];
+        $animal["raza_animal"] = $datos["razaAlta"];
+        $animal["especie_animal"] = $datos["especieAlta"];
+        $animal["sexo_animal"] = $datos["sexoAlta"];
+        $animal["descripcion_animal"] = $datos["descripcionAlta"];
+        $animal["estado_animal"] = "activo";
+        $animal["castrado"] = $datos["castradoAlta"];
+        $animal["adoptado"] = 0;
+        $animal["nombre_imagen_animal"]= $datos["imagen"];
+        $animal["fechaNacimiento"] = $datos["fechaAlta"];
+        $animal["id_centro"] = $datos["id_centro"];
 
-    return $this->db->insert('animal', $animal);
-}
-function activar()
-{
-    $this->db->set('estado_animal', "activo");
-    $this->db->where('id_animal', $this->id_animal);
-    return $this->db->update('animal');
-}
+        return $this->db->insert('animal', $animal);
+    }
+    
+    
+    function activar()
+    {
+        $this->db->set('estado_animal', "activo");
+        $this->db->where('id_animal', $this->id_animal);
+        return $this->db->update('animal');
+    }
 
+    
     //----> La funcion calcula la edad del animal
 function calculaEdad()
 {
@@ -282,7 +288,6 @@ function cambiarEstadoAdoptado($value=false)
         return $this->db->update('animal');
     }
 
-}
 
 /*CREO QUE SERIA MEJOR QUE ESTO TENER UNAS TABLAS EN DB SOLO CON LAS ESPECIES/RAZAS QUE SE USEN PARA CARGAR LOS SELECT'S, (SIN ID, SOLO NOMBRE)*/
 function especieDistinct()

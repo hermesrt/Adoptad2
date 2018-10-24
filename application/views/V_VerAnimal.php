@@ -16,7 +16,7 @@
 									<li><i class="far fa-calendar-alt"></i> Edad: <?= $animal -> calculaEdad() ?></li>
 									<li><i class="fas fa-venus-mars"></i> Sexo: <?= $animal -> sexo_animal ?></li>
 									<li><i class="fas fa-cut"></i> Castrado: <?= ($animal->castrado == 0)?'No':'Sí' ?></li>
-									<li><i class="fas fa-align-center"></i> Descripción: <?= $animal->descripcion_animal ?></li>
+									<li><i class="fas fa-align-center"></i> Descripción: <?= ($animal -> descripcion_animal) ? $animal -> descripcion_animal : "No posee" ?></li>
 								</ul>
 							</p>
 						</div>

@@ -10,6 +10,7 @@ class M_Revision extends CI_Model {
     public $detalle_revision;
     public $id_animal;
     public $id_usuario;
+    public $id_vacuna;
     
     
     //-------> iniciliza el objeto M_Revision con todos los valores de la columna que trae de la bd
@@ -21,6 +22,7 @@ class M_Revision extends CI_Model {
         $this -> detalle_revision = $row -> detalle_revision;
         $this -> id_animal = $row -> id_animal;
         $this -> id_usuario = $row -> id_usuario;
+        $this -> id_vacuna = $row -> id_vacuna;
     }
 
     
@@ -125,16 +127,29 @@ function obtenerRevisiones($id_animal)
         }
     }
     
-    
+    //---- este metodo me parece que no se necesita para nada ...
     function fechaUltimaRevision()
     {
-
+        
     }
     
+    //-------> Compara las fechas de la ultima revision y la fecha actual
+    function compararFechas($fecha_ultima_revision)
+    {
+        $hoy = date('Y-m-d');  //----> fecha actual
+        $diff = abs(strtotime($hoy) - strtotime($fecha_ultima_revision)); //---> calcula la diferencia entre ambas fechas
+        $anios = floor($diff / (365*60*60*24));      
+        $meses = floor(($diff - $anios * 365*60*60*24) / (30*60*60*24));
+        if ($meses > 6){
+            return true;  
+        } else {
+            return false;
+        }
+    }
     
     function getFecha()
     {
-
+        return $this -> fecha_revision;
     }
     
     function registrarRevision($datos)
