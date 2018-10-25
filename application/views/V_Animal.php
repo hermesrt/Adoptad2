@@ -181,15 +181,24 @@
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="especie">Especie</label>
-									<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
-										<!-- OPCIONES CARGADAS CON AJAX -->
-									</select>
+									<div class="input-group">
+										<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2"><i class="fas fa-plus-circle"></i></button>
+									</div>
+									
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="raza">Raza</label>
-									<select class="form-control" id="razaAlta" name="razaAlta">
-										<!-- OPCIONES CARGADAS CON AJAX -->
-									</select>
+									<div class="input-group">
+										
+										<select class="form-control" id="razaAlta" name="razaAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2"><i class="fas fa-plus-circle"></i></button>
+
+									</div>
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="sexoAlta">Sexo</label>
