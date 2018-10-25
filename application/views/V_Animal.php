@@ -185,7 +185,7 @@
 										<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
 											<!-- OPCIONES CARGADAS CON AJAX -->
 										</select>
-										<button class="btn btn-success mx-2"><i class="fas fa-plus-circle"></i></button>
+										<button class="btn btn-success mx-2" id="addEspecie"><i class="fas fa-plus-circle"></i></button>
 									</div>
 									
 								</fieldset>
@@ -196,7 +196,7 @@
 										<select class="form-control" id="razaAlta" name="razaAlta">
 											<!-- OPCIONES CARGADAS CON AJAX -->
 										</select>
-										<button class="btn btn-success mx-2"><i class="fas fa-plus-circle"></i></button>
+										<button class="btn btn-success mx-2" id="addRaza"><i class="fas fa-plus-circle"></i></button>
 
 									</div>
 								</fieldset>
@@ -334,8 +334,75 @@
 		});
 		
 	}
+	function imprimirEspecies() {
+		$.ajax({
+			url: 'getEspecies',
+			type: 'POST',
+			dataType: 'json',
+		})
+		.done(function(especies) {
+			$("#especieAlta").empty();
+
+			$.each(especies, function(index, val) {
+				$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
+			});
+			imprimirRazas();
+		})
+		.fail(function() {
+			console.log("Error al cargar las especies");
+		});
+	}
 
 	$(document).ready(function() {	
+
+		$("#addEspecie").click(function(event) {
+			event.preventDefault();
+			var especie = prompt("Ingrese la nueva especie");
+			if (especie) {
+				$.ajax({
+					url: 'nuevaEspecie',
+					type: 'POST',
+					data: {especie: especie},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirEspecies();
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
+
+		$("#addRaza").click(function(event) {
+			event.preventDefault();
+			var raza = prompt("Ingrese la nueva raza")
+			if (raza) {
+				$.ajax({
+					url: 'nuevaRaza',
+					type: 'POST',
+					data: {
+						especie: $("#especieAlta").val(),
+						raza: raza
+					},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirRazas();
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
 
 // -------------------------<AJAX ALTA ANIMAL>------------------------//
 $("#formuploadajax").on("submit", function(e){
@@ -373,22 +440,7 @@ $("#formuploadajax").on("submit", function(e){
 
 $("#btnAlta").off().click(function(event) {
 	$("#md-alta").modal("show");
-	$.ajax({
-		url: 'getEspecies',
-		type: 'POST',
-		dataType: 'json',
-	})
-	.done(function(especies) {
-		$("#especieAlta").empty();
-
-		$.each(especies, function(index, val) {
-			$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
-		});
-		imprimirRazas();
-	})
-	.fail(function() {
-		console.log("Error al cargar las especies");
-	});
+	imprimirEspecies();
 	
 });	
 // -------------------------</AJAX ALTA ANIMAL>------------------------//

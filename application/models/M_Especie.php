@@ -26,6 +26,12 @@ class M_Especie extends CI_Model {
 			}
 	}
 	
+	function insertEspecie($especie)
+	{
+		$this->load->model('M_Raza');
+		$this->db->insert('especie', array("especie" => $especie));
+		return $this->M_Raza->insertRaza($especie,"No Definido");
+	}
 
 }
 

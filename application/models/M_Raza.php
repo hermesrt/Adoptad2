@@ -28,6 +28,11 @@ class M_Raza extends CI_Model {
 				return false;
 			}
 	}
+
+	function insertRaza($especie,$raza)
+	{
+		return $this->db->insert('raza', array("especie" => $especie, "raza" => $raza));
+	}
 	
 
 }
