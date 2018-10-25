@@ -451,7 +451,7 @@ $("#btnAlta").off().click(function(event) {
 /*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 $('#table_id').DataTable({	
 	ajax: {
-		url: 'getAnimales',
+		url: 'C_Animal/getAnimales',
 		dataSrc: ''
 	},
 	columns: [ 

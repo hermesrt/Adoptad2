@@ -98,7 +98,6 @@
     $(document).ready( function () {
 // -- Script para activar el datatable en la tabla -- //
 $('#table_id').DataTable({
-        select: true,  //-----> hace que las filas sean seleccionables
         paging: true,  //--> habilita el paginado
         "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
             "lengthMenu": "Muestra _MENU_ revisiones por página",
