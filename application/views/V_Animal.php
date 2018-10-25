@@ -184,14 +184,12 @@
 									<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
 										<!-- OPCIONES CARGADAS CON AJAX -->
 									</select>
-									<input type="text" class="form-control" id="especieAlta" name="especieAlta" placeholder="Especie">
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="raza">Raza</label>
 									<select class="form-control" id="razaAlta" name="razaAlta">
 										<!-- OPCIONES CARGADAS CON AJAX -->
 									</select>
-									<input type="text" class="form-control" id="razaAlta" name="razaAlta" placeholder="Raza">
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="sexoAlta">Sexo</label>
@@ -317,7 +315,6 @@
 		})
 		.done(function(razas) {
 			$("#razaAlta").empty();
-			console.log($("#especieAlta").val());
 
 			$.each(razas, function(index, val) {
 				$("#razaAlta").append("<option value='"+val.raza+"' >" + val.raza + "</option>");
@@ -346,7 +343,7 @@ $("#formuploadajax").on("submit", function(e){
 	}
 	if (registro.nombre && registro.especie && registro.raza && registro.fecha) {
 		$.ajax({
-			url: "C_Animal/altaAnimal",
+			url: "altaAnimal",
 			type: "post",
 			dataType: "html",
 			data:new FormData(this), 
@@ -356,6 +353,7 @@ $("#formuploadajax").on("submit", function(e){
 		})
 		.done(function(res){
 			$("#md-alta").modal("hide");
+			alert(res);
 			$('#table_id').DataTable().ajax.reload();
 		});
 	}else{
@@ -364,7 +362,7 @@ $("#formuploadajax").on("submit", function(e){
 	}
 });
 
-$("#btnAlta").click(function(event) {
+$("#btnAlta").off().click(function(event) {
 	$("#md-alta").modal("show");
 	$.ajax({
 		url: 'getEspecies',
@@ -372,10 +370,11 @@ $("#btnAlta").click(function(event) {
 		dataType: 'json',
 	})
 	.done(function(especies) {
+		$("#especieAlta").empty();
+
 		$.each(especies, function(index, val) {
 			$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
 		});
-		console.log($("#especieAlta").val());
 		imprimirRazas();
 	})
 	.fail(function() {

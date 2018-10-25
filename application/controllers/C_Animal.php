@@ -58,11 +58,11 @@ class C_Animal extends CI_Controller {
         }
         $rta = array();
         if ($this->animal->guardar($datos)) {
-            $rta['status'] = 'success';
+            echo "Animal guardado exitosamente!";
         } else {
-            $rta['status'] = 'error';
+            echo "Error al guardar el animal!";
+
         }
-        return json_encode($rta);
     }
 
     
