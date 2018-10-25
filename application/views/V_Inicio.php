@@ -42,11 +42,8 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="especie">Especie</label>
             </div>
-            <select class="custom-select" id="especie">
-              <option selected value="-1">Todos</option>
-              <?php foreach ($especies as $especie): ?>
-                <option value="<?php echo $especie->especie_animal ?>"><?php echo $especie->especie_animal ?></option>                
-              <?php endforeach ?>
+            <select class="custom-select" id="especie" onclick="imprimirRazas()">
+              <!-- CARGADO CON AJAX -->
             </select>
           </div>
         </div>
@@ -57,9 +54,7 @@
             </div>
             <select class="custom-select" id="raza">
               <option selected value="-1">Todos</option>
-              <?php foreach ($razas as $raza): ?>
-                <option value="<?php echo $raza->raza_animal ?>"><?php echo $raza->raza_animal ?></option>                
-              <?php endforeach ?>
+              <!-- CARGADO CON AJAX -->
             </select>
           </div>
         </div>
@@ -102,31 +97,6 @@
   </div>
 </div>
 </div>
-
-<!-- <div class="row">
-  <?php foreach ($animales as $animal) { ?>
-    <div class="my-2 col-xs-12 col-sm-6 col-md-4 ">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<?= base_url() ?>assets/img/animales/<?= $animal->nombre_imagen_animal ?>" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title"><?= $animal -> nombre_animal ?></h5>
-          <p class="card-text">
-            <ul>
-              <li>Raza: <?= $animal -> raza_animal ?></li>
-              <li>Sexo: <?= $animal -> sexo_animal ?></li>
-            </ul>
-          </p>
-          <center>
-           <?php if ($this-> session->userdata('id_centro')): ?>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAdoptar" ><i class="fas fa-plus"></i> Adoptar</a>
-          <?php endif ?>
-          <a href="<?= base_url('C_Animal/verAnimal/'.$animal -> id_animal) ?>" class="btn btn-primary" ><i class="fas fa-plus"></i> Ver Animal</a>
-        </center>
-      </div>
-    </div>
-  </div>
-<?php } ?>
-</div> -->
 <div class="row" id="fila">
 </div>
 </div>
@@ -134,6 +104,45 @@
 
 
 <script type="text/javascript">
+  function imprimirRazas() {
+    $.ajax({
+      url: 'C_Inicio/getRazas',
+      type: 'POST',
+      dataType: 'json',
+      data: {especie: $("#especie").val()},
+    })
+    .done(function(razas) {
+      $("#raza").empty();
+      $("#raza").append("<option value='-1' >Todos</option>");
+
+      $.each(razas, function(index, val) {
+        $("#raza").append("<option value='"+val.raza+"' >" + val.raza + "</option>");
+      });
+    })
+    .fail(function() {
+      console.log("Error al imprimir las razas");
+    });
+    
+  }
+  function imprimirEspecies() {
+    $.ajax({
+      url: 'C_Inicio/getEspecies',
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(especies) {
+      $("#especie").empty();
+      $("#especie").append("<option value='-1' >Todos</option>");
+
+      $.each(especies, function(index, val) {
+        $("#especie").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
+      });
+      imprimirRazas();
+    })
+    .fail(function() {
+      console.log("Error al cargar las especies");
+    });
+  }
 
   function toggleFiltros(){
     $("#filtros").toggle("slow",function() {
@@ -180,9 +189,9 @@
     .done(function(a) {
       $("#fila").html(" ");
       if (a) {
-      imprimirAnimales(a);        
+        imprimirAnimales(a);        
       } else {
-      $("#fila").html("<center class='my-5'><div class='alert alert-warning' role='alert'><h4>No se encontraron animales con esas caracteristicas</h4></div></center>");
+        $("#fila").html("<center class='my-5'><div class='alert alert-warning' role='alert'><h4>No se encontraron animales con esas caracteristicas</h4></div></center>");
       }
     })
     .fail(function() {
@@ -214,6 +223,8 @@
    .always(function() {
     console.log("complete");
   });
+   imprimirRazas();
+   imprimirEspecies();
 
  });
 
