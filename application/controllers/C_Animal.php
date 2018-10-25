@@ -157,6 +157,18 @@ class C_Animal extends CI_Controller {
         }
     }
 
+    function getEspecies()
+    {
+        $this->load->model('M_Especie');
+        echo json_encode($this->M_Especie->getAll());
+    }
+
+    function getRazas()
+    {
+        $this->load->model('M_Raza');
+        echo json_encode($this->M_Raza->getByEspecie($this->input->post('especie')));
+    }
+
     
 
 

@@ -24,20 +24,20 @@
 			<a class="btn btn-success my-2" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
 			<div class=" scroll" style="height: auto;">
 				
-			<table class="table table-striped table-dark display" id="table_id">
-				<thead>
-					<tr>
-						<th scope="col">Id Animal</th>				
-						<th scope="col">Nombre</th>
-						<th scope="col">Especie</th>
-						<th scope="col">Raza</th>
-						<th scope="col">Sexo</th>
-						<th scope="col">Accion</th>
-					</tr>
-				</thead>
-				<tbody>		
-				</tbody>
-			</table>
+				<table class="table table-striped table-dark display" id="table_id">
+					<thead>
+						<tr>
+							<th scope="col">Id Animal</th>				
+							<th scope="col">Nombre</th>
+							<th scope="col">Especie</th>
+							<th scope="col">Raza</th>
+							<th scope="col">Sexo</th>
+							<th scope="col">Accion</th>
+						</tr>
+					</thead>
+					<tbody>		
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -181,10 +181,16 @@
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="especie">Especie</label>
+									<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
+										<!-- OPCIONES CARGADAS CON AJAX -->
+									</select>
 									<input type="text" class="form-control" id="especieAlta" name="especieAlta" placeholder="Especie">
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="raza">Raza</label>
+									<select class="form-control" id="razaAlta" name="razaAlta">
+										<!-- OPCIONES CARGADAS CON AJAX -->
+									</select>
 									<input type="text" class="form-control" id="razaAlta" name="razaAlta" placeholder="Raza">
 								</fieldset>
 								<fieldset class="form-group">
@@ -204,8 +210,8 @@
 								<fieldset class="form-group">
 									<label for="castradoAlta">Castrado</label>
 									<select class="form-control" id="castradoAlta" name="castradoAlta" placeholder="Castrado">
-										<option>Si</option>
-										<option selected>No</option>
+										<option value="1">Si</option>
+										<option selected value="0" >No</option>
 									</select>
 								</fieldset>
 								<fieldset class="form-group">
@@ -302,6 +308,27 @@
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
+	function imprimirRazas() {
+		$.ajax({
+			url: 'getRazas',
+			type: 'POST',
+			dataType: 'json',
+			data: {especie: $("#especieAlta").val()},
+		})
+		.done(function(razas) {
+			$("#razaAlta").empty();
+			console.log($("#especieAlta").val());
+
+			$.each(razas, function(index, val) {
+				$("#razaAlta").append("<option value='"+val.raza+"' >" + val.raza + "</option>");
+			});
+		})
+		.fail(function() {
+			console.log("Error al imprimir las razas");
+		});
+		
+	}
+
 	$(document).ready(function() {	
 
 // -------------------------<AJAX ALTA ANIMAL>------------------------//
@@ -339,6 +366,22 @@ $("#formuploadajax").on("submit", function(e){
 
 $("#btnAlta").click(function(event) {
 	$("#md-alta").modal("show");
+	$.ajax({
+		url: 'getEspecies',
+		type: 'POST',
+		dataType: 'json',
+	})
+	.done(function(especies) {
+		$.each(especies, function(index, val) {
+			$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
+		});
+		console.log($("#especieAlta").val());
+		imprimirRazas();
+	})
+	.fail(function() {
+		console.log("Error al cargar las especies");
+	});
+	
 });	
 // -------------------------</AJAX ALTA ANIMAL>------------------------//
 
@@ -348,7 +391,7 @@ $("#btnAlta").click(function(event) {
 /*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 $('#table_id').DataTable({	
 	ajax: {
-		url: 'C_Animal/getAnimales',
+		url: 'getAnimales',
 		dataSrc: ''
 	},
 	columns: [ 
