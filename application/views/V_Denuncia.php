@@ -17,39 +17,39 @@
 		<div class="col-9">
 			<div class="card my-5">
 				<center><h1 class="my-2"><i class="fas fa-question-circle"></i> Formulario de denuncia</center>
-    				<div class="card-body">
-						<table class="table table-striped table-dark display" id="table_id">
-						<thead>
-							<tr>
+                    <div class="card-body scroll" style="height: auto;">
+                      <table class="table table-striped table-dark display" id="table_id">
+                          <thead>
+                             <tr>
                                 <th scope="col">#</th>
-								<th scope="col">Nombre y Apellido</th>
-								<th scope="col">Dirección</th>
-								<th scope="col">Email</th>
-								<th scope="col">Teléfono</th>
-								<th scope="col">Acción</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php if ($adoptantes != false): ?>
-						<?php foreach($adoptantes as $adoptante): ?>
-							<tr>
-                                <input id="id_adoptante" class="oculto" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
-                                <th scope="row"><?= $adoptante -> id_adoptante ?></th>
-                                <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
-								<td><?= $adoptante->direccion_adoptante ?></td>
-								<td><?= $adoptante->email_adoptante ?></td>
-								<td><?= $adoptante->telefono_adoptante ?></td>
-								<td><button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
-							</tr>
-                        <?php endforeach ?>
+                                <th scope="col">Nombre y Apellido</th>
+                                <th scope="col">Dirección</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <?php if ($adoptantes != false): ?>
+                              <?php foreach($adoptantes as $adoptante): ?>
+                                 <tr>
+                                    <input id="id_adoptante" class="oculto" type="hidden" value="<?= $adoptante -> id_adoptante ?>">
+                                    <th scope="row"><?= $adoptante -> id_adoptante ?></th>
+                                    <th scope="row"><?= $adoptante ->nombre_adoptante." ".$adoptante->apellido_adoptante ?></th>
+                                    <td><?= $adoptante->direccion_adoptante ?></td>
+                                    <td><?= $adoptante->email_adoptante ?></td>
+                                    <td><?= $adoptante->telefono_adoptante ?></td>
+                                    <td><button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Registrar Denuncia</button></td>
+                                </tr>
+                            <?php endforeach ?>
                         <?php endif ?>
-						</tbody>
-					</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </div>
 
 
@@ -63,32 +63,32 @@
         <h5 class="modal-title" id="exampleModalLabel">Datos de la Denuncia</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button> 
-      </div>
-      <div class="modal-body">
-            <form class="formDenuncia" id="formDenuncia" method="post">
-                <fieldset class="form-group">
-                    <label for="formGroupExampleInput">Motivo de la denuncia</label>
-                    <select class="custom-select selectDenuncia" id="selectMotivoDenuncia" >
-                        <option selected>Seleccione motivo de la denuncia</option>
-                        <option value="1">Maltrato</option>
-                        <option value="2">Abandono</option>
-                        <option value="3">Tenencia Irresponsable</option>
-                        <option value="4">Otros</option>
-                    </select>
-                </fieldset>
-                <fieldset>
-                    <label for="formGroupExampleInput" >Detalle de denuncia:</label>
-                    <textarea  class="form-control" id="descripcionDenuncia" ></textarea>
-                </fieldset>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
-                </div> 
-            </form>
-      </div>
-    </div>
+      </button> 
   </div>
+  <div class="modal-body">
+    <form class="formDenuncia" id="formDenuncia" method="post">
+        <fieldset class="form-group">
+            <label for="formGroupExampleInput">Motivo de la denuncia</label>
+            <select class="custom-select selectDenuncia" id="selectMotivoDenuncia" >
+                <option selected>Seleccione motivo de la denuncia</option>
+                <option value="1">Maltrato</option>
+                <option value="2">Abandono</option>
+                <option value="3">Tenencia Irresponsable</option>
+                <option value="4">Otros</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="formGroupExampleInput" >Detalle de denuncia:</label>
+            <textarea  class="form-control" id="descripcionDenuncia" ></textarea>
+        </fieldset>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
+        </div> 
+    </form>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -105,33 +105,33 @@
         <h3 class="modal-title">Denuncia registrada</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <h5><p>La denuncia fue registrada exitosamente!</p></h5>
-        <form>
-            <fieldset >
-                <div class="form-group  mb-4">
-                    <label class="col-form-label" id="nomApe"></label>
-                </div>
-                <div class="form-group  mb-4">
-                    <label class=" col-form-label" id="motivoD"></label>
-                </div>
-                <div class="form-group  mb-4">
-                    <label class=" col-form-label" id="descr"></label>
-                </div>
-                <div class="form-group  mb-4">
-                    <label class=" col-form-label" id="cant"></label>
-                </div>
-            </fieldset>
-        </form>
-      </div>
-      <div id="divMuestra"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
+      </button>
   </div>
+  <div class="modal-body">
+     <h5><p>La denuncia fue registrada exitosamente!</p></h5>
+     <form>
+        <fieldset >
+            <div class="form-group  mb-4">
+                <label class="col-form-label" id="nomApe"></label>
+            </div>
+            <div class="form-group  mb-4">
+                <label class=" col-form-label" id="motivoD"></label>
+            </div>
+            <div class="form-group  mb-4">
+                <label class=" col-form-label" id="descr"></label>
+            </div>
+            <div class="form-group  mb-4">
+                <label class=" col-form-label" id="cant"></label>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div id="divMuestra"></div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -139,8 +139,8 @@
 
 <!-- Script para activar el datatable en la tabla -->
 <script>
-$(document).ready( function () {
-    
+    $(document).ready( function () {
+
     //------------> seteo las configuraciones de la tabla
     $('#table_id').DataTable({
         select: true,  //-----> hace que las filas sean seleccionables
@@ -170,8 +170,8 @@ $(document).ready( function () {
             { "searchable": false, "targets": 0, "orderable": false, "visible": false},   //---> columna del id
             { "searchable": false, "targets": [1,3,4], "orderable": true, "visible": true},      
             { "searchable": true, "targets": 2, "orderable": true, "visible": true},
-             { "searchable": false, "targets": 5, "orderable": false, "visible": true}   
-        ],
+            { "searchable": false, "targets": 5, "orderable": false, "visible": true}   
+            ],
         "ordering": true,                     //-->  habilita el ordenamiento de columnas
         "search": {                           // -----> opciones para la busqueda de datos 
             "caseInsensitive": true,        //----> habilita el caseSensitive
@@ -179,13 +179,13 @@ $(document).ready( function () {
             "smart": true                    //----->  activa la busqueda smart, no busca el String identico, busca los similares y las ocurrencias
         }
     });
- 
+
 } );
 </script>
 
 
 <script>
-    
+
     //----> Esta funcion validaba que dos nombres no sean numeros y no sean nulos
     /*
     function validoNombreApellido(){
@@ -201,7 +201,7 @@ $(document).ready( function () {
     
     //------> Si manda el formulario entonces pasa esto
     $('#formDenuncia').on('submit',function(event){
-        
+
         event.preventDefault();
         var tipoDenuncia = $('#selectMotivoDenuncia').val();
         var id_adoptante = $('.selected').find('.oculto').val();   
@@ -231,11 +231,11 @@ $(document).ready( function () {
                     var arr = JSON.parse(data);
                     
                     console.log(arr['usuario']);
-        
+
                     $('#nomApe').html("<h5>Nombre persona que registro la denuncia: </h5>"+ arr['usuario']['nombre_usuario']);
                     $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['motivo']);
                     $('#descr').html("<h5>Detalle de denuncia:</h5><p>"+ arr['descripcionDenuncia']+"</p>");
-                     $('#cant').html("<h5>Cantidad de denuncias: </h5>"+ arr['cantidad_denuncias']);
+                    $('#cant').html("<h5>Cantidad de denuncias: </h5>"+ arr['cantidad_denuncias']);
                 }
             })
             // Code to run if the request succeeds (is done);

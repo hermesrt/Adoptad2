@@ -19,39 +19,42 @@
 					<center><h1 class="my-2"><i class="fas fa-check"></i></center>						
 						<center><h4 class="card-title">Periodos de Seguimiento Activos:</h4></center>
 						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo" data-placement="right" title="Presione para agregar un nuevo periodo de seguimiento"><i class="far fa-calendar-plus"></i> Agregar Nuevo</button>
-						<table class="table table-striped table-dark display" id="table_id">
-							<thead>
-								<tr>
-									<th>Tipo de Periodo</th>
-									<th>Fecha Inicio Periodo</th>
-									<th>Fecha Fin Periodo</th>
-								</tr>
-							</thead>
-							<tbody>
-							<?php if ($periodos != false): ?>
-							<?php foreach($periodos as $periodo): ?>
-								<tr>
-                                   <?php switch($periodo->tipo_periodo):
-                                    case 'Vacunacion': 
-                                        echo '<td><i class="fas fa-pills"></i> '.$periodo->tipo_periodo.'</td>';break;
-                                    case 'Castracion': 
-                                        echo '<td><i class="fas fa-cut"></i> '.$periodo->tipo_periodo.'</td>';break;
-                                    case 'Seguimiento': 
-                                        echo '<td><i class="fas fa-calendar-check"></i> '.$periodo->tipo_periodo.'</td>';break;
-                                    endswitch
-                                    ?>			
-									<td><?= $periodo->fecha_inicio_periodo ?></td> 	
-									<td><?= $periodo->fecha_fin_periodo ?></td>
-								</tr>
-								<?php endforeach ?>
-								<?php  endif ?>
-							</tbody>
-						</table>					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <div class="scroll" style="height: auto;">
+                            
+                            <table class="table table-striped table-dark display" id="table_id">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Periodo</th>
+                                        <th>Fecha Inicio Periodo</th>
+                                        <th>Fecha Fin Periodo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($periodos != false): ?>
+                                        <?php foreach($periodos as $periodo): ?>
+                                            <tr>
+                                             <?php switch($periodo->tipo_periodo):
+                                                case 'Vacunacion': 
+                                                echo '<td><i class="fas fa-pills"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                                case 'Castracion': 
+                                                echo '<td><i class="fas fa-cut"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                                case 'Seguimiento': 
+                                                echo '<td><i class="fas fa-calendar-check"></i> '.$periodo->tipo_periodo.'</td>';break;
+                                            endswitch
+                                            ?>          
+                                            <td><?= $periodo->fecha_inicio_periodo ?></td>  
+                                            <td><?= $periodo->fecha_fin_periodo ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                <?php  endif ?>
+                            </tbody>
+                        </table>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -93,9 +96,9 @@
         </div>
     </div>
 </div>
-	
-	
-	
+
+
+
 <!-- Modal que se muestra cuando se registro correctamente el periodo de seguimiento -->
 <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -104,20 +107,20 @@
         <h5 class="modal-title" id="cartelModal"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-            <form>
-                <fieldset>
-                    <label id="mensaje"></label>
-                </fieldset>
-            </form>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-      </div>
-    </div>
+      </button>
   </div>
+  <div class="modal-body">
+    <form>
+        <fieldset>
+            <label id="mensaje"></label>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -126,8 +129,8 @@
 <script>
     
     
-$(document).ready( function () {
-    
+    $(document).ready( function () {
+        
     //------------> seteo las configuraciones de la tabla
     $('#table_id').DataTable({
         select: true,  //-----> hace que las filas sean seleccionables
@@ -153,7 +156,7 @@ $(document).ready( function () {
         lengthMenu: [5,10,20],       //--> longitud del menu del paginado
         searching: false,             //---> habilita la busqueda de registros
         "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
-            { "orderable": true, "visible": true,"targets": [0,1,2]}
+        { "orderable": true, "visible": true,"targets": [0,1,2]}
         ],
         "ordering": true                     //-->  habilita el ordenamiento de columnas
     });

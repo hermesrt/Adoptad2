@@ -22,7 +22,8 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-9">	
 			<a class="btn btn-success my-2" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
-
+			<div class=" scroll" style="height: auto;">
+				
 			<table class="table table-striped table-dark display" id="table_id">
 				<thead>
 					<tr>
@@ -37,6 +38,7 @@
 				<tbody>		
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</div>
 </div>
