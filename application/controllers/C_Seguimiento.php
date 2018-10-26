@@ -48,6 +48,7 @@ class C_Seguimiento extends CI_Controller {
             $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
             
             //-----> falta enviar el mail a todos los adoptantes a los que los animales les falte lo del periodo de castracion
+            $this -> correo -> generarCorreoPeriodo($tipoPeriodo,$adop);
             //-----> $this -> correo -> enviarCorreo();
             
         }

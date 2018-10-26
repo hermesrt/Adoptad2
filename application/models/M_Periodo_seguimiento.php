@@ -107,7 +107,7 @@ class M_Periodo_seguimiento extends CI_Model {
         $this -> db -> from('periodo_seguimiento');
         $this -> db -> where("fecha_inicio_periodo <=",$fechaDesde);
         $this -> db -> where("fecha_fin_periodo >=",$fechaDesde);
-        $this -> db -> or_where('fecha_inicio_periodo <=',$fechaHasta)-> where('fecha_fin_periodo >=',$fechaHasta);
+        $this -> db -> or_where('fecha_inicio_periodo <=',$fechaHasta) -> where('fecha_fin_periodo >=',$fechaHasta);
         $query = $this -> db -> get();
         if ($query -> num_rows() > 0){
             return false;
@@ -122,7 +122,7 @@ class M_Periodo_seguimiento extends CI_Model {
         $listado = array();
         foreach ($this -> adopciones as $adopcion){
             $animal = $adopcion -> getAnimal();
-            if (!$animal->estaCastrado()){
+            if (!$animal->estaCastrado()){  //--> si el animal no esta castrado
                 $listado[] = $adopcion -> getAdoptante();  //---> obtiene el adoptante y lo añade a el listado de adoptantes
             }
         }

@@ -43,7 +43,9 @@ class C_Denuncia extends CI_Controller {
             ); 
         
         //-----> ACA TENGO QUE ENVIAR EL MAIL
-        //  $this -> correo -> enviarCorreo($email_destino,$encabezado,$mensaje);
+        $mensaje = $this -> correo -> generarCorreoDenuncia($adoptante); //---> mensaje que se envia en correo
+        $encabezado = "Denuncia";
+        //  $this -> correo -> enviarCorreo($adoptante->email_adoptante,$encabezado,$mensaje,null);
         
         echo json_encode($datos);   
     }
