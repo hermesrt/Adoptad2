@@ -127,11 +127,17 @@ function obtenerRevisiones($id_animal)
         }
     }
     
-    //---- este metodo me parece que no se necesita para nada ...
+    //---- este metodo me parece que no se necesita para nada ... EL METODO ESTA RE AL "!=($U=)I PORQUE ES UN GETTER NOMAS DE ULTIMA
     function fechaUltimaRevision()
     {
-        
+        return $this -> fecha_revision;
     }
+    
+     function getFecha()
+    {
+        return $this -> fecha_revision;
+    }
+    
     
     //-------> Compara las fechas de la ultima revision y la fecha actual
     function compararFechas($fecha_ultima_revision)
@@ -147,10 +153,6 @@ function obtenerRevisiones($id_animal)
         }
     }
     
-    function getFecha()
-    {
-        return $this -> fecha_revision;
-    }
     
     function registrarRevision($datos)
     {
