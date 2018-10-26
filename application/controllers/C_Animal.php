@@ -58,11 +58,11 @@ class C_Animal extends CI_Controller {
         }
         $rta = array();
         if ($this->animal->guardar($datos)) {
-            $rta['status'] = 'success';
+            echo "Animal guardado exitosamente!";
         } else {
-            $rta['status'] = 'error';
+            echo "Error al guardar el animal!";
+
         }
-        return json_encode($rta);
     }
 
     
@@ -155,6 +155,69 @@ class C_Animal extends CI_Controller {
         } else {
             echo 'Error al revocar adopcion, intente nuevamente!';
         }
+    }
+
+    function getEspecies()
+    {
+        $this->load->model('M_Especie');
+        echo json_encode($this->M_Especie->getAll());
+    }
+
+    function getRazas()
+    {
+        $this->load->model('M_Raza');
+        echo json_encode($this->M_Raza->getByEspecie($this->input->post('especie')));
+    }
+
+    function nuevaEspecie()
+    {
+        $nuevaEspecie = $this->input->post('especie');
+
+        $this->load->model('M_Especie');
+        $especies =  $this->M_Especie->getAll();
+
+        $existe = false;
+
+        foreach ($especies as $value) {
+            if (strtoupper($value->especie) == strtoupper($nuevaEspecie)) {
+                $existe=true;
+            }
+        }
+        if ($existe) {
+            echo "La especie ya existe!";
+        } else {
+            if ($this->M_Especie->insertEspecie($nuevaEspecie)) {
+                echo "Especie insertada exitosamente!";
+            } else {
+                echo "Error al insertar especie";
+            }
+        }
+    }
+
+    function nuevaRaza()
+    {
+        $especie = $this->input->post('especie');
+        $raza = $this->input->post('raza');
+
+        $this->load->model('M_Raza');
+        $razas = $this->M_Raza->getByEspecie($especie);
+
+        $existe=false;
+        foreach ($razas as $value) {
+            if (strtoupper($value->raza) == strtoupper($raza)) {
+                $existe=true;
+            }
+        }
+        if ($existe) {
+            echo "La raza ya existe";
+        } else {
+            if ($this->M_Raza->insertRaza($especie,$raza)) {
+                echo "Raza registrada correctamente para la especie: " . $especie;
+            } else {
+                echo "Error al agregar la raza!";
+            }
+        }
+        
     }
 
     

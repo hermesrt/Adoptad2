@@ -22,31 +22,34 @@
 				<div class="card-body">
 
 					<h4 class="card-title"><i class="fas fa-notes-medical"></i> Revisiones:</h4>
-					<table class="table table-striped table-dark display" id="table_id">
-						<thead>
-							<tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Adoptante</th>
-                                <th scope="col">Animal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if ($revisiones): ?>                                
-                              <?php foreach($revisiones as $revision): ?>
-                                 <tr>
-                                    <th scope="row"><?= $revision -> id_revision ?></th>
-                                    <td><?= $revision -> tipo_revision ?></td>
-                                    <td><?= $revision -> fecha_revision ?></td>
-                                    <td><a href="#">Nombre adoptante</a></td>
-                                    <td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
-                                </tr>
-                            <?php endforeach ?>
-                        <?php endif ?>
-                    </tbody>
-                </table>
+                    <div class="scroll" style="height: auto;">
 
+                        <table class="table table-striped table-dark display" id="table_id">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Adoptante</th>
+                                    <th scope="col">Animal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($revisiones): ?>                                
+                                  <?php foreach($revisiones as $revision): ?>
+                                     <tr>
+                                        <th scope="row"><?= $revision -> id_revision ?></th>
+                                        <td><?= $revision -> tipo_revision ?></td>
+                                        <td><?= $revision -> fecha_revision ?></td>
+                                        <td><a href="#">Nombre adoptante</a></td>
+                                        <td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif ?>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
@@ -66,6 +69,8 @@
       </button>
   </div>
   <div class="modal-body">
+    <div class="scroll" style="height: auto;">
+
      <table class="table table-striped table-dark display" id="tablaAdoptantes">
         <thead>
             <tr>
@@ -84,6 +89,7 @@
 </div>
 </div>
 </div>
+</div>
 
 </div>
 
@@ -92,7 +98,6 @@
     $(document).ready( function () {
 // -- Script para activar el datatable en la tabla -- //
 $('#table_id').DataTable({
-        select: true,  //-----> hace que las filas sean seleccionables
         paging: true,  //--> habilita el paginado
         "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
             "lengthMenu": "Muestra _MENU_ revisiones por página",

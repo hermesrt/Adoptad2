@@ -22,21 +22,23 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-9">	
 			<a class="btn btn-success my-2" id="btnAlta" href="#"><i class="fas fa-plus-square"></i> Agregar Animal</a>
-
-			<table class="table table-striped table-dark display" id="table_id">
-				<thead>
-					<tr>
-						<th scope="col">Id Animal</th>				
-						<th scope="col">Nombre</th>
-						<th scope="col">Especie</th>
-						<th scope="col">Raza</th>
-						<th scope="col">Sexo</th>
-						<th scope="col">Accion</th>
-					</tr>
-				</thead>
-				<tbody>		
-				</tbody>
-			</table>
+			<div class=" scroll" style="height: auto;">
+				
+				<table class="table table-striped table-dark display" id="table_id">
+					<thead>
+						<tr>
+							<th scope="col">Id Animal</th>				
+							<th scope="col">Nombre</th>
+							<th scope="col">Especie</th>
+							<th scope="col">Raza</th>
+							<th scope="col">Sexo</th>
+							<th scope="col">Accion</th>
+						</tr>
+					</thead>
+					<tbody>		
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
@@ -179,11 +181,24 @@
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="especie">Especie</label>
-									<input type="text" class="form-control" id="especieAlta" name="especieAlta" placeholder="Especie">
+									<div class="input-group">
+										<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2" id="addEspecie"><i class="fas fa-plus-circle"></i></button>
+									</div>
+									
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="raza">Raza</label>
-									<input type="text" class="form-control" id="razaAlta" name="razaAlta" placeholder="Raza">
+									<div class="input-group">
+										
+										<select class="form-control" id="razaAlta" name="razaAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2" id="addRaza"><i class="fas fa-plus-circle"></i></button>
+
+									</div>
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="sexoAlta">Sexo</label>
@@ -202,8 +217,8 @@
 								<fieldset class="form-group">
 									<label for="castradoAlta">Castrado</label>
 									<select class="form-control" id="castradoAlta" name="castradoAlta" placeholder="Castrado">
-										<option>Si</option>
-										<option selected>No</option>
+										<option value="1">Si</option>
+										<option selected value="0" >No</option>
 									</select>
 								</fieldset>
 								<fieldset class="form-group">
@@ -300,7 +315,94 @@
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
+	function imprimirRazas() {
+		$.ajax({
+			url: 'getRazas',
+			type: 'POST',
+			dataType: 'json',
+			data: {especie: $("#especieAlta").val()},
+		})
+		.done(function(razas) {
+			$("#razaAlta").empty();
+
+			$.each(razas, function(index, val) {
+				$("#razaAlta").append("<option value='"+val.raza+"' >" + val.raza + "</option>");
+			});
+		})
+		.fail(function() {
+			console.log("Error al imprimir las razas");
+		});
+		
+	}
+	function imprimirEspecies() {
+		$.ajax({
+			url: 'getEspecies',
+			type: 'POST',
+			dataType: 'json',
+		})
+		.done(function(especies) {
+			$("#especieAlta").empty();
+
+			$.each(especies, function(index, val) {
+				$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
+			});
+			imprimirRazas();
+		})
+		.fail(function() {
+			console.log("Error al cargar las especies");
+		});
+	}
+
 	$(document).ready(function() {	
+
+		$("#addEspecie").click(function(event) {
+			event.preventDefault();
+			var especie = prompt("Ingrese la nueva especie");
+			if (especie) {
+				$.ajax({
+					url: 'nuevaEspecie',
+					type: 'POST',
+					data: {especie: especie},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirEspecies();
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
+
+		$("#addRaza").click(function(event) {
+			event.preventDefault();
+			var raza = prompt("Ingrese la nueva raza")
+			if (raza) {
+				$.ajax({
+					url: 'nuevaRaza',
+					type: 'POST',
+					data: {
+						especie: $("#especieAlta").val(),
+						raza: raza
+					},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirRazas();
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
 
 // -------------------------<AJAX ALTA ANIMAL>------------------------//
 $("#formuploadajax").on("submit", function(e){
@@ -317,7 +419,7 @@ $("#formuploadajax").on("submit", function(e){
 	}
 	if (registro.nombre && registro.especie && registro.raza && registro.fecha) {
 		$.ajax({
-			url: "C_Animal/altaAnimal",
+			url: "altaAnimal",
 			type: "post",
 			dataType: "html",
 			data:new FormData(this), 
@@ -327,6 +429,7 @@ $("#formuploadajax").on("submit", function(e){
 		})
 		.done(function(res){
 			$("#md-alta").modal("hide");
+			alert(res);
 			$('#table_id').DataTable().ajax.reload();
 		});
 	}else{
@@ -335,8 +438,10 @@ $("#formuploadajax").on("submit", function(e){
 	}
 });
 
-$("#btnAlta").click(function(event) {
+$("#btnAlta").off().click(function(event) {
 	$("#md-alta").modal("show");
+	imprimirEspecies();
+	
 });	
 // -------------------------</AJAX ALTA ANIMAL>------------------------//
 
