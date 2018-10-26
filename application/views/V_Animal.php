@@ -317,7 +317,7 @@
 
 	function imprimirRazas() {
 		$.ajax({
-			url: 'getRazas',
+			url: '<?php echo base_url('C_Animal/getRazas') ?>',
 			type: 'POST',
 			dataType: 'json',
 			data: {especie: $("#especieAlta").val()},
@@ -336,7 +336,7 @@
 	}
 	function imprimirEspecies() {
 		$.ajax({
-			url: 'getEspecies',
+			url: '<?php echo base_url('C_Animal/getEspecies') ?>',
 			type: 'POST',
 			dataType: 'json',
 		})
@@ -360,7 +360,7 @@
 			var especie = prompt("Ingrese la nueva especie");
 			if (especie) {
 				$.ajax({
-					url: 'nuevaEspecie',
+					url: '<?php echo base_url('C_Animal/nuevaEspecie') ?>',
 					type: 'POST',
 					data: {especie: especie},
 				})
@@ -383,7 +383,7 @@
 			var raza = prompt("Ingrese la nueva raza")
 			if (raza) {
 				$.ajax({
-					url: 'nuevaRaza',
+					url: '<?php echo base_url('C_Animal/nuevaRaza') ?>',
 					type: 'POST',
 					data: {
 						especie: $("#especieAlta").val(),
@@ -419,7 +419,7 @@ $("#formuploadajax").on("submit", function(e){
 	}
 	if (registro.nombre && registro.especie && registro.raza && registro.fecha) {
 		$.ajax({
-			url: "altaAnimal",
+			url: "<?php echo base_url('C_Animal/altaAnimal') ?>",
 			type: "post",
 			dataType: "html",
 			data:new FormData(this), 
@@ -451,7 +451,7 @@ $("#btnAlta").off().click(function(event) {
 /*--------------<Renderizado de la tabla obteniendo datos con ajax>-----------*/
 $('#table_id').DataTable({	
 	ajax: {
-		url: 'C_Animal/getAnimales',
+		url: '<?php echo base_url('C_Animal/getAnimales') ?>',
 		dataSrc: ''
 	},
 	columns: [ 
@@ -542,7 +542,7 @@ table.on( 'draw', function () {
 			if (r) {
 				id = $(this).closest('tr').find('.id').html();
 				$.ajax({
-					url: 'C_Animal/comprobarAdoptado',
+					url: '<?php echo base_url('C_Animal/comprobarAdoptado') ?>',
 					type: 'POST',
 					data: {id: id},
 				})
@@ -555,7 +555,7 @@ table.on( 'draw', function () {
 						if (motivo != null) {
 
 							$.ajax({
-								url: 'C_Animal/deshabilitarAnimal',
+								url: '<?php echo base_url('C_Animal/deshabilitarAnimal') ?>',
 								type: 'POST',
 								data: {
 									id: id,
@@ -583,7 +583,7 @@ table.on( 'draw', function () {
 			if (r) {
 				id = $(this).closest('tr').find('.id').html();
 				$.ajax({
-					url: 'C_Animal/habilitarAnimal',
+					url: '<?php echo base_url('C_Animal/habilitarAnimal') ?>',
 					type: 'post',
 					dataType: 'json',
 					data: {id: id},
@@ -605,7 +605,7 @@ table.on( 'draw', function () {
 				$("#btnRegistrarAdoptante").click(function(event) {
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
 						$.ajax({
-							url: 'C_Animal/registrarAdoptanteYAdopcion',
+							url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
 							type: 'POST',
 							data: {
 								nombreAdoptante: $("#nombreAdoptante").val(),
@@ -635,7 +635,7 @@ table.on( 'draw', function () {
 			$("#btnRegistrarAdopcion").off().click(function(event) {
 				dni = $("#dni").val();
 				$.ajax({
-					url: 'C_Animal/buscarAdoptante',
+					url: '<?php echo base_url('C_Animal/buscarAdoptante') ?>',
 					type: 'POST',
 					data: {dni: dni},
 				})
@@ -645,7 +645,7 @@ table.on( 'draw', function () {
 						var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
 						if (a) {
 							$.ajax({
-								url: 'C_Animal/registrarAdopcion',
+								url: '<?php echo base_url('C_Animal/registrarAdopcion') ?>',
 								type: 'POST',
 								data: {
 									id_animal: id_animal,
@@ -666,7 +666,7 @@ table.on( 'draw', function () {
 							$("#btnRegistrarAdoptante").click(function(event) {
 								if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
 									$.ajax({
-										url: 'C_Animal/registrarAdoptanteYAdopcion',
+										url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
 										type: 'POST',
 										data: {
 											nombreAdoptante: $("#nombreAdoptante").val(),
@@ -709,7 +709,7 @@ table.on( 'draw', function () {
 				$("#formRevocar").off().on("submit", function(event) {
 					event.preventDefault();
 					$.ajax({
-						url: 'C_Animal/revocarAdopcion',
+						url: '<?php echo base_url('C_Animal/revocarAdopcion') ?>',
 						type: 'POST',
 						data: {
 							id_animal: id_animal,
