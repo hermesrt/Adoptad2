@@ -27,36 +27,34 @@
 					<br>
 					<form>	
 						<center>
-						<div class="form-group">
-							<div class="col-sm-10">
-							<?php foreach($centros as $centro): ?> 
-								<input type="checkbox" id="<?= $centro -> id_centro ?>" ><?= $centro -> nombre_ca ?>
-								<!-- <input type="checkbox" > Centro de Adopcion 2 -->
-								<!-- <input type="checkbox"> Centro de Adopcion 3   -->
-                            <?php endforeach ?>
+							<div class="form-group">
+								<div class="col-sm-10">
+									<?php foreach($centros as $centro): ?> 
+										<input type="checkbox" name="centro" value="<?= $centro -> id_centro ?>"><?= $centro -> nombre_ca ?>
+									<?php endforeach ?>
+								</div>
 							</div>
-						</div>
 						</center>
 
 						<div class="form-group">
 							<label for="tipoInforme">Seleccione el tipo de informe:</label>
 							<select class="form-control" id="tipoInforme">
-								<option>Informe de Adopciones</option>
-								<option>Informe de Denuncias</option>
-								<option>Informe de animales disponibles para adoptar</option>
+								<option value="adopciones">Informe de Adopciones</option>
+								<option value="denuncias">Informe de Denuncias</option>
+								<option value="animales">Informe de animales disponibles para adoptar</option>
 							</select>
 						</div>
 
 						<div class="row">
 							<div class="form-group col-6">
-								<label data-toggle="tooltip" data-placement="right" title="Fecha desde donde se comienzan a recuperar los datos para generar el informe">Fecha desde: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha desde donde se comienzan a recuperar los datos para generar el informe">Fecha desde: </label> <input class="form-control" type="date" id="desde">
 							</div>
 							<div class="form-group col-6">
 
-								<label data-toggle="tooltip" data-placement="right" title="Fecha tope hasta donde se recuperan los datos para generar el informe">Fecha hasta: </label> <input class="form-control" type="date" name="">
+								<label data-toggle="tooltip" data-placement="right" title="Fecha tope hasta donde se recuperan los datos para generar el informe">Fecha hasta: </label> <input class="form-control" type="date" id="hasta">
 							</div>
 						</div>
-						<center><button type="button" class="btn btn-primary"><i class="fas fa-chart-pie"></i> Generar informe</button></center>
+						<center><button type="button" class="btn btn-primary" id="btnInforme"><i class="fas fa-chart-pie"></i> Generar informe</button></center>
 					</form>
 				</div>
 
@@ -66,3 +64,42 @@
 	</div>
 </div>
 </div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		$("#btnInforme").on('click', function(event) {
+
+			var centros = [];
+			$.each($("input[name='centro']:checked"), function(){            //get the CA's selected
+				centros.push($(this).val());
+			});
+			var informe = $("#tipoInforme").val();
+			var desde = $("#desde").val();
+			var hasta = $("#hasta").val();
+
+			$.ajax({
+				url: '<?php echo base_url('C_Informes/generarInforme') ?>',
+				type: 'POST',
+				data: {
+					centros: centros,
+					informe: informe,
+					desde: desde,
+					hasta: hasta
+				},
+			})
+			.done(function(a) {
+				alert(informe)
+				console.log(a);
+			})
+			.fail(function() {
+				alert("error");
+			});
+			
+
+
+		});
+		
+	});
+
+</script>
