@@ -20,6 +20,9 @@ class C_Informes extends CI_Controller {
 		
 	}
 
+
+
+
 	function generarInforme()
 	{
 		switch ($this->input->post('informe')) {
@@ -34,7 +37,7 @@ class C_Informes extends CI_Controller {
 				$centroActual->nombreCA = $CA->nombre_ca;
 				if ($CA->animales) {
 					foreach ($CA->animales as $animal) {
-						if (!$animal->estaCastrado()) {
+						if (!($animal->estaAdoptado()) && $animal->estado_animal=="activo") {
 							$centroActual->animales[] = $animal;
 						}
 					}
@@ -44,7 +47,7 @@ class C_Informes extends CI_Controller {
 				$datos[] = $centroActual;
 				
 			}
-			echo json_encode($datos);
+			echo json_encode($datos);		// ARRAY DE OBJETOS (StdClass) con el nombre del CA y un array de sus animales
 			break;
 
 			case 'denuncias':
@@ -56,6 +59,14 @@ class C_Informes extends CI_Controller {
 			break;
 		}
 	}
+
+	function guardarImagen()
+	{
+		$imagenEnBase64 = $this->input->post("imagen");
+		$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenEnBase64));
+		$filepath =  "./assets/img/graficos/".$this->input->post("nombre");
+		file_put_contents($filepath,$data);
+}
 
 }
 

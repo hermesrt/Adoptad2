@@ -64,13 +64,66 @@
 	</div>
 </div>
 </div>
+<div id="chart_div"></div>
 
 <script type="text/javascript">
-	
-	$(document).ready(function() {
-		$("#btnInforme").on('click', function(event) {
 
-			var centros = [];
+	function animalesXcentro(datos) {
+		google.charts.load("current", {packages:['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var datos2chart = [];
+			datos2chart[0] = ['Centro', 'Cantidad', { role: 'style' }];
+			
+			$.each(datos, function(indice,valor) {
+				var cantidad=0;
+				if (valor.animales != false){
+					cantidad=valor.animales.length;
+				}
+				
+				datos2chart[indice+1] = [valor.nombreCA, cantidad, "silver"]
+			});
+			var data = google.visualization.arrayToDataTable(datos2chart);
+
+			var options = {
+				title: "Animales disponibles para adoptar por centro",
+				bar: {groupWidth: '95%'},
+				legend: 'none',
+			};
+
+			var chart_div = document.getElementById('chart_div');
+			var chart = new google.visualization.ColumnChart(chart_div);
+
+      // Wait for the chart to finish dibujarse before calling the getImageURI() method
+      google.visualization.events.addListener(chart, 'ready', function () {
+      	chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+      	$.ajax({
+      		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+      		type: 'POST',
+      		data: {
+      			imagen: chart.getImageURI(),
+      			nombre: "animalesXcentro.jpg"
+      		},
+      	})
+      	.done(function() {
+      		console.log("success");
+      	})
+      	.fail(function() {
+      		console.log("error");
+      	});
+      });
+
+      chart.draw(data, options);
+  }
+}
+
+
+
+
+$(document).ready(function() {
+	$("#btnInforme").on('click', function(event) {
+
+		var centros = [];
 			$.each($("input[name='centro']:checked"), function(){            //get the CA's selected
 				centros.push($(this).val());
 			});
@@ -88,9 +141,11 @@
 					hasta: hasta
 				},
 			})
-			.done(function(a) {
-				alert(informe)
-				console.log(a);
+			.done(function(rta) {
+				var datos = JSON.parse(rta);
+				
+				animalesXcentro(datos);
+
 			})
 			.fail(function() {
 				alert("error");
@@ -99,7 +154,7 @@
 
 
 		});
-		
-	});
+
+});
 
 </script>
