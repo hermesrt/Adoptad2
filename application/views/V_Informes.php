@@ -79,6 +79,18 @@
 
 
 <script type="text/javascript">
+	function calcularEdad(fecha) {
+		var hoy = new Date();
+		var cumpleanos = new Date(fecha);
+		var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+		var m = hoy.getMonth() - cumpleanos.getMonth();
+
+		if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+			edad--;
+		}
+
+		return edad;
+	}
 
 	function getRandomColor() {
 		var letters = '0123456789ABCDEF';
@@ -120,9 +132,97 @@
 		});
 		return count; /*devuelve array: ["perro" => 5, "gato" => 2, ...]*/
 	}
+	function countEdad(animales) {
+		var count=[
+		{
+			rango: "Menor a 1 año",
+			cantidad: 0
+		},
+		{
+			rango: "Entre 1 y 5 años ",
+			cantidad: 0
+		},
+		{
+			rango: "Mayor a 5 año",
+			cantidad: 0
+		}
+		];
 
-	function disponiblesXespecie(datos) {
-		$("#disponiblesXespecie").empty();
+		$.each(animales, function(index, animal) {
+			var edad = calcularEdad(animal.fechaNacimiento);
+			if (edad == 0) {
+				count[0].cantidad++;
+			}
+			if (edad > 1 && edad < 5) {
+				count[1].cantidad++;
+			}
+			if (edad > 5) {
+				count[2].cantidad++;
+			}
+		});
+		return count;
+	}
+
+	function disponiblesXedad(datos) {
+		$("#disponiblesXedad").empty();
+
+			var divId=0; //variable que q le da el id al div de cada grafico
+			$.each(datos, function(index, centro) {
+
+				google.charts.load("current", {packages:["corechart"]});
+				google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var datos2chart = [];
+					$("#disponiblesXedad").append("<center><h5>Disponibles por edad en: "+centro.nombreCA+" </h5></center>");
+					$("#disponiblesXedad").append("<div id='chart2"+divId+"'></div>");
+
+					var count = countEdad(centro.animales);
+
+					datos2chart[0]=["Especies", "Porcentaje"];
+
+					var i =1;
+					$.each(count, function(index, val) {
+						datos2chart[i]=[val.rango,val.cantidad];
+						i++;
+					});
+					if (!(count[0].cantidad ==0 && count[1].cantidad ==0 && count[2].cantidad ==0 )) {
+
+						var data = google.visualization.arrayToDataTable(datos2chart);
+
+						var options = {
+							title: 'Animales disponibles por edad en: ' + centro.nombreCA,
+							is3D: true,
+						};
+						var chart = new google.visualization.PieChart(document.getElementById("chart2"+divId));
+					 // Wait for the chart to finish dibujarse before call the getImageURI() method
+					 google.visualization.events.addListener(chart, 'ready', function () {
+					 	$.ajax({
+					 		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+					 		type: 'POST',
+					 		data: {
+					 			imagen: chart.getImageURI(),
+					 			nombre: "animalesXedad"+divId+".jpg"
+					 		},
+					 	})
+					 	.done(function() {
+
+					 		console.log("success");
+					 	})
+					 	.fail(function() {
+					 		console.log("error");
+					 	});
+					 });
+					 chart.draw(data,options);
+					 divId++;
+					} else {
+						$("#disponiblesXedad").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
+					}
+				}
+			});
+		}
+
+		function disponiblesXespecie(datos) {
+			$("#disponiblesXespecie").empty();
 
 			var divId=0; //variable que q le da el id al div de cada grafico
 			$.each(datos, function(index, centro) {
@@ -137,14 +237,14 @@
 					var especies = distinctEspecies(centro);
 					var count = countEspecies(centro.animales,especies);
 
-					datos2chart[0]=["Especies", "Porcentaje"];
-
-					var i =1;
-					$.each(count, function(index, val) {
-						datos2chart[i]=[val.especie,val.cantidad];
-						i++;
-					});
 					if (count.length > 0) {
+						datos2chart[0]=["Especies", "Porcentaje"];
+
+						var i =1;
+						$.each(count, function(index, val) {
+							datos2chart[i]=[val.especie,val.cantidad];
+							i++;
+						});
 
 						var data = google.visualization.arrayToDataTable(datos2chart);
 
@@ -184,7 +284,6 @@
 			$("#disponiblesXcentro").empty();
 			$("#disponiblesXcentro").append("<center><h5>Disponibles por Centro</h5></center>");
 			$("#disponiblesXcentro").append("<div id='xCentro'></div>");
-
 			google.charts.load("current", {packages:['corechart']});
 			google.charts.setOnLoadCallback(drawChart);
 			function drawChart() {
@@ -210,38 +309,31 @@
 
 				var xCentro = document.getElementById('xCentro');
 				var chart = new google.visualization.ColumnChart(xCentro);
+				google.visualization.events.addListener(chart, 'ready', function () {
+					$.ajax({
+						url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+						type: 'POST',
+						data: {
+							imagen: chart.getImageURI(),
+							nombre: "animalesXcentro.jpg"
+						},
+					})
+					.done(function() {
 
-				//chart.draw(data,options);
-      // Wait for the chart to finish dibujarse before call the getImageURI() method
-      google.visualization.events.addListener(chart, 'ready', function () {
-      	$.ajax({
-      		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
-      		type: 'POST',
-      		data: {
-      			imagen: chart.getImageURI(),
-      			nombre: "animalesXcentro.jpg"
-      		},
-      	})
-      	.done(function() {
+						console.log("success");
+					})
+					.fail(function() {
+						console.log("error");
+					});
+				});
+				chart.draw(data,options);
+			}
 
-      		console.log("success");
-      	})
-      	.fail(function() {
-      		console.log("error");
-      	});
-      });
-      chart.draw(data,options);
-  }
+		}
+		$(document).ready(function() {
+			$("#btnInforme").on('click', function(event) {
 
-}
-
-
-
-
-$(document).ready(function() {
-	$("#btnInforme").on('click', function(event) {
-
-		var centros = [];
+				var centros = [];
 			$.each($("input[name='centro']:checked"), function(){            //get the CA's selected
 				centros.push($(this).val());
 			});
@@ -262,14 +354,16 @@ $(document).ready(function() {
 			.done(function(rta) {
 				//alert(informe)				//----TODO: falta clavar un switch para c/informe
 				var datos = JSON.parse(rta);
+				console.log(datos)
 				disponiblesXcentro(datos);
 				disponiblesXespecie(datos);
+				disponiblesXedad(datos);
 				$("#graficos").show();
 			})
 			.fail(function() {
 				alert("error");
 			});
 		});
-});
+		});
 
-</script>
+	</script>
