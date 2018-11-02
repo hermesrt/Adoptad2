@@ -18,6 +18,8 @@ class M_Animal extends CI_Model {
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
     public $vacunas;          //------->  es un array de muchos objetos Vacuna
+
+    public $edad;
     
     //-------> iniciliza el objeto M_Animal con todos los valores de la columna que trae de la bd
     function init($row)
@@ -29,6 +31,7 @@ class M_Animal extends CI_Model {
         $this -> raza_animal = $row -> raza_animal;
         $this -> especie_animal = $row -> especie_animal;
         $this -> descripcion_animal = $row -> descripcion_animal;
+        $this -> estado_animal = $row -> estado_animal;
         $this -> sexo_animal = $row -> sexo_animal;
         $this -> castrado = $row -> castrado;
         $this -> adoptado = $row -> adoptado;
@@ -38,6 +41,7 @@ class M_Animal extends CI_Model {
         //-----> obtengo todas las revisiones para un animal
         $this -> revisiones = $this -> revision -> obtenerRevisiones($this -> id_animal);
         $this-> vacunas = $this-> M_Vacuna-> obtenerPorAnimal($this-> id_animal);
+        $this->edad = $this->calculaEdad();
     }
 
     
