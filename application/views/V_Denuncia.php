@@ -245,6 +245,9 @@
                 console.log( "The request is good!" );
                 $('#exampleModal').modal('hide');
                 $('#registro_denuncia').modal('show');
+                //---> seteo los valores por defecto
+                $('#selectMotivoDenuncia').val('');
+                $('#descripcionDenuncia').val('');
             })
             // Code to run if the request fails; the raw request and
             // status codes are passed to the function
