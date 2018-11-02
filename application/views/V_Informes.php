@@ -60,43 +60,160 @@
 
 
 			</div>
+			<div class="row" id="graficos" style="display: none">
+				<div class="col-12 my-3">
+					<div id="disponiblesXcentro"></div>
+				</div>
+				<div class="col-12 my-3">
+					<div id="disponiblesXespecie"></div>
+				</div>
+				<div class="col-12 my-3">
+					<div id="disponiblesXedad"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 </div>
-<div id="chart_div"></div>
+
+
 
 <script type="text/javascript">
 
-	function animalesXcentro(datos) {
-		google.charts.load("current", {packages:['corechart']});
-		google.charts.setOnLoadCallback(drawChart);
-		function drawChart() {
-			var datos2chart = [];
-			datos2chart[0] = ['Centro', 'Cantidad', { role: 'style' }];
-			
-			$.each(datos, function(indice,valor) {
-				var cantidad=0;
-				if (valor.animales != false){
-					cantidad=valor.animales.length;
-				}
-				
-				datos2chart[indice+1] = [valor.nombreCA, cantidad, "silver"]
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color
+	}
+
+	function distinctEspecies(centro) {
+		var especies = [];
+		$.each(centro.animales, function(k, animal) {
+			if (!especies.includes(animal.especie_animal)) {
+				especies.push(animal.especie_animal);
+			}
+		});
+		return especies;/*devuelve array: ["perro, "gato", ...]*/
+	}
+
+	function countEspecies(animales, distinctEspecies) {
+		var count=[];
+		$.each(distinctEspecies, function(i, val) {	
+			count.push({
+				especie: val,
+				cantidad:0
 			});
-			var data = google.visualization.arrayToDataTable(datos2chart);
+		});
+		$.each(distinctEspecies, function(j, especie) {
+			$.each(animales, function(k, animal) {
+				if (animal.especie_animal == especie) {
+					$.each(count, function(index, val) {
+						if (val.especie==especie) {
+							count[index].cantidad++
+						}
+					});
+				}
+			});
+		});
+		return count; /*devuelve array: ["perro" => 5, "gato" => 2, ...]*/
+	}
 
-			var options = {
-				title: "Animales disponibles para adoptar por centro",
-				bar: {groupWidth: '95%'},
-				legend: 'none',
-			};
+	function disponiblesXespecie(datos) {
+		$("#disponiblesXespecie").empty();
 
-			var chart_div = document.getElementById('chart_div');
-			var chart = new google.visualization.ColumnChart(chart_div);
+			var divId=0; //variable que q le da el id al div de cada grafico
+			$.each(datos, function(index, centro) {
 
-      // Wait for the chart to finish dibujarse before calling the getImageURI() method
+				google.charts.load("current", {packages:["corechart"]});
+				google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var datos2chart = [];
+					$("#disponiblesXespecie").append("<center><h5>Disponibles por especie en: "+centro.nombreCA+" </h5></center>");
+					$("#disponiblesXespecie").append("<div id='chart"+divId+"'></div>");
+
+					var especies = distinctEspecies(centro);
+					var count = countEspecies(centro.animales,especies);
+
+					datos2chart[0]=["Especies", "Porcentaje"];
+
+					var i =1;
+					$.each(count, function(index, val) {
+						datos2chart[i]=[val.especie,val.cantidad];
+						i++;
+					});
+					if (count.length > 0) {
+
+						var data = google.visualization.arrayToDataTable(datos2chart);
+
+						var options = {
+							title: 'Animales disponibles por especies en: ' + centro.nombreCA,
+							is3D: true,
+						};
+						var chart = new google.visualization.PieChart(document.getElementById("chart"+divId));
+					 // Wait for the chart to finish dibujarse before call the getImageURI() method
+					 google.visualization.events.addListener(chart, 'ready', function () {
+					 	$.ajax({
+					 		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+					 		type: 'POST',
+					 		data: {
+					 			imagen: chart.getImageURI(),
+					 			nombre: "animalesXcentro"+divId+".jpg"
+					 		},
+					 	})
+					 	.done(function() {
+
+					 		console.log("success");
+					 	})
+					 	.fail(function() {
+					 		console.log("error");
+					 	});
+					 });
+					 chart.draw(data,options);
+					 divId++;
+					} else {
+						$("#disponiblesXespecie").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
+					}
+				}
+			});
+		}
+
+		function disponiblesXcentro(datos) {
+			$("#disponiblesXcentro").empty();
+			$("#disponiblesXcentro").append("<center><h5>Disponibles por Centro</h5></center>");
+			$("#disponiblesXcentro").append("<div id='xCentro'></div>");
+
+			google.charts.load("current", {packages:['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+				var datos2chart = [];
+				datos2chart[0] = ['Centro', 'Cantidad', { role: 'style' }];
+
+				var color = getRandomColor();
+				$.each(datos, function(indice,valor) {
+					var cantidad=0;
+					if (valor.animales != false){
+						cantidad=valor.animales.length;
+					}
+
+					datos2chart[indice+1] = [valor.nombreCA, cantidad, color]
+				});
+				var data = google.visualization.arrayToDataTable(datos2chart);
+
+				var options = {
+					title: "Animales disponibles para adoptar por centro",
+					bar: {groupWidth: '25%'},
+					legend: 'none',
+				};
+
+				var xCentro = document.getElementById('xCentro');
+				var chart = new google.visualization.ColumnChart(xCentro);
+
+				//chart.draw(data,options);
+      // Wait for the chart to finish dibujarse before call the getImageURI() method
       google.visualization.events.addListener(chart, 'ready', function () {
-      	chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
       	$.ajax({
       		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
       		type: 'POST',
@@ -106,15 +223,16 @@
       		},
       	})
       	.done(function() {
+
       		console.log("success");
       	})
       	.fail(function() {
       		console.log("error");
       	});
       });
-
-      chart.draw(data, options);
+      chart.draw(data,options);
   }
+
 }
 
 
@@ -142,19 +260,16 @@ $(document).ready(function() {
 				},
 			})
 			.done(function(rta) {
+				//alert(informe)				//----TODO: falta clavar un switch para c/informe
 				var datos = JSON.parse(rta);
-				
-				animalesXcentro(datos);
-
+				disponiblesXcentro(datos);
+				disponiblesXespecie(datos);
+				$("#graficos").show();
 			})
 			.fail(function() {
 				alert("error");
 			});
-			
-
-
 		});
-
 });
 
 </script>
