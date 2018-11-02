@@ -60,7 +60,13 @@
 
 
 			</div>
-			<div class="row" id="graficos" style="display: none">
+			<div class="row border border border-success rounded mx-2 my-2 bg-info" id="graficos" style="display: none" >
+				<div class="col-12">
+					
+				
+				<center><h1>Informe de Animales Disponibles</h1> <button class="btn btn-success mx-2 my-2 right"><i class="far fa-file-pdf"></i> Exportar Informe</button></center>
+				</div>
+
 				<div class="col-12 my-3">
 					<div id="disponiblesXcentro"></div>
 				</div>
@@ -260,7 +266,7 @@
 					 		type: 'POST',
 					 		data: {
 					 			imagen: chart.getImageURI(),
-					 			nombre: "animalesXcentro"+divId+".jpg"
+					 			nombre: "animalesXespecie"+divId+".jpg"
 					 		},
 					 	})
 					 	.done(function() {
