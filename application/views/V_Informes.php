@@ -38,14 +38,14 @@
 
 						<div class="form-group">
 							<label for="tipoInforme">Seleccione el tipo de informe:</label>
-							<select class="form-control" id="tipoInforme">
+							<select class="form-control" id="tipoInforme" onclick="toggleFechas()">
 								<option value="adopciones">Informe de Adopciones</option>
 								<option value="denuncias">Informe de Denuncias</option>
 								<option value="animales">Informe de animales disponibles para adoptar</option>
 							</select>
 						</div>
 
-						<div class="row">
+						<div class="row" id="divFechas">
 							<div class="form-group col-6">
 								<label data-toggle="tooltip" data-placement="right" title="Fecha desde donde se comienzan a recuperar los datos para generar el informe">Fecha desde: </label> <input class="form-control" type="date" id="desde">
 							</div>
@@ -63,8 +63,10 @@
 			<div class="row border border border-success rounded mx-2 my-2 bg-info" id="graficos" style="display: none" >
 				<div class="col-12">
 					
-				
-				<center><h1>Informe de Animales Disponibles</h1> <button class="btn btn-success mx-2 my-2 right"><i class="far fa-file-pdf"></i> Exportar Informe</button></center>
+
+					<center><h1>Informe de Animales Disponibles</h1> 
+						<button class="btn btn-success mx-2 my-2 right" id="btnExportar"><i class="far fa-file-pdf"></i> Exportar Informe</button>
+					</center>
 				</div>
 
 				<div class="col-12 my-3">
@@ -85,6 +87,19 @@
 
 
 <script type="text/javascript">
+	var nombreImagenes=[]; //Variable global para almacenar temporalmente los nombres de las img's
+
+	/*Oculta los inputs de fechas si se selecciona el informe de disponiobles*/
+	function toggleFechas() {
+		if ($("#tipoInforme").val()=="animales") {
+			$("#divFechas").hide();
+		}else {
+			$("#divFechas").show();
+		}
+	}
+
+
+	/*Calcula edad en base a "fechaNacimiento"*/
 	function calcularEdad(fecha) {
 		var hoy = new Date();
 		var cumpleanos = new Date(fecha);
@@ -97,7 +112,7 @@
 
 		return edad;
 	}
-
+	/*Genera un color random para los graficos */
 	function getRandomColor() {
 		var letters = '0123456789ABCDEF';
 		var color = '#';
@@ -106,7 +121,7 @@
 		}
 		return color
 	}
-
+	/*Obtiene las especies sin repetir para un centro pasado por parametro*/
 	function distinctEspecies(centro) {
 		var especies = [];
 		$.each(centro.animales, function(k, animal) {
@@ -116,7 +131,7 @@
 		});
 		return especies;/*devuelve array: ["perro, "gato", ...]*/
 	}
-
+	/*Cuenta la cantidad de animales de por especie*/
 	function countEspecies(animales, distinctEspecies) {
 		var count=[];
 		$.each(distinctEspecies, function(i, val) {	
@@ -138,6 +153,7 @@
 		});
 		return count; /*devuelve array: ["perro" => 5, "gato" => 2, ...]*/
 	}
+	/*Cuenta la cantidad de animales S/rango de edad*/
 	function countEdad(animales) {
 		var count=[
 		{
@@ -169,65 +185,72 @@
 		return count;
 	}
 
+	/*Genera y guarda como JPG un grafico disponibles por edad para cada centro*/
 	function disponiblesXedad(datos) {
-		$("#disponiblesXedad").empty();
+			$("#disponiblesXedad").empty(); //Borra el contenido del DIV para su siguiente utilizacion
 
-			var divId=0; //variable que q le da el id al div de cada grafico
-			$.each(datos, function(index, centro) {
+			var divId=0; //variable que q le da el id al DIV de cada grafico
+
+			$.each(datos, function(index, centro) {	//Recorro cada Centro
 
 				google.charts.load("current", {packages:["corechart"]});
 				google.charts.setOnLoadCallback(drawChart);
 				function drawChart() {
 					var datos2chart = [];
+					/*Agrego titulo y DIV's que contendran los graficos*/
 					$("#disponiblesXedad").append("<center><h5>Disponibles por edad en: "+centro.nombreCA+" </h5></center>");
 					$("#disponiblesXedad").append("<div id='chart2"+divId+"'></div>");
 
-					var count = countEdad(centro.animales);
+					var count = countEdad(centro.animales); //Obtengo el countEdad para el centro acutal
 
-					datos2chart[0]=["Especies", "Porcentaje"];
+					datos2chart[0]=["Especies", "Porcentaje"];	//Encabezado del grafico
 
-					var i =1;
-					$.each(count, function(index, val) {
+
+					if (!(count[0].cantidad ==0 && count[1].cantidad ==0 && count[2].cantidad ==0 )) {	//Si hay datos proceso
+						var i =1;
+					$.each(count, function(index, val) {	//Recorro el countEdad y lo agrego al Array para el grafico
 						datos2chart[i]=[val.rango,val.cantidad];
 						i++;
 					});
-					if (!(count[0].cantidad ==0 && count[1].cantidad ==0 && count[2].cantidad ==0 )) {
 
-						var data = google.visualization.arrayToDataTable(datos2chart);
+						var data = google.visualization.arrayToDataTable(datos2chart);	//Parse datos a GoogleCharts
 
 						var options = {
-							title: 'Animales disponibles por edad en: ' + centro.nombreCA,
+							title: 'Animales disponibles por edad en: ' + centro.nombreCA,	//Opciones para el grafico actual
 							is3D: true,
 						};
-						var chart = new google.visualization.PieChart(document.getElementById("chart2"+divId));
-					 // Wait for the chart to finish dibujarse before call the getImageURI() method
-					 google.visualization.events.addListener(chart, 'ready', function () {
-					 	$.ajax({
-					 		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
-					 		type: 'POST',
-					 		data: {
-					 			imagen: chart.getImageURI(),
-					 			nombre: "animalesXedad"+divId+".jpg"
+
+						var chart = new google.visualization.PieChart(document.getElementById("chart2"+divId));	//genero el grafico en el DIV pasado por parametro
+
+						/*Cuando el grafico termine de dibujarse lo guardo como imagen*/
+						google.visualization.events.addListener(chart, 'ready', function () {
+							$.ajax({
+								url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+								type: 'POST',
+								data: {
+									imagen: chart.getImageURI(),
+					 			nombre: "animalesXedad"+divId+".jpg"	//Ej: "animalesXedad0.jpg", "animalesXedad1.jpg",...
 					 		},
 					 	})
-					 	.done(function() {
-
+							.done(function() {
+					 		nombreImagenes.push("animalesXedad"+divId+".jpg");	//guardo el nombre de la imagen en un array para usarlo luego
+					 		divId++;	//incremento para generar un DIV con distinto id
 					 		console.log("success");
 					 	})
-					 	.fail(function() {
-					 		console.log("error");
-					 	});
-					 });
-					 chart.draw(data,options);
-					 divId++;
-					} else {
+							.fail(function() {
+								console.log("error");
+							});
+						});
+					 chart.draw(data,options);	//Dibujo el grafico
+					} else {	//si no hay datos muestro muestro cartel
 						$("#disponiblesXedad").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
 					}
 				}
 			});
 		}
-
+		/*Genera y guarda como JPG un grafico disponibles por especie para cada centro*/
 		function disponiblesXespecie(datos) {
+
 			$("#disponiblesXespecie").empty();
 
 			var divId=0; //variable que q le da el id al div de cada grafico
@@ -270,6 +293,8 @@
 					 		},
 					 	})
 					 	.done(function() {
+					 		nombreImagenes.push("animalesXespecie"+divId+".jpg");
+					 		divId++;
 
 					 		console.log("success");
 					 	})
@@ -278,14 +303,13 @@
 					 	});
 					 });
 					 chart.draw(data,options);
-					 divId++;
 					} else {
 						$("#disponiblesXespecie").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
 					}
 				}
 			});
 		}
-
+		/*Genera y guarda como JPG un grafico disponibles centro(un solo grafico) */
 		function disponiblesXcentro(datos) {
 			$("#disponiblesXcentro").empty();
 			$("#disponiblesXcentro").append("<center><h5>Disponibles por Centro</h5></center>");
@@ -325,7 +349,7 @@
 						},
 					})
 					.done(function() {
-
+						nombreImagenes.push("animalesXcentro.jpg");
 						console.log("success");
 					})
 					.fail(function() {
@@ -334,42 +358,83 @@
 				});
 				chart.draw(data,options);
 			}
-
 		}
+
 		$(document).ready(function() {
+
 			$("#btnInforme").on('click', function(event) {
 
-				var centros = [];
+			var centros = []; // Array de centros seleccionados
 			$.each($("input[name='centro']:checked"), function(){            //get the CA's selected
 				centros.push($(this).val());
 			});
 			var informe = $("#tipoInforme").val();
-			var desde = $("#desde").val();
+			var desde = $("#desde").val();	//Las fechas deben estar aunque no se utilizen!!!
 			var hasta = $("#hasta").val();
 
-			$.ajax({
-				url: '<?php echo base_url('C_Informes/generarInforme') ?>',
-				type: 'POST',
-				data: {
-					centros: centros,
-					informe: informe,
-					desde: desde,
-					hasta: hasta
-				},
-			})
-			.done(function(rta) {
-				//alert(informe)				//----TODO: falta clavar un switch para c/informe
-				var datos = JSON.parse(rta);
-				console.log(datos)
-				disponiblesXcentro(datos);
-				disponiblesXespecie(datos);
-				disponiblesXedad(datos);
-				$("#graficos").show();
-			})
-			.fail(function() {
-				alert("error");
-			});
+			if (centros.length != 0) { //Si se selecciono almenos 1 CA
+				//obtengo la info segun el informe
+				$.ajax({
+					url: '<?php echo base_url('C_Informes/generarInforme') ?>',	
+					type: 'POST',
+					data: {
+						centros: centros,
+						informe: informe,
+						desde: desde,
+						hasta: hasta
+					},
+				})
+				.done(function(rta) {
+
+					switch (informe) {
+						case "animales":
+						nombreImagenes = [];		//vacio el array para su proximo uso
+						var datos = JSON.parse(rta);
+						disponiblesXcentro(datos);
+						disponiblesXespecie(datos);	//dibuja y guarda img's de los graficos
+						disponiblesXedad(datos);
+						$("#graficos").show(); //Muestra el DIV que los contiene
+						break;
+
+						case "denuncias":					
+						alert("Informe denuncias pendiente!");
+						break;
+
+						case "adopciones":					
+						alert("Informe adopciones pendiente!");
+						break;
+					}
+
+				})
+				.fail(function() {
+					alert("error");
+				});
+			} else {
+				alert("Debe seleccionar almenos un Centro de Adopcion!");
+			}
 		});
+
+			$("#btnExportar").click(function(event) {
+
+				$.ajax({
+					url: '<?php echo base_url('C_Informes/salvarNombres') ?>',	//Guardo los nombres de las img's en SESSION
+					type: 'POST',
+					data: {nombreImagenes: JSON.stringify(nombreImagenes)},
+				})
+				.done(function(rta) {
+					if (rta=="ok") {
+						window.location.href = "<?php echo base_url('C_Informes/exportarPDF'); ?>";	//si todo esta OK genero el PDF
+					} else {
+						alert("Error al exportar informe, intente nuevamente!")
+					}
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			});
 		});
 
 	</script>

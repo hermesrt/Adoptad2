@@ -12,6 +12,10 @@ class Prueba extends CI_Controller {
 		$this->pdf->Cell(40,10,'Hola, Mundo!');
 		$this->pdf->Output();
 	}
+	public function imagen()
+	{
+		$this->load->view('Prueba');
+	}
 
 }
 
