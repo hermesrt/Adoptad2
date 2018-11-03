@@ -23,7 +23,7 @@ class C_Informes extends CI_Controller {
 
 
 	/*Este metodo es el que se usa para obtener la informacion necesaria para los graficos*/
-	function generarInforme()
+	function obtenerDatosInforme()
 	{
 		switch ($this->input->post('informe')) {
 			case 'animales':

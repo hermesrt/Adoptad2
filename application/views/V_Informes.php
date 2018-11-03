@@ -375,7 +375,7 @@
 			if (centros.length != 0) { //Si se selecciono almenos 1 CA
 				//obtengo la info segun el informe
 				$.ajax({
-					url: '<?php echo base_url('C_Informes/generarInforme') ?>',	
+					url: '<?php echo base_url('C_Informes/obtenerDatosInforme') ?>',	
 					type: 'POST',
 					data: {
 						centros: centros,
