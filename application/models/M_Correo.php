@@ -25,8 +25,8 @@ class M_correo extends CI_Model {
         $config = array(
             'protocol' => 'smtp',
             'smtp_host' => 'smtp.googlemail.com', 
-            'smtp_user' => 'XXXXXXXX', //Su Correo de Gmail Aqui
-            'smtp_pass' => 'XXXXX', // Su Password de Gmail aqui
+            'smtp_user' => 'adopta2app@gmail.com', //Su Correo de Gmail Aqui
+            'smtp_pass' => 'aplicacionadopta2', // Su Password de Gmail aqui
             'smtp_port' => '465',
             'smtp_crypto' => 'ssl',
             'mailtype' => 'html',
@@ -41,7 +41,7 @@ class M_correo extends CI_Model {
         if ($listado != null){
             foreach ($listado as $adoptante)
             {
-                $this->email->from('correo@gmail.com','Nombre del chabon'); //----> el correo de google del que se envia
+                $this->email->from('adopta2app@gmail.com','Perrito Adoptado'); //----> el correo de google del que se envia
                 $this->email->to($adoptante -> email_adoptante);
                 $this->email->subject($encabezado);
                 $this->email->message($mensaje);
@@ -57,7 +57,7 @@ class M_correo extends CI_Model {
                 }
             }
         } else {
-            $this->email->from('correo@gmail.com','Nombre del chabon'); //----> el correo de google del que se envia
+            $this->email->from('adopta2app@gmail.com','Perrito Adoptado'); //----> el correo de google del que se envia
             $this->email->to($email_destino);
             $this->email->subject($encabezado);
             $this->email->message($mensaje);
@@ -73,8 +73,6 @@ class M_correo extends CI_Model {
             }
         }
         
-        
-    
     }
 
     
@@ -86,8 +84,8 @@ class M_correo extends CI_Model {
         'protocol' => 'smtp',
         'smtp_host' => 'ssl://smtp.gmail.com',
         'smtp_port' => '465',
-        'smtp_user' => 'correo_gmail',
-        'smtp_pass' => 'password',
+        'smtp_user' => 'correo_gmail',  //--> correo gmail 
+        'smtp_pass' => 'password', //--> password
         'mailtype' => 'html',
         'charset' => 'utf-8',
         'newline' => "\r\n"

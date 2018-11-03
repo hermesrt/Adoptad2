@@ -128,7 +128,6 @@
 <!-- Script para hacer el ajax y las validaciones y cargar la tabla --> 	
 <script>
     
-    
     $(document).ready( function () {
         
     //------------> seteo las configuraciones de la tabla
@@ -241,6 +240,10 @@
                     console.log('se hizo bien man 👏👏');
                     $('#modalPeriodo').modal('hide');
                     $('#modalMensaje').modal('show');
+                    //----> Seteo los valores de vuelta en blanco asi elije de vuelta 
+                    $('#fechaDesde').val('');
+                    $('#fechaHasta').val('');
+                    $('#tipoPeriodo').val('');
                 })
                 // Code to run if the request fails; the raw request and
                 // status codes are passed to the function
