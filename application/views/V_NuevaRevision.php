@@ -37,7 +37,7 @@
 											<ul>
 												<li>Especie: <?= $adopcion->animal->especie_animal ?></li>
 												<li>Raza: <?= $adopcion->animal->raza_animal ?></li>
-												<li>Edad: <?= $adopcion->animal->fechaNacimiento ?></li>
+												<li>Edad: <?= $adopcion->animal-> calculaEdad() ?></li>
 												<li>Sexo: <?= $adopcion->animal->sexo_animal ?></li>
 												<li>Castrado:
 													<?php if ($adopcion->animal->castrado==1): ?>
@@ -127,6 +127,11 @@
 	}
 
 	$(document).ready(function() {
+        
+        //---> cuando se cierra el modal se recarga el modal, solucion provisoria
+        $('#modalRevision').on('hide.modal', function (e) {
+            window.location.reload();
+        });
 
 		$(".btn-registrar").off().click(function(event) {
 			$("#modalRevision").modal("show");
@@ -147,12 +152,16 @@
 							TipoRevision: $("#TipoRevision").val(),
 							tipoVacuna: $("#tipoVacuna").val(),
 							detalle: $("#detalle").val()
-
 						},
 					})
 					.done(function(msg) {
 						alert(msg);
 						$("#modalRevision").modal("hide");
+                        //--> limpio campos del modal
+                        $('#fecha').val('');
+                        $('#TipoRevision').val('');
+                        $('#tipoVacuna').val('');
+                        $('#detalle').val('');
 						//window.location = "";
 						// probar en IE (agregar window.location.href )
 						// no se deberia refrescar la pagina

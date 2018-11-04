@@ -202,9 +202,9 @@
 								</fieldset>
 								<fieldset class="form-group">
 									<label for="sexoAlta">Sexo</label>
-									<select class="form-control" id="sexoAlta" name="sexoAlta" placeholder="Sexo">
-										<option>Masculino</option>
-										<option selected>Femenino</option>
+									<select class="form-control" id="sexoAlta" name="sexoAlta" placeholder="Sexo" onchange="habilitaCastrado();">
+										<option selected>Masculino</option>
+										<option>Femenino</option>
 									</select>
 								</fieldset>
 							</div>
@@ -290,6 +290,25 @@
 </div>
 
 
+<!-- Este script habilita desahilita en campo Si en el select castracion -->
+<script>
+    
+    function habilitaCastrado () {
+        
+        var sexo = $('#sexoAlta').val();
+        var select = document.getElementById('castradoAlta');  //--> trae el seelct de castrado
+        select.length = 0; //--> vacio el select por las dudas
+        if (sexo == 'Femenino'){
+            //-----> Le cargo opciones
+            select.options[0] = new Option('No',0);
+        } else {
+            //-----> Le cargo opciones
+            select.options[0] = new Option('No',0);
+            select.options[1] = new Option('Si',1);
+        }
+    }
+    
+</script>
 
 
 <!-- Script con todo el comportamiento de los modales de la vista  --> 
@@ -354,7 +373,7 @@
 	}
 
 	$(document).ready(function() {	
-
+        
 		$("#addEspecie").click(function(event) {
 			event.preventDefault();
 			var especie = prompt("Ingrese la nueva especie");
@@ -564,6 +583,7 @@ table.on( 'draw', function () {
 							})
 							.done(function() {
 								alert("Animal deshabilitado con exito!");
+                                //--> recarga la tabla
 								$('#table_id').DataTable().ajax.reload();
 
 							});
@@ -622,7 +642,15 @@ table.on( 'draw', function () {
 							alert(rta);
 							$("#md-altaAdoptante").modal("hide");
 							$("#md-adopcion").modal("hide");
-
+                            //---> limpia los campos del formulario
+                            $("#nombreAdoptante").val('');
+                            $("#apellidoAdoptante").val('');
+                            $("#direccionAdoptante").val('');
+                            $("#dniAdoptante").val('');
+                            $("#telefonoAdoptante").val('');
+                            $("#emailAdoptante").val('');
+                            $("#ciudadAdoptante").val('');
+                            //--> recarga la tabla
 							$('#table_id').DataTable().ajax.reload();
 						});
 
@@ -655,6 +683,9 @@ table.on( 'draw', function () {
 							.done(function(msg) {
 								alert(msg);
 								$("#md-adopcion").modal("hide");
+                                //--> limpio campo dni
+                                $('#dni').val('');
+                                //--> reacargo la tabla
 								$('#table_id').DataTable().ajax.reload();
 							});
 
@@ -683,7 +714,15 @@ table.on( 'draw', function () {
 										alert(rta);
 										$("#md-altaAdoptante").modal("hide");
 										$("#md-adopcion").modal("hide");
-
+                                        //---> se limpian los campos
+                                        $('#nombreAdoptante').val('');
+                                        $('#apellidoAdoptante').val('');
+                                        $('#direccionAdoptante').val('');
+                                        $("#dniAdoptante").val('');
+                                        $('#telefonoAdoptante').val('');
+                                        $("#emailAdoptante").val('');
+                                        $("#ciudadAdoptante").val('');
+                                        //--> recarga la tabla
 										$('#table_id').DataTable().ajax.reload();
 									});
 
@@ -720,6 +759,10 @@ table.on( 'draw', function () {
 					.done(function(msg) {
 						alert(msg);
 						$("#md-revocar").modal("hide");
+                        //--> limpio los datos del modal
+                        $("#detalleRevocacion").val('');
+                        $("#motivo").val('');
+                        //---> recarga la tabla
 						$('#table_id').DataTable().ajax.reload();
 
 					});

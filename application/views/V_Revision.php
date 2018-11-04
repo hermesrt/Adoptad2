@@ -28,9 +28,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Tipo</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Adoptante</th>
+                                    <th scope="col">Tipo de Revisión</th>
+                                    <th scope="col">Fecha de Revisión</th>
                                     <th scope="col">Animal</th>
                                 </tr>
                             </thead>
@@ -41,7 +40,6 @@
                                         <th scope="row"><?= $revision -> id_revision ?></th>
                                         <td><?= $revision -> tipo_revision ?></td>
                                         <td><?= $revision -> fecha_revision ?></td>
-                                        <td><a href="#">Nombre adoptante</a></td>
                                         <td><a class="btn btn-primary" href="<?= base_url('C_Animal/VerAnimal/'.$revision->id_animal) ?>">Ver Animal</a></td>
                                     </tr>
                                 <?php endforeach ?>
@@ -124,7 +122,7 @@ $('#table_id').DataTable({
             { "searchable": false, "targets": 0, "orderable": false, "visible": false},   //---> columna del id
             { "searchable": true, "targets": 1, "orderable": true, "visible": true},      //---> busca por tipo_revision
             { "searchable": true, "targets": 2, "orderable": true, "visible": true},     //---> busca por fecha_revision
-            { "searchable": false, "targets": [3,4], "orderable": false},                //---> columna del adoptante y animal
+            { "searchable": false, "targets": [3], "orderable": false},                //---> columna del adoptante y animal
             ],
         "ordering": true,                     //-->  habilita el ordenamiento de columnas
         "search": {                           // -----> opciones para la busqueda de datos 
