@@ -76,6 +76,25 @@ class M_Centro_adopcion extends CI_Model {
         }
     }
     
+    //-----> Obtiene todos los centros de adopcion activos
+    function obtenerTodosActivos()
+    {
+        $result = array();
+        $this->db->from("centro_adopcion");
+        $this -> db -> where('estado_ca',"activo");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $new_object = new self();
+                $new_object->init($row);
+                $result[] = $new_object;  //----> el resultado seria un array de objetos M_Centro_adopcion
+            }
+            return $result;
+        }else {
+            return false;
+        }
+    }
+    
     //-----> funcion que devuelve el objeto M_Centro_Adopcion
     public function getCentro()
     {

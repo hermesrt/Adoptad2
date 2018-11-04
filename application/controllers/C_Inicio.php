@@ -17,7 +17,7 @@ class C_Inicio extends CI_Controller {
     $data['animales'] = $this->M_Animal-> obtenerTodos();
   }
   $this->load->model('M_Centro_adopcion','CA');
-  $data['centros']=$this->CA->obtenerTodos();
+  $data['centros']=$this->CA->obtenerTodosActivos();  //---> obtiene los centros de adopcion activos
   $data['especies'] = $this->M_Animal->especieDistinct();
   $data['razas'] = $this->M_Animal->razaDistinct();
 
