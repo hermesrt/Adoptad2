@@ -30,7 +30,7 @@
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-6">
-											<img src="<?= base_url('assets/img/animales/').$adopcion->animal->nombre_imagen_animal ?>">
+											<img class="card-img" src="<?= base_url('assets/img/animales/').$adopcion->animal->nombre_imagen_animal ?>">
 										</div>
 										<div class="col-6">
 											<h4><?= $adopcion->animal->nombre_animal ?></h4>
@@ -39,14 +39,7 @@
 												<li>Raza: <?= $adopcion->animal->raza_animal ?></li>
 												<li>Edad: <?= $adopcion->animal-> calculaEdad() ?></li>
 												<li>Sexo: <?= $adopcion->animal->sexo_animal ?></li>
-												<li>Castrado:
-													<?php if ($adopcion->animal->castrado==1): ?>
-														Si
-														<?php else: ?>
-															No
-														<?php endif ?>
-
-													</li>
+												<li>Castrado: <?= ($adopcion->animal->castrado==1) ? "Si" : "No" ?></li>
 												</ul>
 											</div>
 										</div>
