@@ -54,7 +54,12 @@ class C_Informes extends CI_Controller {
 			break;
 
 			case 'adopciones':
-				# code...
+			$this->load->model('M_Centro_adopcion');
+			$centrosSeleccionados = $this->input->post('centros');
+			foreach ($centrosSeleccionados as $idCentro) {
+				$centros[] = $this->M_Centro_adopcion->obtenerUno($idCentro);
+			}
+			echo json_encode($centros);
 			break;
 		}
 	}
