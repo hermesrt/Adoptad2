@@ -94,6 +94,21 @@ class M_Centro_adopcion extends CI_Model {
             return false;
         }
     }
+
+    // cuenta las revisiones apra ese centro, si se le pasa desde y hasta solo toma ese intervalo (fechas con formato  2018-11-04)
+    function countRevisiones($desde=false, $hasta=false)
+    {
+        $this->db->select('id_centro,fecha_revision');
+        $this->db->from('revision');
+        $this->db->join('animal', 'revision.id_animal = animal.id_animal');
+        if ($desde && $hasta) {
+            $this->db->where('fecha_revision >=', $desde);
+            $this->db->where('fecha_revision <=', $hasta);
+        }
+        $this->db->where('id_centro', $this->id_centro);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
     
     //-----> funcion que devuelve el objeto M_Centro_Adopcion
     public function getCentro()

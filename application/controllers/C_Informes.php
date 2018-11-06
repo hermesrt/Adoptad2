@@ -35,10 +35,15 @@ class C_Informes extends CI_Controller {
 				$centroActual = new stdClass();
 				$centroActual->nombreCA = $CA->nombre_ca;
 				if ($CA->animales) {
+					$vacio =true;
 					foreach ($CA->animales as $animal) {
 						if (!($animal->estaAdoptado()) && $animal->estado_animal=="activo") {
 							$centroActual->animales[] = $animal;
+							$vacio=false;
 						}
+					}
+					if ($vacio) {
+						$centroActual->animales = false;
 					}
 				} else {
 					$centroActual->animales = false;	
@@ -54,49 +59,77 @@ class C_Informes extends CI_Controller {
 			break;
 
 			case 'adopciones':
-				# code...
-			break;
+			$this->load->model('M_Centro_adopcion');
+			$centrosSeleccionados = $this->input->post('centros');
+			foreach ($centrosSeleccionados as $idCentro) {
+				$CA= $this->M_Centro_adopcion->obtenerUno($idCentro);
+				$centroActual = new stdClass();
+				$centroActual->cantidadRevisiones = $CA->countRevisiones($this->input->post('desde'),$this->input->post('hasta'));
+				$centroActual->nombreCA = $CA->nombre_ca;
+				if ($CA->adopciones) {
+					$vacio=true;
+					foreach ($CA->adopciones as $adopcion) {
+						if ((strtotime($adopcion->fecha_adopcion) >= strtotime($this->input->post('desde'))) && (strtotime($adopcion->fecha_adopcion) <= strtotime($this->input->post('hasta')))) {
+							$centroActual->animales[] = $adopcion->animal;
+							$vacio=false; 
+						}
+				}
+				if ($vacio) {
+						$centroActual->animales = false;
+				 }
+			}else{
+				$centroActual->animales = false;
+			}
+			$datos[] = $centroActual;
 		}
+		echo json_encode($datos);
+		break;
 	}
+}
+function prueba()
+{
+	$this->load->model('M_Centro_adopcion');
+	echo $this->M_Centro_adopcion->countRevisiones("2018-11-05","2018-11-10");
+}
 
-	/*Este metodo guarda los nombres de las imagenes en SESSION*/
-	function salvarNombres()
-	{	
-		$arrayNombres = json_decode($this->input->post('nombreImagenes'));
-		foreach ($arrayNombres as $key => $value) {
-			$array["imagen".$key] = $value;
-		}
-		$this->session->set_userdata("nombresImgs",$array);
-		echo 'ok';
+/*Este metodo guarda los nombres de las imagenes en SESSION*/
+function salvarNombres()
+{	
+	$arrayNombres = json_decode($this->input->post('nombreImagenes'));
+	foreach ($arrayNombres as $key => $value) {
+		$array["imagen".$key] = $value;
 	}
+	$this->session->set_userdata("nombresImgs",$array);
+	echo 'ok';
+}
 
 
-	/*Este metodo recibe el grafico en base64 y lo guarda como imagen con el nombre que se le pase*/
-	function guardarImagen()
-	{
-		$imagenEnBase64 = $this->input->post("imagen");
-		$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenEnBase64));
-		$filepath =  "./assets/img/graficos/".$this->input->post("nombre");
-		file_put_contents($filepath,$data);
+/*Este metodo recibe el grafico en base64 y lo guarda como imagen con el nombre que se le pase*/
+function guardarImagen()
+{
+	$imagenEnBase64 = $this->input->post("imagen");
+	$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenEnBase64));
+	$filepath =  "./assets/img/graficos/".$this->input->post("nombre");
+	file_put_contents($filepath,$data);
+}
+
+/*Este metodo recupera los nombres de las img's y genera el PDF*/
+function exportarPDF()
+{
+	$nombres = $this->session->userdata('nombresImgs');
+	$this->load->library('pdf');
+	$this->pdf = new Pdf();
+	$this->pdf->AddPage();
+	$this->pdf->SetFont('Arial','B',16);
+	$y=50;
+	foreach ($nombres as $nombre) {
+
+		$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 50 ,$y, 100 , 60,'PNG');
+		$y=$y+60;
 	}
-
-	/*Este metodo recupera los nombres de las img's y genera el PDF*/
-	function exportarPDF()
-	{
-		$nombres = $this->session->userdata('nombresImgs');
-		$this->load->library('pdf');
-		$this->pdf = new Pdf();
-		$this->pdf->AddPage();
-		$this->pdf->SetFont('Arial','B',16);
-		$y=50;
-		foreach ($nombres as $nombre) {
-
-			$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 50 ,$y, 100 , 60,'PNG');
-			$y=$y+60;
-		}
-		$this->session->unset_userdata('nombresImgs');
-		$this->pdf->Output();
-	}
+	$this->session->unset_userdata('nombresImgs');
+	$this->pdf->Output();
+}
 
 
 

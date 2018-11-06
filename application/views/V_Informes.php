@@ -189,7 +189,6 @@
 	function disponiblesXedad(datos) {
 			$("#disponiblesXedad").empty(); //Borra el contenido del DIV para su siguiente utilizacion
 
-			var divId=0; //variable que q le da el id al DIV de cada grafico
 
 			$.each(datos, function(index, centro) {	//Recorro cada Centro
 
@@ -199,7 +198,7 @@
 					var datos2chart = [];
 					/*Agrego titulo y DIV's que contendran los graficos*/
 					$("#disponiblesXedad").append("<center><h5>Disponibles por edad en: "+centro.nombreCA+" </h5></center>");
-					$("#disponiblesXedad").append("<div id='chart2"+divId+"'></div>");
+					$("#disponiblesXedad").append("<div id='chart2"+index+"'></div>");
 
 					var count = countEdad(centro.animales); //Obtengo el countEdad para el centro acutal
 
@@ -220,7 +219,7 @@
 							is3D: true,
 						};
 
-						var chart = new google.visualization.PieChart(document.getElementById("chart2"+divId));	//genero el grafico en el DIV pasado por parametro
+						var chart = new google.visualization.PieChart(document.getElementById("chart2"+index));	//genero el grafico en el DIV pasado por parametro
 
 						/*Cuando el grafico termine de dibujarse lo guardo como imagen*/
 						google.visualization.events.addListener(chart, 'ready', function () {
@@ -229,12 +228,11 @@
 								type: 'POST',
 								data: {
 									imagen: chart.getImageURI(),
-					 			nombre: "animalesXedad"+divId+".jpg"	//Ej: "animalesXedad0.jpg", "animalesXedad1.jpg",...
+					 			nombre: "animalesXedad"+index+".jpg"	//Ej: "animalesXedad0.jpg", "animalesXedad1.jpg",...
 					 		},
 					 	})
 							.done(function() {
-					 		nombreImagenes.push("animalesXedad"+divId+".jpg");	//guardo el nombre de la imagen en un array para usarlo luego
-					 		divId++;	//incremento para generar un DIV con distinto id
+					 		nombreImagenes.push("animalesXedad"+index+".jpg");	//guardo el nombre de la imagen en un array para usarlo luego
 					 		console.log("success");
 					 	})
 							.fail(function() {
@@ -252,25 +250,24 @@
 		function disponiblesXespecie(datos) {
 
 			$("#disponiblesXespecie").empty();
-
 			var divId=0; //variable que q le da el id al div de cada grafico
-			$.each(datos, function(index, centro) {
 
+			$.each(datos, function(index1, centro) {
+				$("#disponiblesXespecie").append("<center><h5>Disponibles por especie en: "+centro.nombreCA+" </h5></center>");
+				$("#disponiblesXespecie").append("<div id='disponibleXespecie"+index1+"'></div>");
+				var datos2chart = [];
 				google.charts.load("current", {packages:["corechart"]});
+				var especies = distinctEspecies(centro);
+				var count = countEspecies(centro.animales,especies);
+
 				google.charts.setOnLoadCallback(drawChart);
 				function drawChart() {
-					var datos2chart = [];
-					$("#disponiblesXespecie").append("<center><h5>Disponibles por especie en: "+centro.nombreCA+" </h5></center>");
-					$("#disponiblesXespecie").append("<div id='chart"+divId+"'></div>");
-
-					var especies = distinctEspecies(centro);
-					var count = countEspecies(centro.animales,especies);
 
 					if (count.length > 0) {
 						datos2chart[0]=["Especies", "Porcentaje"];
 
 						var i =1;
-						$.each(count, function(index, val) {
+						$.each(count, function(index2, val) {
 							datos2chart[i]=[val.especie,val.cantidad];
 							i++;
 						});
@@ -281,22 +278,24 @@
 							title: 'Animales disponibles por especies en: ' + centro.nombreCA,
 							is3D: true,
 						};
-						var chart = new google.visualization.PieChart(document.getElementById("chart"+divId));
+						var chart = new google.visualization.PieChart(document.getElementById("disponibleXespecie"+index1));
+						alert("aca")
+						
+
 					 // Wait for the chart to finish dibujarse before call the getImageURI() method
 					 google.visualization.events.addListener(chart, 'ready', function () {
+					 	alert("entro")
 					 	$.ajax({
 					 		url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
 					 		type: 'POST',
 					 		data: {
 					 			imagen: chart.getImageURI(),
-					 			nombre: "animalesXespecie"+divId+".jpg"
+					 			nombre: "animalesXespecie"+index1+".jpg"
 					 		},
 					 	})
 					 	.done(function() {
-					 		nombreImagenes.push("animalesXespecie"+divId+".jpg");
-					 		divId++;
-
-					 		console.log("success");
+					 		nombreImagenes.push("animalesXespecie"+index1+".jpg");
+					 		console.log("guardad");
 					 	})
 					 	.fail(function() {
 					 		console.log("error");
@@ -308,6 +307,7 @@
 					}
 				}
 			});
+
 		}
 		/*Genera y guarda como JPG un grafico disponibles centro(un solo grafico) */
 		function disponiblesXcentro(datos) {
@@ -359,6 +359,15 @@
 				chart.draw(data,options);
 			}
 		}
+		function validarFechas() {
+			if ($("#tipoInforme").val()=="animales") {
+				return true;
+			}else {
+				return ($("#desde").val() < $("#hasta").val());
+			}
+		}
+
+		
 
 		$(document).ready(function() {
 
@@ -372,6 +381,7 @@
 			var desde = $("#desde").val();	//Las fechas deben estar aunque no se utilizen!!!
 			var hasta = $("#hasta").val();
 
+			if (validarFechas()) {
 			if (centros.length != 0) { //Si se selecciono almenos 1 CA
 				//obtengo la info segun el informe
 				$.ajax({
@@ -400,8 +410,9 @@
 						alert("Informe denuncias pendiente!");
 						break;
 
-						case "adopciones":					
-						alert("Informe adopciones pendiente!");
+						case "adopciones":	
+						var datos = JSON.parse(rta);										
+						console.log(datos);
 						break;
 					}
 
@@ -409,10 +420,10 @@
 				.fail(function() {
 					alert("error");
 				});
-			} else {
-				alert("Debe seleccionar almenos un Centro de Adopcion!");
-			}
-		});
+			} else {alert("Debe seleccionar almenos un Centro de Adopcion!");
+		}
+	} else {alert("Rango de fechas invalido, intente nuevamente!")}
+});
 
 			$("#btnExportar").click(function(event) {
 
