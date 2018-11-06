@@ -109,7 +109,7 @@ class M_Adopcion extends CI_Model {
      $result = array();
      $this->db->from("adopcion");
      $this->db->where("id_centro", $id_centro);
-     $this -> db -> where('estado_adopcion',1);
+     $this -> db -> where('estado_adopcion','activa');
      $query = $this->db->get();
 
      if ($query->num_rows() > 0) {
