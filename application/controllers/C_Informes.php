@@ -73,63 +73,75 @@ class C_Informes extends CI_Controller {
 							$centroActual->animales[] = $adopcion->animal;
 							$vacio=false; 
 						}
-				}
-				if ($vacio) {
+					}
+					if ($vacio) {
 						$centroActual->animales = false;
-				 }
-			}else{
-				$centroActual->animales = false;
+					}
+				}else{
+					$centroActual->animales = false;
+				}
+				$datos[] = $centroActual;
 			}
-			$datos[] = $centroActual;
+			echo json_encode($datos);
+			break;
 		}
-		echo json_encode($datos);
-		break;
 	}
-}
-function prueba()
-{
-	$this->load->model('M_Centro_adopcion');
-	echo $this->M_Centro_adopcion->countRevisiones("2018-11-05","2018-11-10");
-}
-
-/*Este metodo guarda los nombres de las imagenes en SESSION*/
-function salvarNombres()
-{	
-	$arrayNombres = json_decode($this->input->post('nombreImagenes'));
-	foreach ($arrayNombres as $key => $value) {
-		$array["imagen".$key] = $value;
+	function prueba()
+	{
+		$this->load->model('M_Centro_adopcion');
+		echo $this->M_Centro_adopcion->countRevisiones("2018-11-05","2018-11-10");
 	}
-	$this->session->set_userdata("nombresImgs",$array);
-	echo 'ok';
-}
 
-
-/*Este metodo recibe el grafico en base64 y lo guarda como imagen con el nombre que se le pase*/
-function guardarImagen()
-{
-	$imagenEnBase64 = $this->input->post("imagen");
-	$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenEnBase64));
-	$filepath =  "./assets/img/graficos/".$this->input->post("nombre");
-	file_put_contents($filepath,$data);
-}
-
-/*Este metodo recupera los nombres de las img's y genera el PDF*/
-function exportarPDF()
-{
-	$nombres = $this->session->userdata('nombresImgs');
-	$this->load->library('pdf');
-	$this->pdf = new Pdf();
-	$this->pdf->AddPage();
-	$this->pdf->SetFont('Arial','B',16);
-	$y=50;
-	foreach ($nombres as $nombre) {
-
-		$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 50 ,$y, 100 , 60,'PNG');
-		$y=$y+60;
+	/*Este metodo guarda los nombres de las imagenes en SESSION*/
+	function salvarNombres()
+	{	
+		$arrayNombres = json_decode($this->input->post('nombreImagenes'));
+		foreach ($arrayNombres as $key => $value) {
+			$array["imagen".$key] = $value;
+		}
+		$this->session->set_userdata("nombresImgs",$array);
+		echo 'ok';
 	}
-	$this->session->unset_userdata('nombresImgs');
-	$this->pdf->Output();
-}
+
+
+	/*Este metodo recibe el grafico en base64 y lo guarda como imagen con el nombre que se le pase*/
+	function guardarImagen()
+	{
+		$imagenEnBase64 = $this->input->post("imagen");
+		$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenEnBase64));
+		$filepath =  "./assets/img/graficos/".$this->input->post("nombre");
+		file_put_contents($filepath,$data);
+	}
+
+	/*Este metodo recupera los nombres de las img's y genera el PDF*/
+	function exportarPDF()
+	{
+		$nombres = $this->session->userdata('nombresImgs');
+		$this->load->library('pdf');
+		$this->pdf = new Pdf();
+		$this->pdf->SetFont('Arial','B',16);
+		$this->pdf->AddPage();
+
+		$contador=0;
+		$posicion=50;
+		foreach ($nombres as $nombre) {
+			if ($contador==2) {
+				$this->pdf->AddPage();
+				$contador=0;
+				$posicion=50;
+			}
+			$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 50 ,$posicion, 125 , 85,'PNG');
+			$contador++;
+			$posicion=150;
+		}
+		$this->session->unset_userdata('nombresImgs');
+		$this->pdf->Output();
+	}
+
+	function limpiarNombres()
+	{
+		$this->session->unset_userdata('nombresImgs');
+	}
 
 
 
