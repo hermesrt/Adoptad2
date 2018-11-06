@@ -13,7 +13,7 @@ class C_Informes extends CI_Controller {
 
 	public function index()
 	{
-		$data['centros'] = $this -> centro -> obtenerTodos();
+		$data['centros'] = $this -> centro -> obtenerTodosActivos();  //--> obtiene los centros activos
 		$this->load->view('Plantillas/V_Header');
 		$this->load->view('V_Informes',$data);
 		$this->load->view('Plantillas/V_Footer');
