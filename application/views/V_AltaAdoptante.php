@@ -75,7 +75,7 @@
 						<div class="form-group row">
 							<label for="inputPassword3" class="col-sm-2 form-control-label">DNI</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese DNI del adoptante...">
+								<input type="number" class="form-control" id="inputPassword3" placeholder="Ingrese DNI del adoptante..." max="99999999" min="1000000">
 							</div>
 						</div>
 						<div class="form-group row">

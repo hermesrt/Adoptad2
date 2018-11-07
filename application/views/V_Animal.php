@@ -129,7 +129,7 @@
 			<div class="modal-body">
 				<form class="form">
 					<div class="form-group">
-						<input type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante...">
+                        <input type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante..." max="99999999" min="1000000">
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante...">

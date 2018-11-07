@@ -130,7 +130,7 @@ class C_Informes extends CI_Controller {
 				$contador=0;
 				$posicion=50;
 			}
-			$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 50 ,$posicion, 125 , 85,'PNG');
+			$this->pdf->Image(base_url('assets/img/graficos/').$nombre , 20 ,$posicion, 200 , 85,'PNG'); //125,85
 			$contador++;
 			$posicion=150;
 		}
