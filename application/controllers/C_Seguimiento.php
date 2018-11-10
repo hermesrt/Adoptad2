@@ -9,6 +9,7 @@ class C_Seguimiento extends CI_Controller {
         parent::__construct();
         $this -> load -> model('M_Periodo_seguimiento','periodo');
         $this -> load -> model('M_Correo','correo');
+        $this -> load -> model('M_Centro_adopcion','centro');
     }
     
     
@@ -43,13 +44,14 @@ class C_Seguimiento extends CI_Controller {
             
             //----> genera el listado de adoptantes para enviar el mail
             $datos['listado'] = $periodo -> generarListaEmail($tipoPeriodo);   
-            
+            $centro = $this -> centro -> obtenerUno($id_centro);
             //-----> guarda el periodo nuevo en la base de datos
             $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);
             
             //-----> falta enviar el mail a todos los adoptantes a los que los animales les falte lo del periodo de castracion
-           // $this -> correo -> generarCorreoPeriodo($tipoPeriodo,$adop);
-            //-----> $this -> correo -> enviarCorreo();
+            $mensaje = $this -> correo -> generarCorreoPeriodo ($tipoPeriodo,$fechaDesde,$fechaHasta,$centro);
+            $encabezado = 'Aviso Periodo de Seguimiento';
+            $this -> correo -> enviarCorreo(null,$encabezado,$mensaje,$datos['listado']);
             
         }
         

@@ -5,17 +5,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_correo extends CI_Model {
     
     
-    //-----> Genera el correo de una denuncia para un adoptante
+    //-----> Genera el mensaje del correo de una denuncia para un adoptante
     public function generarCorreoDenuncia($adoptante)
     {
-        $mensaje = "Saludos ".$adoptante->nombre_adoptante." ".$adoptante->apellido_adoptante.', queremos informarle que posee '.count($adoptante->denuncias)." y recordarle que si acumula 3 denuncias o más no podra adoptar mas animales en ningun centro de adopción.";
+        $mensaje = "Saludos ".$adoptante->nombre_adoptante." ".$adoptante->apellido_adoptante.', desde Adopta2 queremos informarle que posee '.count($adoptante->denuncias)." denuncias. Le recordamos que si acumula 3 denuncias o más no podra adoptar mas animales en ningun centro de adopción. Que tenga un buen dia!";
         return $mensaje;
     }
     
-    //-------> Genera el correo de periodo de seguimiento
-    public function generarCorreoPeriodo ($tipo_correo,$adoptante,$fecha_desde,$fecha_hasta)
+    //-------> Genera el mensaje de correo de periodo de seguimiento
+    public function generarCorreoPeriodo ($tipo_periodo,$fecha_desde,$fecha_hasta,$centro)
     {
-        
+        $mensaje = "Saludos, desde Adopta2 queremos informarle que esta abierto el periodo de ".$tipo_periodo." desde la fecha ".$fecha_desde." hasta la fecha ".$fecha_hasta.". Puede acercarse a ".$centro -> nombre_ca." ubicado en ".$centro->direccion_ca." entre el periodo específicado, y ante cualquier duda puede consultar al telefono ".$centro ->telefono_ca." o al email ".$centro->email_ca.". Que tenga un buen día!.";
+        return $mensaje;
     }
     
     //--------- funcion para enviar el mail
@@ -41,7 +42,7 @@ class M_correo extends CI_Model {
         if ($listado != null){
             foreach ($listado as $adoptante)
             {
-                $this->email->from('adopta2app@gmail.com','Perrito Adoptado'); //----> el correo de google del que se envia
+                $this->email->from('adopta2app@gmail.com','Adopta2 app'); //----> el correo de google del que se envia
                 $this->email->to($adoptante -> email_adoptante);
                 $this->email->subject($encabezado);
                 $this->email->message($mensaje);
@@ -57,7 +58,7 @@ class M_correo extends CI_Model {
                 }
             }
         } else {
-            $this->email->from('adopta2app@gmail.com','Perrito Adoptado'); //----> el correo de google del que se envia
+            $this->email->from('adopta2app@gmail.com','Adopta2 app'); //----> el correo de google del que se envia
             $this->email->to($email_destino);
             $this->email->subject($encabezado);
             $this->email->message($mensaje);
