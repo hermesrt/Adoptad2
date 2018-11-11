@@ -103,24 +103,24 @@
 <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cartelModal"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div class="modal-body">
-    <form>
-        <fieldset>
-            <label id="mensaje"></label>
-        </fieldset>
-    </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-</div>
-</div>
-</div>
+        <div class="modal-header">
+            <h5 class="modal-title" id="cartelModal"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <fieldset>
+                    <label id="mensaje"></label>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        </div>
+    </div>
+   </div>
 </div>
 
 
@@ -173,10 +173,10 @@
             console.log('son iguales');
             return false;
         } 
-        // fechaHasta = fechaHasta.split('-',3).reverse().join('-'); //---> esto da vuelta la cadena y la vuelve a unir con '-'
-        fechaHasta = fechaHasta.split('-',3);   //--> la fecha esta devuelta como un array separado con -
+        // fechaHasta = fechaHasta.split('-',3).reverse().join('-'); //---> esto da vuelta la cadena y la vuelve a unir con '-'  No lo use pero puede ser util
+        fechaHasta = fechaHasta.split('-',3);   //--> la fecha esta devuelta como un array separado con '-'
         console.log(fechaHasta); 
-        fechaDesde = fechaDesde.split('-',3);    //--> la fecha esta devuelta como un array separado con -
+        fechaDesde = fechaDesde.split('-',3);    //--> la fecha esta devuelta como un array separado con '-'
         console.log(fechaDesde);
         
         //---> creo dos objetos Date con los datos de los array fechas
