@@ -172,7 +172,7 @@
         if(fechaDesde == fechaHasta){  //-----> si las cadenas son iguales entonces la validacion es invalida
             console.log('son iguales');
             return false;
-        }
+        } 
         // fechaHasta = fechaHasta.split('-',3).reverse().join('-'); //---> esto da vuelta la cadena y la vuelve a unir con '-'
         fechaHasta = fechaHasta.split('-',3);   //--> la fecha esta devuelta como un array separado con -
         console.log(fechaHasta); 
@@ -183,6 +183,11 @@
         fechaHasta = new Date(fechaHasta[0],fechaHasta[1],fechaHasta[2]);
         fechaDesde = new Date(fechaDesde[0],fechaDesde[1],fechaDesde[2]);
         
+        var hoy = new Date();
+        if(fechaDesde < hoy){ //--> si ela fecha de inicio es menor a la del dia de hoy esta mal
+            console.log('la fecha es menor al dia de hoy y no es valida '+hoy);
+            return false;
+        }
         if(fechaDesde<fechaHasta){   //----> si la fechaDesde es menor que hasta sale del validar sino no
             console.log('estan bien');
             return true;
@@ -192,6 +197,14 @@
         }
         
     }
+    
+    //----> Cuando se cierra el modal donde ingresa los datos de periodo seguimiento
+    $('#modalPeriodo').on('hide.bs.modal', function (e) {
+        //----> Seteo los valores de vuelta en blanco asi elije de vuelta 
+        $('#fechaDesde').val('');
+        $('#fechaHasta').val('');
+        $('#tipoPeriodo').val('');
+    });
     
     
     //-------> Comportamiento cuando clickea el boton de iniciar periodo
@@ -240,10 +253,6 @@
                     console.log('se hizo bien man 👏👏');
                     $('#modalPeriodo').modal('hide');
                     $('#modalMensaje').modal('show');
-                    //----> Seteo los valores de vuelta en blanco asi elije de vuelta 
-                    $('#fechaDesde').val('');
-                    $('#fechaHasta').val('');
-                    $('#tipoPeriodo').val('');
                 })
                 // Code to run if the request fails; the raw request and
                 // status codes are passed to the function

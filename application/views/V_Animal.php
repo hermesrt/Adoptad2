@@ -488,7 +488,6 @@ $('#table_id').DataTable({
 			var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
 			'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
 
-
 			if(data.estado_animal == 'activo'){
 				if (data.adoptado == 0){
 					btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';

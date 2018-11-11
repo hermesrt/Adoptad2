@@ -12,7 +12,7 @@ class C_Animal extends CI_Controller {
 
     function index()
     {
-        $data['animales'] = $this->animal->obtenerTodos();
+        $data['animales'] = $this->animal->obtenerPorCentro($this->session->userdata('id_centro'));
         $this->load->view('Plantillas/V_Header',$data);
         $this->load->view('V_Animal');
         $this->load->view('Plantillas/V_Footer');
@@ -68,8 +68,10 @@ class C_Animal extends CI_Controller {
     
     function getAnimales()
     {
-        $todos = $this->animal->getTodosJson();
-        echo $todos;
+        // $todos = $this->animal->getTodosJson();
+        //---> obtiene los animales por centro y los envia al ajax en formato JSON
+        $animales = $this -> animal -> obtenerPorCentro($this->session->userdata('id_centro'));
+        echo json_encode($animales);
     }
 
     

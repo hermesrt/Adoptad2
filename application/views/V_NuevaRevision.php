@@ -76,6 +76,7 @@
 						<div class="form-group">
 							<label for="fecha">Fecha revisión</label>
 							<input type="date" class="form-control" id="fecha" placeholder="Fecha">
+							<?= date("d/m/Y") ?>
 						</div>
 						<div class="form-group">
 							<label for="TipoRevision">Tipo de revisión</label>
@@ -135,7 +136,7 @@
 				var fechaActual = new Date();
 				var fechaElegida = new Date($("#fecha").val());
 				fechaActual.setHours(0,0,0,0);
-				if ($("#fecha").val() && fechaActual.getTime()>=fechaElegida.getTime()) {
+				if ($("#fecha").val() && fechaActual.getTime() <= fechaElegida.getTime()) {
 					$.ajax({
 						url: '<?= base_url('C_Adoptante/registrarRevision') ?>',
 						type: 'POST',
