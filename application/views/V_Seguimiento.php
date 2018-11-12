@@ -91,7 +91,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
+                <div class="loader"></div><input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
             </div>
         </div>
     </div>
@@ -129,6 +129,9 @@
 <script>
     
     $(document).ready( function () {
+        
+    //-----> acac oculto del spinner asi no se ve en modal cuando arranca
+    $('.loader').hide();
         
     //------------> seteo las configuraciones de la tabla
     $('#table_id').DataTable({
@@ -230,6 +233,7 @@
                     'beforeSend': function (data)
                     {
                         console.log('... cargando...');
+                        $('.loader').show();  //---> hago visible el spinner
                     },
                     'error': function (data) {
                         //si hay un error mostramos un mensaje
@@ -251,7 +255,8 @@
                 // The response is passed to the function
                 .done(function( json ) {         
                     console.log('se hizo bien man 👏👏');
-                    $('#modalPeriodo').modal('hide');
+                    $('.loader').hide(); //---> oculta el spinner
+                    $('#modalPeriodo').modal('hide'); 
                     $('#modalMensaje').modal('show');
                 })
                 // Code to run if the request fails; the raw request and
