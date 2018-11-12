@@ -77,6 +77,17 @@
 						<div id="disponiblesXedad"></div>
 					</div>
 				</div>
+				<div id="denuncias" class="col-12" style="display: none;">
+					<div class="col-12 my-3">
+						<div id="denunciasXcentro"></div>
+					</div>
+					<div class="col-12 my-3">
+						<div id="denunciasXmotivo"></div>
+					</div>
+					<div class="col-12 my-3">
+						<div id="denunciasXciudad"></div>
+					</div>
+				</div>
 				<div id="adoptados" class="col-12" style="display: none;">
 					<div class="col-12 my-3">
 						<div id="adoptadosXcentro"></div>
@@ -681,10 +692,180 @@
 
 
 
+	function denunciasXcentro(datos) {
+		$("#denunciasXcentro").empty();
+		$("#denunciasXcentro").append("<center><h5>Denuncias por Centro</h5></center>");
+		$("#denunciasXcentro").append("<div id='divDenuncias'></div>");
+		google.charts.load("current", {packages:['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var datos2chart = [];
+			datos2chart[0] = ['Centro', 'Cantidad', { role: 'style' }];
 
-	$(document).ready(function() {
+			var color = getRandomColor();
+			$.each(datos, function(indice,valor) {
+				var cantidad=0;
+				if (valor.denuncias != 0){
+					cantidad=valor.denuncias.length;
+				}
 
-		$("#btnInforme").on('click', function(event) {
+				datos2chart[indice+1] = [valor.nombreCA, cantidad, color]
+			});
+			var data = google.visualization.arrayToDataTable(datos2chart);
+
+			var options = {
+				title: "Denuncias por centro",
+				bar: {groupWidth: '25%'},
+				legend: 'none',
+			};
+
+			var divDenuncias = document.getElementById('divDenuncias');
+			var chart = new google.visualization.ColumnChart(divDenuncias);
+			google.visualization.events.addListener(chart, 'ready', function () {
+				$.ajax({
+					url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+					type: 'POST',
+					data: {
+						imagen: chart.getImageURI(),
+						nombre: "denunciasXcentro.jpg"
+					},
+				})
+				.done(function() {
+					nombreImagenes.push("denunciasXcentro.jpg");
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+				});
+			});
+			chart.draw(data,options);
+		}
+	}
+	function denunciasXmotivo(datos) {
+			$("#denunciasXmotivo").empty(); //Borra el contenido del DIV para su siguiente utilizacion
+
+
+			$.each(datos, function(index, centro) {	//Recorro cada Centro
+
+				google.charts.load("current", {packages:["corechart"]});
+				google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var datos2chart = [];
+					/*Agrego titulo y DIV's que contendran los graficos*/
+					$("#denunciasXmotivo").append("<center><h5>Denuncias por motivo en: "+centro.nombreCA+" </h5></center>");
+					$("#denunciasXmotivo").append("<div id='chart9"+index+"'></div>");
+
+
+					datos2chart[0]=["Motivo", "Porcentaje"];	//Encabezado del grafico
+
+
+					if (centro.denuncias!=0) {	//Si hay datos proceso
+						j =1;
+						$.each(centro.motivos, function(motivo, cantidad) {
+							datos2chart[j] = [motivo,cantidad];
+							j++;
+						});
+						
+						var data = google.visualization.arrayToDataTable(datos2chart);	//Parse datos a GoogleCharts
+
+						var options = {
+							title: 'Denuncias por motivo en: ' + centro.nombreCA,	//Opciones para el grafico actual
+							is3D: true,
+						};
+
+						var chart = new google.visualization.PieChart(document.getElementById("chart9"+index));	//genero el grafico en el DIV pasado por parametro
+
+						/*Cuando el grafico termine de dibujarse lo guardo como imagen*/
+						google.visualization.events.addListener(chart, 'ready', function () {
+							$.ajax({
+								url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+								type: 'POST',
+								data: {
+									imagen: chart.getImageURI(),
+					 			nombre: "denunciasXmotivo"+index+".jpg"	//Ej: "animalesXedad0.jpg", "animalesXedad1.jpg",...
+					 		},
+					 	})
+							.done(function() {
+					 		nombreImagenes.push("denunciasXmotivo"+index+".jpg");	//guardo el nombre de la imagen en un array para usarlo luego
+					 		console.log("success");
+					 	})
+							.fail(function() {
+								console.log("error");
+							});
+						});
+					 chart.draw(data,options);	//Dibujo el grafico
+					} else {	//si no hay datos muestro muestro cartel
+						$("#denunciasXmotivo").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
+					}
+				}
+			});
+		}
+
+		function denunciasXciudad(datos) {
+			$("#denunciasXciudad").empty(); //Borra el contenido del DIV para su siguiente utilizacion
+
+
+			$.each(datos, function(index, centro) {	//Recorro cada Centro
+
+				google.charts.load("current", {packages:["corechart"]});
+				google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var datos2chart = [];
+					/*Agrego titulo y DIV's que contendran los graficos*/
+					$("#denunciasXciudad").append("<center><h5>Denuncias por ciudad en: "+centro.nombreCA+" </h5></center>");
+					$("#denunciasXciudad").append("<div id='chart8"+index+"'></div>");
+
+
+					datos2chart[0]=["Motivo", "Porcentaje"];	//Encabezado del grafico
+
+
+					if (centro.denuncias!=0) {	//Si hay datos proceso
+						j =1;
+						$.each(centro.ciudades, function(ciudad, cantidad) {
+							datos2chart[j] = [ciudad,cantidad];
+							j++;
+						});
+						
+						var data = google.visualization.arrayToDataTable(datos2chart);	//Parse datos a GoogleCharts
+
+						var options = {
+							title: 'Denuncias por ciudad en: ' + centro.nombreCA,	//Opciones para el grafico actual
+							is3D: true,
+						};
+
+						var chart = new google.visualization.PieChart(document.getElementById("chart8"+index));	//genero el grafico en el DIV pasado por parametro
+
+						/*Cuando el grafico termine de dibujarse lo guardo como imagen*/
+						google.visualization.events.addListener(chart, 'ready', function () {
+							$.ajax({
+								url: '<?php echo base_url("C_Informes/guardarImagen") ?>',
+								type: 'POST',
+								data: {
+									imagen: chart.getImageURI(),
+					 			nombre: "denunciasXciudad"+index+".jpg"	//Ej: "animalesXedad0.jpg", "animalesXedad1.jpg",...
+					 		},
+					 	})
+							.done(function() {
+					 		nombreImagenes.push("denunciasXciudad"+index+".jpg");	//guardo el nombre de la imagen en un array para usarlo luego
+					 		console.log("success");
+					 	})
+							.fail(function() {
+								console.log("error");
+							});
+						});
+					 chart.draw(data,options);	//Dibujo el grafico
+					} else {	//si no hay datos muestro muestro cartel
+						$("#denunciasXciudad").append("<center><h6 class='alert alert-warning'>No hay datos suficientes para: "+centro.nombreCA+" </h6></center>");
+					}
+				}
+			});
+		}
+		
+
+
+		$(document).ready(function() {
+
+			$("#btnInforme").on('click', function(event) {
 
 
 			var centros = []; // Array de centros seleccionados
@@ -722,11 +903,23 @@
 						$("#disponibles").show(); 
 						break;
 
-						case "denuncias":					
-						alert("Informe denuncias pendiente!");
+						case "denuncias":	
+						nombreImagenes = [];		//vacio el array para su proximo uso
+						var datos = JSON.parse(rta);
+						console.log(datos);
+						denunciasXcentro(datos);
+						denunciasXmotivo(datos);
+						denunciasXciudad(datos);
+
+						$("#adoptados").hide(); 
+						$("#disponibles").hide(); 
+						$("#graficos").show(); //Muestra el DIV que los contiene
+						$("#denuncias").show(); //Muestra el DIV que los contiene
+						
 						break;
 
 						case "adopciones":	
+
 						nombreImagenes = [];		//vacio el array para su proximo uso
 
 						var datos = JSON.parse(rta);
@@ -751,27 +944,27 @@
 	} else {alert("Rango de fechas invalido, intente nuevamente!")}
 });
 
-		$("#btnExportar").click(function(event) {
+			$("#btnExportar").click(function(event) {
 
-			$.ajax({
+				$.ajax({
 					url: '<?php echo base_url('C_Informes/salvarNombres') ?>',	//Guardo los nombres de las img's en SESSION
 					type: 'POST',
 					data: {nombreImagenes: JSON.stringify(nombreImagenes)},
 				})
-			.done(function(rta) {
-				if (rta=="ok") {
+				.done(function(rta) {
+					if (rta=="ok") {
 						window.location.href = "<?php echo base_url('C_Informes/exportarPDF'); ?>";	//si todo esta OK genero el PDF
 					} else {
 						alert("Error al exportar informe, intente nuevamente!")
 					}
 				})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
 			});
 		});
-	});
 
-</script>
+	</script>

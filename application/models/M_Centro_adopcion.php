@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Centro_adopcion extends CI_Model {
-    
+
     //------> atributos
     public $id_centro;
     public $nombre_ca;
@@ -134,7 +134,66 @@ class M_Centro_adopcion extends CI_Model {
     {
         return $this -> animales;
     }
-    
+
+    function denunciasPorFecha($desde,$hasta)
+    {
+        $result = 0;
+        if ($this->denuncias) {
+           $result = Array();
+           foreach ($this->denuncias as $denuncia) {
+            if ((strtotime($denuncia->fecha_denuncia)) >= (strtotime($desde)) && (strtotime($denuncia->fecha_denuncia)) <= (strtotime($hasta))) {
+                $result[] = $denuncia;
+            }
+        }
+        return $result;
+    }
+}
+
+function denunciasPorMotivo($denuncias)
+{
+    $motivos = new stdClass();
+    $motivos->maltrato = 0;
+    $motivos->abandono = 0;
+    $motivos->tenenciaIrresponsable = 0;
+    $motivos->otros = 0;
+
+    if ($denuncias!=0) {
+        foreach ($denuncias as $den) {
+            switch ($den->id_motivo) {
+                case '1':
+                $motivos->maltrato++;
+                break;
+                case '2':
+                $motivos->abandono++;
+                break;
+                case '3':
+                $motivos->tenenciaIrresponsable++;
+                break;
+                case '4':
+                $motivos->otros++;
+                break;
+            }
+        }
+    }
+    return $motivos;
+}
+
+function denunciasPorCiudad($denuncias)
+{
+    $this->load->model('M_Adoptante');
+    $ciudades = new stdClass();
+
+    foreach ($denuncias as $den) {
+        $adoptante = $this->M_Adoptante->obtenerUno($den->id_adoptante);
+        $city = $adoptante->ciudad_adoptante;
+        if (property_exists ($ciudades, $city)) {
+            $ciudades->$city++;
+        } else {
+            $ciudades->$city=1;
+        }        
+    }
+    return $ciudades;
+}
 }
 
 /* End of file M_Centro_adopcion.php */

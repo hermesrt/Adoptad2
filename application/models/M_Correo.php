@@ -3,12 +3,18 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_correo extends CI_Model {
-    
-    
+
+
     //-----> Genera el mensaje del correo de una denuncia para un adoptante
     public function generarCorreoDenuncia($adoptante)
     {
-        $mensaje = "Saludos ".$adoptante->nombre_adoptante." ".$adoptante->apellido_adoptante.', desde Adopta2 queremos informarle que posee '.count($adoptante->denuncias)." denuncias. Le recordamos que si acumula 3 denuncias o más no podra adoptar mas animales en ningun centro de adopción. Que tenga un buen dia!";
+        $mensaje = "Saludos ".$adoptante->nombre_adoptante." ".$adoptante->apellido_adoptante.', desde Adopta2 queremos informarle que posee ';
+        if ($adoptante->denuncias){
+            $mensaje.= (count($adoptante->denuncias)+1);
+        } else {
+            $mensaje .= ' 1 ';
+        }       
+        $mensaje .= " denuncias. Le recordamos que si acumula 3 denuncias o más no podra adoptar mas animales en ningun centro de adopción. Que tenga un buen dia!";
         return $mensaje;
     }
     
@@ -82,15 +88,15 @@ class M_correo extends CI_Model {
     {
         //configuracion para gmail
         $configGmail = array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.gmail.com',
-        'smtp_port' => '465',
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => '465',
         'smtp_user' => 'correo_gmail',  //--> correo gmail 
         'smtp_pass' => 'password', //--> password
         'mailtype' => 'html',
         'charset' => 'utf-8',
         'newline' => "\r\n"
-        );    
+    );    
         //cargamos la configuración para enviar con gmail
         $this->email->initialize($configGmail);
         $this->email->from($email_from);
@@ -102,7 +108,7 @@ class M_correo extends CI_Model {
         var_dump($this->email->print_debugger());
     }
     
- 
+
     //---------> Envia mail para yahoo
     public function sendMailYahoo($email_from,$email_to,$subject,$message)
     {

@@ -244,7 +244,8 @@
                     $('#nomApe').html("<h5>Nombre persona que registro la denuncia: </h5>"+ arr['usuario']['nombre_usuario']+" "+arr['usuario']['apellido_usuario']);
                     $('#motivoD').html("<h5>Motivo de la denuncia: </h5>"+ arr['motivo']);
                     $('#descr').html("<h5>Detalle de denuncia:</h5><p>"+ arr['descripcionDenuncia']+"</p>");
-                    $('#cant').html("<h5>Cantidad de denuncias: </h5>"+ arr['cantidad_denuncias']);
+                    var cantidad = parseInt(arr.cantidad_denuncias)+1;
+                    $('#cant').html("<h5>Cantidad de denuncias: </h5>"+ cantidad);
                 }
             })
             // Code to run if the request succeeds (is done);

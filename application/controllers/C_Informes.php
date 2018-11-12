@@ -55,7 +55,26 @@ class C_Informes extends CI_Controller {
 			break;
 
 			case 'denuncias':
-				# code...
+			$this->load->model('M_Centro_adopcion');
+			$centrosSeleccionados = $this->input->post('centros');
+			$desde = $this->input->post('desde');
+			$hasta = $this->input->post('hasta');
+
+			foreach ($centrosSeleccionados as $idCentro) {
+				$CA= $this->M_Centro_adopcion->obtenerUno($idCentro);
+				$centroActual = new stdClass();
+				$centroActual->nombreCA = $CA->nombre_ca;
+				if ($CA->denuncias) {
+					$centroActual->denuncias = $CA->denunciasPorFecha($desde,$hasta);
+					$centroActual->motivos = $CA->denunciasPorMotivo($centroActual->denuncias);
+					$centroActual->ciudades = $CA->denunciasPorCiudad($centroActual->denuncias);
+
+				} else {
+					$centroActual->denuncias = 0;
+				}
+				$datos[] = $centroActual;
+			}
+			echo json_encode($datos);
 			break;
 
 			case 'adopciones':
