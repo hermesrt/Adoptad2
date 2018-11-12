@@ -43,7 +43,9 @@ class Prueba extends CI_Controller {
     
 	public function imagen()
 	{
+        $this -> load -> view('Plantillas/V_Header');
 		$this->load->view('Prueba');
+        $this -> load -> view('Plantillas/V_Footer');
 	}
 
 }

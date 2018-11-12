@@ -83,7 +83,7 @@
         </fieldset>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
+            <div class="loader"></div><button type="submit" class="btn btn-primary btn-registrar-denuncia">Regsitrar Denuncia</button>
         </div> 
     </form>
 </div>
@@ -141,6 +141,9 @@
 <script>
     $(document).ready( function () {
 
+    //-----> oculto el spinner que se carga en el modal
+    $('.loader').hide();    
+        
     //------------> seteo las configuraciones de la tabla
     $('#table_id').DataTable({
         select: true,  //-----> hace que las filas sean seleccionables
@@ -226,6 +229,7 @@
                 'beforeSend': function (data)
                 {
                     console.log('... cargando...');
+                    $('.loader').show();  //---> hago visible el spinner
                 },
                 'error': function (data) {
                     //si hay un error mostramos un mensaje
@@ -249,6 +253,7 @@
                 // si todo anda bien
                 console.log( "The request is good!" );
                 $('#exampleModal').modal('hide');
+                $('.loader').hide(); //---> oculta ek spinner 
                 $('#registro_denuncia').modal('show');
                 //---> seteo los valores por defecto
                 $('#selectMotivoDenuncia').val('');

@@ -11,6 +11,8 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/fontawesome/css/all.css') ?>">
   <!-- Cargo la libreria del DataTable -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/datatables.css') ?>">
+  <!-- Cargo el css personalizado -->
+  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/cssPersonalizados.css') ?>">
 
   <title>A2!</title>
   <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
