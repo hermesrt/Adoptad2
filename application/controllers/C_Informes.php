@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_Informes extends CI_Controller {
+    
+    
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,7 +19,6 @@ class C_Informes extends CI_Controller {
 		$this->load->view('Plantillas/V_Header');
 		$this->load->view('V_Informes',$data);
 		$this->load->view('Plantillas/V_Footer');
-		
 	}
 
 
@@ -86,6 +87,8 @@ class C_Informes extends CI_Controller {
 			break;
 		}
 	}
+    
+    
 	function prueba()
 	{
 		$this->load->model('M_Centro_adopcion');
@@ -113,6 +116,7 @@ class C_Informes extends CI_Controller {
 		file_put_contents($filepath,$data);
 	}
 
+    
 	/*Este metodo recupera los nombres de las img's y genera el PDF*/
 	function exportarPDF()
 	{
@@ -138,6 +142,7 @@ class C_Informes extends CI_Controller {
 		$this->pdf->Output();
 	}
 
+    
 	function limpiarNombres()
 	{
 		$this->session->unset_userdata('nombresImgs');

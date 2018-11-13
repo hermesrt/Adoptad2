@@ -57,9 +57,9 @@
 						<center><button type="button" class="btn btn-primary" id="btnInforme"><i class="fas fa-chart-pie"></i> Generar informe</button></center>
 					</form>
 				</div>
-
-
 			</div>
+			
+			<!-- Muestra los graficos en pantalla en el caso de Informe Animales Disponibles  -->
 			<div class="row border border border-success rounded mx-2 my-2 bg-info" id="graficos" style="display: none" >
 				<div class="col-12">
 					<center><h1>Informe de Animales Disponibles</h1> 
@@ -95,6 +95,8 @@
 					</div>
 				</div>
 			</div>
+			
+			
 		</div>
 	</div>
 </div>
@@ -102,8 +104,10 @@
 
 
 
+<!-- Script en donde se obtienen los datos para el informe de animales disponibles para adopcion  -->
 <script type="text/javascript">
-	var nombreImagenes=[]; //Variable global para almacenar temporalmente los nombres de las img's
+    
+	var nombreImagenes=[];  //--> Variable global para almacenar temporalmente los nombres de las img's
 
 	/*Oculta los inputs de fechas si se selecciona el informe de disponiobles*/
 	function toggleFechas() {
@@ -115,7 +119,7 @@
 	}
 
 
-	/*Calcula edad en base a "fechaNacimiento"*/
+	/*   Calcula edad en base a "fechaNacimiento"  */
 	function calcularEdad(fecha) {
 		var hoy = new Date();
 		var cumpleanos = new Date(fecha);
@@ -128,7 +132,9 @@
 
 		return edad;
 	}
-	/*Genera un color random para los graficos */
+    
+
+	/*  Genera un color random para los graficos  */
 	function getRandomColor() {
 		var letters = '0123456789ABCDEF';
 		var color = '#';
@@ -137,7 +143,9 @@
 		}
 		return color
 	}
-	/*Obtiene las especies sin repetir para un centro pasado por parametro*/
+    
+    
+	/*  Obtiene las especies sin repetir para un centro pasado por parametro  */
 	function distinctEspecies(centro) {
 		var especies = [];
 		$.each(centro.animales, function(k, animal) {
@@ -147,7 +155,9 @@
 		});
 		return especies;/*devuelve array: ["perro, "gato", ...]*/
 	}
-	/*Cuenta la cantidad de animales de por especie*/
+    
+    
+	/*  Cuenta la cantidad de animales de por especie  */
 	function countEspecies(animales, distinctEspecies) {
 		var count=[];
 		$.each(distinctEspecies, function(i, val) {	
@@ -167,7 +177,7 @@
 				}
 			});
 		});
-		return count; /*devuelve array: ["perro" => 5, "gato" => 2, ...]*/
+		return count; /*  devuelve array: ["perro" => 5, "gato" => 2, ...]  */
 	}
 
 	function countSexo(animales) {

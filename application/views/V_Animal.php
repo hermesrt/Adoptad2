@@ -129,30 +129,34 @@
 			<div class="modal-body">
 				<form class="form">
 					<div class="form-group">
-                        <input type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante..." max="99999999" min="1000000">
+                        <input required type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante..." max="99999999" min="1000000" >
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante...">
+						<input required type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante...">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante...">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control mx-2" name="direccionAdoptante" id="direccionAdoptante" placeholder="Ingrese direccion del adoptante...">
-					</div>
+						<input required type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante...">
+                    </div>
 					<div class="form-group">
 						<input type="number" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese telefono del adoptante...">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante...">
+						<input required type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante...">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control mx-2" name="ciudadAdoptante" id="ciudadAdoptante" placeholder="Ingrese ciudad del adoptante...">
+						<input required type="text" class="form-control mx-2" name="ciudadAdoptante" id="ciudadAdoptante" placeholder="Ingrese ciudad del adoptante...">
 					</div>
+					<div class="row">
+                        <div class="col">
+                          <input required type="text" class="form-control " name="direccionAdoptante" id="direccionAdoptante" placeholder="Dirección del adoptante...">
+                        </div>
+                        <div class="col">
+                            <input required type="number" class="form-control " name="alturaDireccion" id="alturaDireccion" min="0" max="9999" placeholder="altura de la dirección">
+                        </div>
+                    </div>
 				</form>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					
 					<button type="button" id="btnRegistrarAdoptante" class="btn btn-primary">Registrar Adoptante</button>
 				</div>
 			</div>
@@ -309,6 +313,75 @@
     }
     
 </script>
+
+<!-- Script para validacion de formulario Registrar Adoptante --> 
+<script>
+
+    //----> valida que la direccion no sea numero y que la altura no sea nula
+    function validoDireccion() {
+        if( (isNaN($('#direccionAdoptante').val())) && ($('#alturaDireccion').val()) && ($("#nombreAdoptante").val().match(/^[a-zA-Z]+$/)) ){
+            var nro = $('#alturaDireccion').val();
+            if ( nro > 0 && nro < 9999 ){
+                return true;
+            } else {
+                alert("Ingrese correctamente la direccion o la altura");
+                return false;
+            }
+        } else {
+            alert("Ingrese correctamente la direccion o la altura");
+            return false;
+        }
+    }
+    
+    function validoDni() {
+        var dni = $('#dniAdoptante').val();
+        if (dni > 1000000 && dni < 99999999){
+            return true;
+        } else {
+            alert('Ingrese correctamente el DNI');
+            return false;
+        }
+    }
+    
+    function validoNombreApellido(){
+        if ( ($("#nombreAdoptante").val().match(/^[a-zA-Z]+$/)) && ($("#apellidoAdoptante").val().match(/^[a-zA-Z]+$/)) ) {
+           return true;
+        } else {
+            alert('Ingrese correctamente el nombre o apellido');
+            return false;
+        }
+    }
+    
+    function validoEmail() {
+        if ( $('#emailAdoptante').val().match(/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/) ){
+            return true;
+        } else {
+            alert('Ingrese correctamente el email');
+            return false;
+        }
+    }
+    
+    function validoCiudad() {
+        // $("#ciudadAdoptante").val().match(/^[a-zA-Z]+$/)
+        if ( isNaN($("#ciudadAdoptante").val()) ){
+            return true;
+        }else{
+            alert('Ingrese correctamente la ciudad');
+        }
+    }
+    
+    function validoTelefono() {
+        if ( $('#telefonoAdoptante').val().match(/^[0-9-()+]{3,20}/) ){
+            return true;
+        } else {
+            alert('Ingrese correctamente el telefono o celular');
+            return false;
+        }
+    }
+    
+    
+</script>
+
 
 
 <!-- Script con todo el comportamiento de los modales de la vista  --> 
@@ -617,44 +690,54 @@ table.on( 'draw', function () {
 
 		// -----<BTN Registrar Adopcion>------//
 		$(".btn-adoptar").click(function(event) {
-			$("#md-adopcion").modal("show");
+            $("#md-adopcion").modal("show");
 			id_animal = $(this).closest('tr').find('.id').html();
+            
+            //----> comportamiento si clicke en registrar adopcion
 			$("#registrarAdopcion").click(function(event) {
 				$("#md-altaAdoptante").modal("show");
+                
+                //---> comportamiento si clickea en registrar adoptante
 				$("#btnRegistrarAdoptante").click(function(event) {
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
-						$.ajax({
-							url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
-							type: 'POST',
-							data: {
-								nombreAdoptante: $("#nombreAdoptante").val(),
-								apellidoAdoptante: $("#apellidoAdoptante").val(),
-								direccionAdoptante:$("#direccionAdoptante").val(),
-								dniAdoptante: $("#dniAdoptante").val(),
-								telefonoAdoptante: $("#telefonoAdoptante").val(),
-								emailAdoptante: $("#emailAdoptante").val(),
-								ciudadAdoptante: $("#ciudadAdoptante").val(),
-								id_animal: id_animal
-							},
-						})
-						.done(function(rta) {
-							alert(rta);
-							$("#md-altaAdoptante").modal("hide");
-							$("#md-adopcion").modal("hide");
-                            //---> limpia los campos del formulario
-                            $("#nombreAdoptante").val('');
-                            $("#apellidoAdoptante").val('');
-                            $("#direccionAdoptante").val('');
-                            $("#dniAdoptante").val('');
-                            $("#telefonoAdoptante").val('');
-                            $("#emailAdoptante").val('');
-                            $("#ciudadAdoptante").val('');
-                            //--> recarga la tabla
-							$('#table_id').DataTable().ajax.reload();
-						});
-
+                        
+                        if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoDni() && validoTelefono() && validoCiudad() ){ 
+                            //----> el ajax en donde envia las cosas para el formulario
+                            $.ajax({
+                                url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
+                                type: 'POST',
+                                data: {
+                                    nombreAdoptante: $("#nombreAdoptante").val(),
+                                    apellidoAdoptante: $("#apellidoAdoptante").val(),
+                                    direccionAdoptante:$("#direccionAdoptante").val(),
+                                    dniAdoptante: $("#dniAdoptante").val(),
+                                    telefonoAdoptante: $("#telefonoAdoptante").val(),
+                                    emailAdoptante: $("#emailAdoptante").val(),
+                                    ciudadAdoptante: $("#ciudadAdoptante").val(),
+                                    id_animal: id_animal
+                                },
+                            })
+                            .done(function(rta) {
+                                alert(rta);
+                                $("#md-altaAdoptante").modal("hide");
+                                $("#md-adopcion").modal("hide");
+                                //---> limpia los campos del formulario
+                                $("#nombreAdoptante").val('');
+                                $("#apellidoAdoptante").val('');
+                                $("#direccionAdoptante").val('');
+                                $("#dniAdoptante").val('');
+                                $("#telefonoAdoptante").val('');
+                                $("#emailAdoptante").val('');
+                                $("#ciudadAdoptante").val('');
+                                //--> recarga la tabla
+                                $('#table_id').DataTable().ajax.reload();
+                            }); 
+                            console.log("paso bieeen wachooo");
+                        } else {
+                            alert('Ingrese los datos correctamente!');
+                        }
 					} else {
-						alert("Ingrese todos los campos!")
+						alert("Ingrese todos los campos!");
 					}
 				})
 			});
@@ -773,13 +856,11 @@ table.on( 'draw', function () {
 
 		// -----</BTN Revoacar Adopcion>------//
 
-
-
-
-
 	});
 // --------------------------------</SETEA COMPORTAMIENTOS A LOS BOTONES CADA VEZ QUE SE DIBUJA LA TABLA>----------//
 
 });
 
 </script>
+
+

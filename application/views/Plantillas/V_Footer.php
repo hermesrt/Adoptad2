@@ -16,9 +16,9 @@
             </div>	
             <div class="col-4 my-2">
                 <h6><i class="fas fa-code"></i> Desarrolladores:</h6>
-                <p><i class="fas fa-user-alt"></i> Vejar Lucas: lucasficus@gmail.com <br>
-                <i class="fas fa-user-alt"></i> Flores Hermes: hermesrt@gmail.com <br>
-                <i class="fas fa-user-alt"></i> Saez Abigail: meliito7545@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> Vejar Lucas: lucasficus@gmail.com <br>
+                <i class="fas fa-envelope"></i> Flores Hermes: hermesrt@gmail.com <br>
+                <i class="fas fa-envelope"></i> Saez Abigail: meliito7545@gmail.com</p>
             </div>	
             <div class="col-4 my-2">
                 <h6><i class="fas fa-address-card"></i> Avalado por:</h6>

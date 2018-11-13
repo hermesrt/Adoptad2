@@ -18,7 +18,6 @@ class M_Animal extends CI_Model {
     public $id_centro;
     public $revisiones;       //------->  es un array de muchos objetos revision    
     public $vacunas;          //------->  es un array de muchos objetos Vacuna
-
     public $edad;
     
     //-------> iniciliza el objeto M_Animal con todos los valores de la columna que trae de la bd
