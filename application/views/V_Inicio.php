@@ -18,14 +18,14 @@
     <div class="col">
       <div class="card">
         <button class="btn btn-warning" onclick="toggleFiltros()">
-          <h4 class=" my-2 mx-2"> <i class="fas fa-angle-double-down mx-4" id="icono"></i>Filtrar busqueda</h4>
+          <h4 class=" my-2 mx-2"> <i class="fas fa-angle-double-down mx-4" id="icono"></i>Filtrar búsqueda</h4>
         </button>
         <div class=" my-2 mx-2" style="display: none;" id="filtros">
           <div class="row">
            <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="centro">Centro de Adopcion</label>
+                <label class="input-group-text" for="centro">Centro de Adopción</label>
               </div>
               <select class="custom-select" id="centro">
                 <option selected value="-1">Todos</option>

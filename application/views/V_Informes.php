@@ -5,7 +5,7 @@
 				<div class="card-body">
 					<center><h1><i class="fas fa-chart-pie"></i></h1></center>
 					<center><h4 class="card-title">Generador de informes</h4></center>
-					<p class="card-text">En este sección podras generar informes para poder contar con la información estadística de los Centros de Adopción de una manera mas util para su uso y/o seguimiento. Selecciona el intervalo de fechas y los Centros de Adopción y se genereara un PDF con el informe</p>
+					<p class="card-text">En este sección podras generar informes para poder contar con la información estadística de los Centros de Adopción de una manera mas útil para su uso y/o seguimiento. Selecciona el intervalo de fechas y los Centros de Adopción y se genereará un PDF con el informe</p>
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic">
 							<i class="fas fa-info"></i> Los informes disponibles son los siguientes:
@@ -949,9 +949,9 @@
 				.fail(function() {
 					alert("error");
 				});
-			} else {alert("Debe seleccionar almenos un Centro de Adopcion!");
+			} else {alert("Debe seleccionar almenos un Centro de Adopción!");
 		}
-	} else {alert("Rango de fechas invalido, intente nuevamente!")}
+	} else {alert("Rango de fechas inválido, intente nuevamente!")}
 });
 
 			$("#btnExportar").click(function(event) {

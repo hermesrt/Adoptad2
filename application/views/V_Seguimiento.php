@@ -5,8 +5,8 @@
 				<div class="card-body">
 					<center><h1 class="my-2"><i class="fas fa-book"></i></h1></center>
 
-					<center><h4 class="card-title">Periodos de Seguimiento</h4></center>
-					<p class="card-text">En esta sección encontrarás los seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aquí tambien podrás iniciar nuevos periodos</p>
+					<center><h4 class="card-title">Períodos de Seguimiento</h4></center>
+					<p class="card-text">En esta sección encontrarás los períodos seguimientos activos de los Centros de Adopción, en caso de ser personal del Centro de Adopción, aquí tambien podrás iniciar nuevos períodos</p>
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic"> <i class="fas fa-info"></i> Cuando se inicia un Periodo de Seguimiento nuestro sistema envía automáticamente un email a aquellos adoptantes que que cumplan con las condiciones relacionadas a este.</p>
 					</div>
@@ -17,7 +17,7 @@
 			<div class="card">
 				<div class="card-body">
 					<center><h1 class="my-2"><i class="fas fa-check"></i></center>						
-						<center><h4 class="card-title">Periodos de Seguimiento Activos:</h4></center>
+						<center><h4 class="card-title">Períodos de Seguimiento Activos:</h4></center>
 						<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#modalPeriodo" data-placement="right" title="Presione para agregar un nuevo periodo de seguimiento"><i class="far fa-calendar-plus"></i> Agregar Nuevo</button>
                         <div class="scroll" style="height: auto;">
                             

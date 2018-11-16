@@ -48,10 +48,10 @@
             <a class="nav-link" href="<?= base_url('C_Denuncia') ?>"><i class="fas fa-bullhorn"></i> Denuncias</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Seguimiento') ?>"><i class="fas fa-book"></i> Periodos de Seguimientos</a>
+            <a class="nav-link" href="<?= base_url('C_Seguimiento') ?>"><i class="fas fa-book"></i> Períodos de Seguimientos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('C_Animal') ?>"><i class="fas fa-paw"></i> Gestion de Animales</a>
+            <a class="nav-link" href="<?= base_url('C_Animal') ?>"><i class="fas fa-paw"></i> Gestión de Animales</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('C_InicioSesion/cerrarSesion') ?>"><i class="fas fa-user-alt"></i> Cerrar Sesión</a>

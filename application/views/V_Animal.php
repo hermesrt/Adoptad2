@@ -6,7 +6,7 @@
 				<div class="card-body">
 					<center><h1><i class="fas fa-paw"></i></h1></center>
 					<center><h4 class="card-title">Gestión de Animales</h4></center>
-					<p class="card-text">En este sección podras realizar tadas aquellas acciones relacionadas a la gestión de los animales, cada botón corresponde a una accion determinada:</p>
+					<p class="card-text">En este sección podras realizar tadas aquellas acciones relacionadas a la gestión de los animales, cada botón corresponde a una acción determinada:</p>
 					<div class="alert alert-warning" role="alert">
 						<p class="font-italic">
 							<ul>
@@ -32,7 +32,7 @@
 							<th scope="col">Especie</th>
 							<th scope="col">Raza</th>
 							<th scope="col">Sexo</th>
-							<th scope="col">Accion</th>
+							<th scope="col">Acción</th>
 						</tr>
 					</thead>
 					<tbody>		
@@ -94,7 +94,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="labelEditar">Registrar Adopcion</h5>
+				<h5 class="modal-title" id="labelEditar">Registrar Adopción</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -109,7 +109,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 					
-					<button type="button" id="btnRegistrarAdopcion" class="btn btn-primary">Registrar Adopcion</button>
+					<button type="button" id="btnRegistrarAdopcion" class="btn btn-primary">Registrar Adopción</button>
 				</div>
 			</div>
 		</div>
@@ -138,7 +138,7 @@
 						<input required type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante...">
                     </div>
 					<div class="form-group">
-						<input type="number" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese telefono del adoptante...">
+						<input type="number" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese teléfono del adoptante...">
 					</div>
 					<div class="form-group">
 						<input required type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante...">
@@ -234,7 +234,7 @@
 						<div class="row">
 							<div class="col-12">
 								<fieldset class="form-group">
-									<label for="descripcionAlta">Descripión</label>
+									<label for="descripcionAlta">Descripción</label>
 									<textarea  class="form-control" id="descripcionAlta" name="descripcionAlta" placeholder="Descripcion"></textarea>
 								</fieldset>
 							</div>
@@ -268,24 +268,24 @@
 				<form id="formRevocar">
 					<div class="form-group">
 
-						<label for="motivo">Seleccione el motivo de la revocacion:</label>
+						<label for="motivo">Seleccione el motivo de la revocación:</label>
 						<select class="form-control" id="motivo" name="motivo">
 							<option value="Perro agresivo">Perro agresivo</option>
 							<option value="Problemas presonales">Problemas presonales</option>
 							<option value="Falta de espacio">Falta de espacio</option>
-							<option value="Problemas economicos">Problemas economicos</option>
+							<option value="Problemas economicos">Problemas económicos</option>
 							<option value="Mal comportamiento">Mal comportamiento</option>
 							<option value="Otro">Otro</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="detalleRevocacion">Detalle de la revocacion:</label>
+						<label for="detalleRevocacion">Detalle de la revocación:</label>
 						<textarea class="form-control mx-2" name="detalleRevocacion" id="detalleRevocacion" placeholder="Ingrese detalle de revocacion (opcional)..."></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
-						<button type="submit" id="btnRevocarAdopcion" class="btn btn-primary">Revocar Adopcion</button>
+						<button type="submit" id="btnRevocarAdopcion" class="btn btn-primary">Revocar Adopción</button>
 					</form>
 				</div>
 			</div>
@@ -639,7 +639,7 @@ table.on( 'draw', function () {
 				})
 				.done(function(a) {
 					if (a) {
-						alert("No se puede deshabilitar un animal con una adopcion vigente. Revoque la adopcion primero.")
+						alert("No se puede deshabilitar un animal con una adopción vigente. Revoque la adopción primero.")
 
 					} else {
 						var motivo = prompt("Por favor ingrese motivo de la deshabilitacion", "Fallecimiento");
@@ -654,7 +654,7 @@ table.on( 'draw', function () {
 								},
 							})
 							.done(function() {
-								alert("Animal deshabilitado con exito!");
+								alert("Animal deshabilitado con éxito!");
                                 //--> recarga la tabla
 								$('#table_id').DataTable().ajax.reload();
 
@@ -681,7 +681,7 @@ table.on( 'draw', function () {
 					data: {id: id},
 				})
 				.done(function() {
-					alert("Animal habilitado con exito!");
+					alert("Animal habilitado con éxito!");
 					$('#table_id').DataTable().ajax.reload();;
 				});
 			}
@@ -752,7 +752,7 @@ table.on( 'draw', function () {
 				.done(function(adoptante) {
 					if (adoptante) {
 						var obj = $.parseJSON(adoptante);
-						var a = confirm("Seguro que desae registrar la adopcion a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante);
+						var a = confirm("Seguro que desea registrar la adopción a nombre de "+ obj.nombre_adoptante+" "+ obj.apellido_adoptante + "?");
 						if (a) {
 							$.ajax({
 								url: '<?php echo base_url('C_Animal/registrarAdopcion') ?>',
@@ -773,7 +773,7 @@ table.on( 'draw', function () {
 
 						}
 					} else {
-						var conf = confirm("No se encontro el adoptante desea registrarlo?");
+						var conf = confirm("No se encontro el adoptante, desea registrarlo?");
 						if (conf) {
 							$("#md-altaAdoptante").modal("show");
 							$("#btnRegistrarAdoptante").click(function(event) {
@@ -823,7 +823,7 @@ table.on( 'draw', function () {
 
 		// -----<BTN Revocar Adopcion>------//
 		$(".btn-revocar").click(function(event) {
-			var t = confirm("Seguro que desea revocar la adopcion?");
+			var t = confirm("Seguro que desea revocar la adopción?");
 			if (t) {
 				$("#md-revocar").modal("show");
 				id_animal = $(this).closest('tr').find('.id').html();

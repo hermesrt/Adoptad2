@@ -21,8 +21,8 @@
                 <i class="fas fa-envelope"></i> Saez Abigail: meliito7545@gmail.com</p>
             </div>	
             <div class="col-4 my-2">
-                <h6><i class="fas fa-address-card"></i> Avalado por:</h6>
-                <p>Cátedra Desarrollo de Software de la Universidad de la Patagonia San Juan Bosco.</p>
+                <h6><i class="fas fa-address-card"></i> Avaládo por:</h6>
+                <p>Cátedra Desarrollo de Software de la Universidad de la Patagonia San Juan Bosco.(2018)</p>
             </div>	
         </div></center>
     </div>

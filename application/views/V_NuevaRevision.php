@@ -164,7 +164,7 @@
 						alert(msg);
 					});
 				} else {
-					alert("Ingrese una fecha valida!");
+					alert("Ingrese una fecha válida!");
 				}
 			});
 

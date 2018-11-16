@@ -9,7 +9,7 @@
 					<p class="card-text">En esta sección podrás registrar denuncias a aquellos adoptantes registrados en el sistema que hayan incumplido las obligaciones legales del cuidado animal.</p>
 
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> Nuestro sistema usa este registro de denuncias para llevar el control de aquellas personas que yo no son aptas para adoptar</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> Nuestro sistema usa este registro de denuncias para llevar el control de aquellas personas que ya no son aptas para adoptar</p>
 					</div>
 				</div>
 			</div>

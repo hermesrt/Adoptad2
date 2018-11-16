@@ -77,8 +77,8 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Ciudad</th>
-                <th scope="col">Direccion</th>
-                <th scope="col">Accion</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Acción</th>
             </tr>
         </thead>
         <tbody>     
