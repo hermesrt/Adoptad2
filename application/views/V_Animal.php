@@ -76,9 +76,9 @@
 						<input type="text" class="form-control" id="sexo" placeholder="Sexo">
 					</fieldset>
 					<fieldset class="form-group">
-						<label for="fechaEditar">Fecha de nacimiento</label>
-						<input type="date" class="form-control" id="fechaEditar" placeholder="Fecha de nacimiento">
-					</fieldset>
+                        <label for="fechaEditar">Fecha de nacimiento: </label><br>
+                        <label id="labelFecha"></label>  <!-- label que muestra la fecha a editar -->
+                    </fieldset>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 						<button type="submit" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
@@ -525,7 +525,7 @@ $("#formuploadajax").on("submit", function(e){
 			$('#table_id').DataTable().ajax.reload();
 		});
 	}else{
-		alert("Ingrese todos los campos")
+		alert("Ingrese todos los campos");
 
 	}
 });
@@ -561,6 +561,9 @@ $('#table_id').DataTable({
 			var btns  = '<a class="btn btn-success mx-2 btn-ver-animal" href="<?= base_url('C_Animal/VerAnimal/') ?>'+ data.id_animal +'">Ver Animal</a>'+
 			'<a class="btn btn-primary btn-editar"><i class="fas fa-edit"></i></a>';
 
+            //----> le muestro la fecha donde se dio de alta
+            $('#labelFecha').html(data.fechaNacimiento); // fechaEditar
+            
 			if(data.estado_animal == 'activo'){
 				if (data.adoptado == 0){
 					btns += '<a class="btn btn-warning btn-adoptar mx-2"><i class="fas fa-plus"></i></a>';
