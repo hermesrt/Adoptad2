@@ -63,7 +63,7 @@
 						<label for="nombre">Nombre</label>
 						<input type="text" class="form-control" id="nombre" placeholder="Nombre">
 					</fieldset>
-					<fieldset class="form-group">
+				<!--	<fieldset class="form-group">
 						<label for="especie">Especie</label>
 						<input type="text" class="form-control" id="especie" placeholder="Especie">
 					</fieldset>
@@ -74,11 +74,43 @@
 					<fieldset class="form-group">
 						<label for="sexo">Sexo</label>
 						<input type="text" class="form-control" id="sexo" placeholder="Sexo">
-					</fieldset>
+					</fieldset>   -->
 					<fieldset class="form-group">
                         <label for="fechaEditar">Fecha de nacimiento: </label><br>
                         <label id="labelFecha"></label>  <!-- label que muestra la fecha a editar -->
                     </fieldset>
+                    <fieldset class="form-group">
+									<label for="especie">Especie</label>
+									<div class="input-group">
+									<script>
+                                        var modEspecie = "especie";
+                                        var modRaza = "raza";
+                                        </script>
+										<select class="form-control" id="especie" onclick="imprimirRazas(modRaza, modEspecie)" name="especieAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2" id="addEspecieMod"><i class="fas fa-plus-circle"></i></button>
+									</div>
+									
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="raza">Raza</label>
+									<div class="input-group">
+										
+										<select class="form-control" id="raza" name="razaAlta">
+											<!-- OPCIONES CARGADAS CON AJAX -->
+										</select>
+										<button class="btn btn-success mx-2" id="addRazaMod"><i class="fas fa-plus-circle"></i></button>
+
+									</div>
+								</fieldset>
+								<fieldset class="form-group">
+									<label for="sexo">Sexo</label>
+									<select class="form-control" id="sexo" name="sexoAlta" placeholder="Sexo" onchange="habilitaCastrado();">
+										<option selected>Masculino</option>
+										<option>Femenino</option>
+									</select>
+								</fieldset>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 						<button type="submit" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
@@ -186,10 +218,14 @@
 								<fieldset class="form-group">
 									<label for="especie">Especie</label>
 									<div class="input-group">
-										<select class="form-control" id="especieAlta" onclick="imprimirRazas()" name="especieAlta">
+									<script>
+                                        var altaEspecie= "especieAlta";
+                                        var altaRaza= "razaAlta";
+                                        </script>
+										<select class="form-control" id="especieAlta" onclick="imprimirRazas(altaRaza,altaEspecie)" name="especieAlta">
 											<!-- OPCIONES CARGADAS CON AJAX -->
 										</select>
-										<button class="btn btn-success mx-2" id="addEspecie"><i class="fas fa-plus-circle"></i></button>
+										<button class="btn btn-success mx-2" id="addEspecieAlta"><i class="fas fa-plus-circle"></i></button>
 									</div>
 									
 								</fieldset>
@@ -200,7 +236,7 @@
 										<select class="form-control" id="razaAlta" name="razaAlta">
 											<!-- OPCIONES CARGADAS CON AJAX -->
 										</select>
-										<button class="btn btn-success mx-2" id="addRaza"><i class="fas fa-plus-circle"></i></button>
+										<button class="btn btn-success mx-2" id="addRazaAlta"><i class="fas fa-plus-circle"></i></button>
 
 									</div>
 								</fieldset>
@@ -407,18 +443,18 @@
 		$('#idAnimal').val(registro.idAnimal)
 	}
 
-	function imprimirRazas() {
+	function imprimirRazas(idSelect,selectEspecie) {
 		$.ajax({
 			url: '<?php echo base_url('C_Animal/getRazas') ?>',
 			type: 'POST',
 			dataType: 'json',
-			data: {especie: $("#especieAlta").val()},
+			data: {especie: $("#"+selectEspecie).val()},
 		})
 		.done(function(razas) {
-			$("#razaAlta").empty();
+			$("#"+idSelect).empty();
 
 			$.each(razas, function(index, val) {
-				$("#razaAlta").append("<option value='"+val.raza+"' >" + val.raza + "</option>");
+				$("#"+idSelect).append("<option value='"+val.raza+"' >" + val.raza + "</option>");
 			});
 		})
 		.fail(function() {
@@ -426,19 +462,20 @@
 		});
 		
 	}
-	function imprimirEspecies() {
+	function imprimirEspecies(idSelectEspecie,idSelectRaza) {
+        alert("wdsa " + idSelectEspecie + " " + idSelectRaza);
 		$.ajax({
 			url: '<?php echo base_url('C_Animal/getEspecies') ?>',
 			type: 'POST',
 			dataType: 'json',
 		})
 		.done(function(especies) {
-			$("#especieAlta").empty();
+			$("#"+idSelectEspecie).empty();
 
 			$.each(especies, function(index, val) {
-				$("#especieAlta").append("<option value='"+val.especie+"' >" + val.especie + "</option>");
+				$("#"+idSelectEspecie).append("<option value='"+val.especie+"' >" + val.especie + "</option>");
 			});
-			imprimirRazas();
+			imprimirRazas(idSelectRaza, idSelectEspecie);
 		})
 		.fail(function() {
 			console.log("Error al cargar las especies");
@@ -447,7 +484,7 @@
 
 	$(document).ready(function() {	
         
-		$("#addEspecie").click(function(event) {
+		$("#addEspecieAlta").click(function(event) {
 			event.preventDefault();
 			var especie = prompt("Ingrese la nueva especie");
 			if (especie) {
@@ -458,7 +495,7 @@
 				})
 				.done(function(rta) {
 					alert(rta);
-					imprimirEspecies();
+					imprimirEspecies("especieAlta", "razaAlta");
 				})
 				.fail(function() {
 					console.log("error");
@@ -470,7 +507,7 @@
 			
 		});
 
-		$("#addRaza").click(function(event) {
+		$("#addRazaAlta").click(function(event) {
 			event.preventDefault();
 			var raza = prompt("Ingrese la nueva raza")
 			if (raza) {
@@ -484,7 +521,56 @@
 				})
 				.done(function(rta) {
 					alert(rta);
-					imprimirRazas();
+					imprimirRazas("razaAlta", "especieAlta");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
+        
+        $("#addEspecieMod").click(function(event) {
+			event.preventDefault();
+			var especie = prompt("Ingrese la nueva especie");
+			if (especie) {
+				$.ajax({
+					url: '<?php echo base_url('C_Animal/nuevaEspecie') ?>',
+					type: 'POST',
+					data: {especie: especie},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirEspecies("especie", "raza");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			}
+			
+		});
+
+		$("#addRazaMod").click(function(event) {
+			event.preventDefault();
+			var raza = prompt("Ingrese la nueva raza")
+			if (raza) {
+				$.ajax({
+					url: '<?php echo base_url('C_Animal/nuevaRaza') ?>',
+					type: 'POST',
+					data: {
+						especie: $("#especie").val(),
+						raza: raza
+					},
+				})
+				.done(function(rta) {
+					alert(rta);
+					imprimirRazas("raza", "especie");
 				})
 				.fail(function() {
 					console.log("error");
@@ -532,7 +618,7 @@ $("#formuploadajax").on("submit", function(e){
 
 $("#btnAlta").off().click(function(event) {
 	$("#md-alta").modal("show");
-	imprimirEspecies();
+	imprimirEspecies("especieAlta", "razaAlta");
 	
 });	
 // -------------------------</AJAX ALTA ANIMAL>------------------------//
@@ -606,6 +692,7 @@ table.on( 'draw', function () {
 			var dato = armarRegistro(this);
 			llenarModal(dato);
 			$('#md-edicion').modal('show');
+            imprimirEspecies("especie","raza");
 		});
 
 		$('#formEditar').off().on("submit", function(event) {
