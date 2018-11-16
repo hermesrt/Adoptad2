@@ -76,7 +76,7 @@
 						<div class="form-group">
 							<label for="fecha">Fecha revisión</label>
 							<input type="date" class="form-control" id="fecha" placeholder="Fecha">
-							<?= date("d/m/Y") ?>
+							<?php //date("d/m/Y") ?>
 						</div>
 						<div class="form-group">
 							<label for="TipoRevision">Tipo de revisión</label>
