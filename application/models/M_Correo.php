@@ -14,7 +14,7 @@ class M_correo extends CI_Model {
         } else {
             $mensaje .= ' 1 ';
         }       
-        $mensaje .= " denuncias. Le recordamos que si acumula 3 denuncias o más no podra adoptar mas animales en ningun centro de adopción. Que tenga un buen dia!";
+        $mensaje .= " denuncias. Le recordamos que si acumula 3 denuncias o más no podra adoptar más animales en ningún centro de adopción. Que tenga un buen dia!";
         return $mensaje;
     }
     
