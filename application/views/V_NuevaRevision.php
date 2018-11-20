@@ -7,14 +7,14 @@
 					<center><h5 class="card-title">Adoptante</h5></center>
 					<p class="card-text">
 						<ul>
-							<li>Nombre y apellido:</li>
-							<li>Dirección:</li>
-							<li>Email:</li>
-							<li>Teléfono:</li>
+							<li>Nombre y apellido:</li> <?= $adoptante->nombre_adoptante ?>, <?= $adoptante->apellido_adoptante ?>  
+							<li>Dirección: </li><?= $adoptante->direccion_adoptante ?>
+							<li>Email: </li><?= $adoptante->email_adoptante ?>
+							<li>Teléfono:</li> <?= $adoptante->telefono_adoptante ?>
 						</ul>
 					</p>					
 					<div class="alert alert-warning" role="alert">
-						<p class="font-italic"> <i class="fas fa-info"></i> En esta sección puedes visualizar los animales adoptados por esta persona. Seleciona el botón "Registrar Revisión" en que desees.</p>
+						<p class="font-italic"> <i class="fas fa-info"></i> En esta sección puedes visualizar los datos del adoptante y los animales adoptados por este. Seleciona el botón "Registrar Revisión" en el animal que desees.</p>
 					</div>
 				</div>
 			</div>
@@ -25,109 +25,150 @@
 
 					<h4 class="card-title"><i class="fas fa-user-circle"></i> Animales:</h4>
 					<ul class="list-group">
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-6">
-									<img src="https://loremflickr.com/320/240?random=1">
-								</div>
-								<div class="col-6">
-									<h4>Firulais</h4>
-									<ul>
-										<li>Edad: </li>
-										<li>Sexo: </li>
-										<li>Raza: </li>
-									</ul>
-								</div>
-							</div>
-							<br>
-							<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-								Registrar Revisión
-							</button></center>
-						</li>
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-6">
-									<img src="https://loremflickr.com/320/240?random=2">
-								</div>
-								<div class="col-6">
-									<h4>Firulais</h4>
-									<ul>
-										<li>Edad: </li>
-										<li>Sexo: </li>
-										<li>Raza: </li>
-									</ul>
-								</div>
-							</div>
-							<br>
-							<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-								Registrar Revisión
-							</button></center>
-
-						</li>
-					</ul>
+						<?php if ($adopciones): ?>							
+							<?php foreach ($adopciones as $adopcion): ?>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-6">
+											<img class="card-img" src="<?= base_url('assets/img/animales/').$adopcion->animal->nombre_imagen_animal ?>">
+										</div>
+										<div class="col-6">
+											<h4><?= $adopcion->animal->nombre_animal ?></h4>
+											<ul>
+												<li>Especie: <?= $adopcion->animal->especie_animal ?></li>
+												<li>Raza: <?= $adopcion->animal->raza_animal ?></li>
+												<li>Edad: <?= $adopcion->animal-> calculaEdad() ?></li>
+												<li>Sexo: <?= $adopcion->animal->sexo_animal ?></li>
+												<li>Castrado: <?= ($adopcion->animal->castrado==1) ? "Si" : "No" ?></li>
+												</ul>
+											</div>
+										</div>
+										<br>
+										<center>
+											<button type="button" class="btn btn-success btn-registrar" id="<?=  $adopcion->animal->id_animal ?>">
+												Registrar Revisión
+											</button>
+										</center>
+									</li>
+									<input type="hidden" id="id_usuario" value="<?= $this->session->userdata('id_usuario') ?>">
+								<?php endforeach ?>
+							<?php endif ?>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>				
 
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Nueva Revisión</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label for="fecha">Fecha revisión</label>
-					<input type="date" class="form-control" id="fecha" placeholder="Fecha">
+	<!-- Modal -->
+	<div class="modal fade" id="modalRevision" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Nueva Revisión</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<div class="form-group">
-					<label for="TipoRevision">Tipo de revisión</label>
-					<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
-						<option>Castración</option>
-						<option>Seguimiento</option>
-						<option>Vacuna</option>						
-					</select>
-				</div>
-				<div class="form-group" style="display: none;" id="divVacuna">
-					<label for="tipoVacuna">Tipo de vacuna</label>
-					<select class="form-control" id="tipoVacuna">
-						<option>-------	</option>
-						<option>Vacuna1</option>
-						<option>Vacuna2</option>
-						<option>Vacuna3</option>						
-					</select>
-				</div>
-				<div class="form-group" >
-					<label for="detalle">Detalle de revisión</label>
-					<textarea class="form-control"></textarea>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Registrar Revisión</button>
+				<div class="modal-body">
+					<form id="formRevision" method="post">
+						
+						<div class="form-group">
+							<label for="fecha">Fecha revisión</label>
+							<input type="date" class="form-control" id="fecha" placeholder="Fecha">
+							<?php //date("d/m/Y") ?>
+						</div>
+						<div class="form-group">
+							<label for="TipoRevision">Tipo de revisión</label>
+							<select class="form-control" id="TipoRevision" onclick="MostrarTipoVacuna();">
+								<option value="Castracion">Castración</option>
+								<option value="Seguimiento">Seguimiento</option>
+								<option value="Vacunacion">Vacunación</option>						
+							</select>
+						</div>
+						<div class="form-group" style="display: none;" id="divVacuna">
+							<label for="tipoVacuna">Tipo de vacuna</label>
+							<select class="form-control" id="tipoVacuna">
+								<?php foreach($vacunas as $vacuna): ?>
+									<option value="<?=  $vacuna->id_vacuna ?>"><?= $vacuna->nombre_vacuna ?></option>
+								<?php endforeach ?>						
+							</select>
+						</div>
+						<div class="form-group" >
+							<label for="detalle">Detalle de revisión</label>
+							<textarea class="form-control" id="detalle"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-primary" id="guardar">Registrar Revisión</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 	//--------Muestra u Oculta el input tipo vacuna------------//
 	function MostrarTipoVacuna() {
-		if ($('#TipoRevision').val()=='Vacuna') {
+		if ($('#TipoRevision').val()=='Vacunacion') {
 			$('#divVacuna').show();
 		} else {
 			$('#divVacuna').hide();
 		}
-	}	
+	}
+
+	$(document).ready(function() {
+        
+        //---> cuando se cierra el modal se recarga el modal, solucion provisoria
+        $('#modalRevision').on('hide.modal', function (e) {
+            window.location.reload();
+        });
+
+		$(".btn-registrar").off().click(function(event) {
+			$("#modalRevision").modal("show");
+			var idAnimal = this.closest('button').id;
+			$("#formRevision").off().on("submit",function(e) {
+				e.preventDefault();
+
+				var fechaActual = new Date();
+				var fechaElegida = new Date($("#fecha").val());
+				fechaActual.setHours(0,0,0,0);
+				if ($("#fecha").val() && fechaActual.getTime() <= fechaElegida.getTime()) {
+					$.ajax({
+						url: '<?= base_url('C_Adoptante/registrarRevision') ?>',
+						type: 'POST',
+						data: {
+							id_animal: idAnimal,
+							fecha: $("#fecha").val(),
+							TipoRevision: $("#TipoRevision").val(),
+							tipoVacuna: $("#tipoVacuna").val(),
+							detalle: $("#detalle").val()
+						},
+					})
+					.done(function(msg) {
+						alert(msg);
+						$("#modalRevision").modal("hide");
+                        //--> limpio campos del modal
+                        $('#fecha').val('');
+                        $('#TipoRevision').val('');
+                        $('#tipoVacuna').val('');
+                        $('#detalle').val('');
+						//window.location = "";
+						// probar en IE (agregar window.location.href )
+						// no se deberia refrescar la pagina
+					})
+					.fail(function(msg) {
+						alert(msg);
+					});
+				} else {
+					alert("Ingrese una fecha válida!");
+				}
+			});
+
+		});
+	});	
+
 </script>
