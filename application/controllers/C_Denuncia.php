@@ -31,7 +31,7 @@ class C_Denuncia extends CI_Controller {
         $datos['usuario'] = $usuario;
         $adoptante = $this -> adoptante -> obtenerUno($datos['id_adoptante']);   //---> obtengo a el adoptante con el id_adoptante
         $datos['cantidad_denuncias'] = $adoptante -> countDenuncias();        //--> cuenta las denuncias y se las asigna al arreglo 
-        $datos['adoptante'] = $adoptante -> nombre_adoptante;    //----> envia tambien datos del adoptante 
+        $datos['adoptante'] = $adoptante;    //----> envia tambien datos del adoptante 
         
         //-----> guarda en la base de datos
         $this -> denuncia -> registrarDenuncia(    //----> registra la denuncia a ese adoptante
@@ -45,7 +45,10 @@ class C_Denuncia extends CI_Controller {
         //-----> ACA TENGO QUE ENVIAR EL MAIL
         $mensaje = $this -> correo -> generarCorreoDenuncia($adoptante); //---> genero el mensaje que se envia en correo
         $encabezado = "Denuncia"; //---> le seteo un header al mail
-        $this -> correo -> enviarCorreo($adoptante->email_adoptante,$encabezado,$mensaje,null);
+        $correoEnviado = $this -> correo -> enviarCorreo($adoptante->email_adoptante,$encabezado,$mensaje,null);
+        
+        $datos['mensajeCorreo'] = $mensaje; 
+        $datos['correoEnviado'] = $correoEnviado;  //---> Flag para saber si el correo fue enviado o no se pudo enviar
         
         echo json_encode($datos);   
     }

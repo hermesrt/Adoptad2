@@ -616,6 +616,7 @@ $("#formuploadajax").on("submit", function(e){
 	}
 });
 
+//----------------> Boton Alta Animal ---------------------------------//
 $("#btnAlta").off().click(function(event) {
 	$("#md-alta").modal("show");
 	imprimirEspecies("especieAlta", "razaAlta");

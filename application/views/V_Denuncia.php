@@ -136,6 +136,30 @@
 
 
 
+<!-- Modal para mostrar el mail enviado -->
+<div class="modal" id="modalMail" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Email enviado exitosamente!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="cartelCorreo" ></div>
+        <div id="infoDesarrolladores" ></div>
+        <div id="destinatario" class="alert alert-light" role="alert"></div>
+        <div id="correo" class="alert alert-light" role="alert"></div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <!-- Script para activar el datatable en la tabla -->
 <script>
@@ -185,6 +209,10 @@
 
     
     $('#registro_denuncia').on('hide.bs.modal', function (e) {
+        $('#modalMail').modal('show');  //---> Muestra el modal para ver datos del email 
+    });
+        
+    $('#modalMail').on('hide.bs.modal', function (e) {
         window.location.reload();
     });
         
@@ -246,6 +274,16 @@
                     $('#descr').html("<h5>Detalle de denuncia:</h5><p>"+ arr['descripcionDenuncia']+"</p>");
                     var cantidad = parseInt(arr.cantidad_denuncias)+1;
                     $('#cant').html("<h5>Cantidad de denuncias: </h5>"+ cantidad);
+                    
+                    if (arr['correoEnviado']){
+                        $('#cartelCorreo').html('<h6>El email se envio correctamente a '+ arr['adoptante']['nombre_adoptante'] +' '+ arr['adoptante']['apellido_adoptante'] +'.</h6>');
+                        $('#destinatario').html('Para: '+ arr['adoptante']['email_adoptante']);
+                        $('#correo').html('Mensaje: ' + arr['mensajeCorreo']);
+                    } else {
+                        $('#cartelCorreo').html('<h6>El email no se pudo enviar correctamente. Por favor revise su conexion a internet, si el problema persiste comuniquese con alguno de los desarrolladores.</h6>');
+                        $('#infoDesarrolladores').html('<p><i class="fas fa-envelope"></i> Vejar Lucas: lucasficus@gmail.com <br><i class="fas fa-envelope"></i> Flores Hermes: hermesrt@gmail.com <br><i class="fas fa-envelope"></i> Saez Abigail: meliito7545@gmail.com</p>');
+                    }
+        
                 }
             })
             // Code to run if the request succeeds (is done);
@@ -254,8 +292,9 @@
                 // si todo anda bien
                 console.log( "The request is good!" );
                 $('#exampleModal').modal('hide');
-                $('.loader').hide(); //---> oculta ek spinner 
+                $('.loader').hide(); //---> oculta el spinner 
                 $('#registro_denuncia').modal('show');
+               
                 //---> seteo los valores por defecto
                 $('#selectMotivoDenuncia').val('');
                 $('#descripcionDenuncia').val('');

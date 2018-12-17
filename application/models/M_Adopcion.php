@@ -156,19 +156,6 @@ class M_Adopcion extends CI_Model {
      return $this->db->insert('adopcion', $datos);
  }
 
- function listarAdopciones()
- {
-
- }
-
-
-
-
- function fechaAdopcion()
- {
-
- }
-
 
     //-----> Devuelve el objeto M_Adopcion
  function getAdopcion()

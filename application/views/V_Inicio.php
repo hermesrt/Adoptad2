@@ -4,7 +4,7 @@
       <div class="card my-3">
         <img class="card-img-top" height="300px" src="<?= base_url('assets/img/banner-inicio.jpg') ?>" alt="Card image cap">
         <div class="card-body">
-          <center><h1 class="card-title">Bienvenidos a Adpota2!</h1></center>
+          <center><h1 class="card-title">Bienvenidos a Adopta2!</h1></center>
           <p class="card-text">
             Buscá tu próxima mascota en nuestro sitio web desde la comodidad de tu casa.
             Cuando decidas cual es el indicado para vos, acercate al "Centro de Adopción" correspondiente.

@@ -134,21 +134,4 @@ class M_Adoptante extends CI_Model {
     }
     
     
-    function validaDatosAdoptante()
-    {
-
-    }
-
-    function creaAdoptante()
-    {
-
-    }
-    
-    
-    function buscarPorDomicilio()
-    {
-
-    }
-    
-    
 }
