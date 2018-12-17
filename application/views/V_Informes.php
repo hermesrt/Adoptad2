@@ -241,7 +241,17 @@
 		if ($("#tipoInforme").val()=="animales") {
 			return true;
 		}else {
-			return ($("#desde").val() < $("#hasta").val());
+            hoy = new Date();
+            dia = hoy.getDate();
+            mes = hoy.getMonth();
+            anio = hoy.getFullYear() ;
+            today = anio+"-"+mes+"-"+dia;
+            
+        var a= new Date(anio,mes,dia);
+            var cadena = $("#hasta").val().split("-",3);
+        var b = new Date(cadena[0],cadena[1]-1,cadena[2]);
+            
+			return ($("#desde").val() < $("#hasta").val() && b<=a);
 		}
 	}
 	// ---------------------------<INFORME DISPONIBLES>-------------------------------------
