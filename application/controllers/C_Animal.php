@@ -74,6 +74,10 @@ class C_Animal extends CI_Controller {
         echo json_encode($animales);
     }
 
+    function getAnimal() {
+        echo json_encode($this->animal->obtenerUno($this->input->post('id')));
+    }
+
     
     function comprobarAdoptado()
     {

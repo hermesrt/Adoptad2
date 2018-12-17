@@ -120,7 +120,9 @@
 		}
 	}
 
+	
 	$(document).ready(function() {
+		
         
         //---> cuando se cierra el modal se recarga el modal, solucion provisoria
         $('#modalRevision').on('hide.modal', function (e) {
@@ -134,9 +136,14 @@
 				e.preventDefault();
 
 				var fechaActual = new Date();
-				var fechaElegida = new Date($("#fecha").val());
 				fechaActual.setHours(0,0,0,0);
-				if ($("#fecha").val() && fechaActual.getTime() <= fechaElegida.getTime()) {
+
+				var fechaElegida = new Date($("#fecha").val());
+
+				console.log("fecha avctual"+fechaActual.getTime());
+				console.log("fechaElegida"+fechaElegida.getTime());
+
+				if ($("#fecha").val() && fechaActual.getTime() >= fechaElegida.getTime()) {
 					$.ajax({
 						url: '<?= base_url('C_Adoptante/registrarRevision') ?>',
 						type: 'POST',
@@ -156,7 +163,7 @@
                         $('#TipoRevision').val('');
                         $('#tipoVacuna').val('');
                         $('#detalle').val('');
-						//window.location = "";
+						window.location = "";
 						// probar en IE (agregar window.location.href )
 						// no se deberia refrescar la pagina
 					})

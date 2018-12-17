@@ -6,9 +6,11 @@ class C_Revision extends CI_Controller {
     public function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata('tipo_usuario')) {
+		
+		if ($this->session->userdata('tipo_usuario')=="administrativo") {
 			redirect(base_url());
 		}
+
         $this -> load -> model('M_Vacuna','vacuna'); //---> Cargo el modelo vacuna 
         $this -> load -> model('M_Revision','revision');  //--> Cargo el modelo revision
 	}
