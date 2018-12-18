@@ -58,7 +58,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal donde crea el nuevo periodo de seguimiento -->
 <div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -116,6 +116,10 @@
                 </fieldset>
             </form>
         </div>
+        <div class="modal-body">
+            <div class="alert alert-success" role="alert">Listado de personas a las que se le envio el email.</div>
+            <ul id="listado" class="list-group" ></ul>
+        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
         </div>
@@ -130,42 +134,45 @@
     
     $(document).ready( function () {
         
-    //-----> acac oculto del spinner asi no se ve en modal cuando arranca
-    $('.loader').hide();
-        
-    //------------> seteo las configuraciones de la tabla
-    $('#table_id').DataTable({
-        select: true,  //-----> hace que las filas sean seleccionables
-        paging: true,  //--> habilita el paginado
-        "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
-            "lengthMenu": "Muestra _MENU_ períodos por página",
-            "zeroRecords": "No se encontro resultados",
-            "info": "Mostrando página _PAGE_ de _PAGES_ páginas",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(Filtrando los _MAX_ registros)",
-            select: {
-                rows: "%d fila seleccionada"
+        //-----> acac oculto del spinner asi no se ve en modal cuando arranca
+        $('.loader').hide();
+
+        //------------> seteo las configuraciones de la tabla
+        $('#table_id').DataTable({
+            select: true,  //-----> hace que las filas sean seleccionables
+            paging: true,  //--> habilita el paginado
+            "language": {    //-------> en este array se puede perzonalizar el texto que se muestra en cada uno de los botones y labels de la tabla y como se muestran los datos
+                "lengthMenu": "Muestra _MENU_ períodos por página",
+                "zeroRecords": "No se encontro resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_ páginas",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(Filtrando los _MAX_ registros)",
+                select: {
+                    rows: "%d fila seleccionada"
+                },
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "previous": "Anterior",
+                    "next": "Siguiente"
+                }
             },
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "previous": "Anterior",
-                "next": "Siguiente"
-            }
-        },
-        pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
-        lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
-        lengthMenu: [5,10,20],       //--> longitud del menu del paginado
-        searching: false,             //---> habilita la busqueda de registros
-        "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
-        { "orderable": true, "visible": true,"targets": [0,1,2]}
-        ],
-        "ordering": true                     //-->  habilita el ordenamiento de columnas
+            pagingType: 'full_numbers',   //---> es el tipo de botonsitos del paginado, ej: next,previous,first,last
+            lengthChange: true,           //----> le habilita el combo box para que el usuario cambie el numero de paginas que quiere ver
+            lengthMenu: [5,10,20],       //--> longitud del menu del paginado
+            searching: false,             //---> habilita la busqueda de registros
+            "columnDefs": [              //-----> se le cambia propiedades a las columnas, cuales son buscables por filtros, visibles, ordenables
+            { "orderable": true, "visible": true,"targets": [0,1,2]}
+            ],
+            "ordering": true                     //-->  habilita el ordenamiento de columnas
+        });
     });
-});
+    
+</script>
     
     
-    
+<!-- Script en donde se hacen las validaciones de los datos y se maneja el AJAX -->
+<script>
     //------> validacion de fechas para mandar por el formulario
     function validoSeleccionFechas() {
         //------> obtengo el valor de las fechas que elige
@@ -209,6 +216,8 @@
         $('#tipoPeriodo').val('');
     });
     
+
+    
     
     //-------> Comportamiento cuando clickea el boton de iniciar periodo
     $('#btn_periodo').click(function(event){
@@ -245,6 +254,12 @@
                         if (datos['periodo_valido']){
                             $('#cartelModal').html('<i class="fas fa-check-circle"> Periodo registrado');
                             $('#mensaje').html('El periodo creado se registro exitosamente!');
+                            
+                            var listado = datos['listado'].map(function(data){
+                                return '<li class="list-group-item">'+ data.nombre_adoptante +" "+ data.apellido_adoptante +"</li>";
+                            });
+                            document.getElementById('listado').innerHTML = listado;
+                            
                         } else {
                             $('#cartelModal').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
                             $('#mensaje').html('El periodo ingresado no es valido porque se superpone con otros periodos de seguimiento.');
