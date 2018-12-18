@@ -112,12 +112,10 @@
         <div class="modal-body">
             <form>
                 <fieldset>
-                    <label id="mensaje"></label>
+                    <label id="mensaje" class="alert alert-light" role="alert" ></label>
                 </fieldset>
             </form>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-success" role="alert">Listado de personas a las que se le envio el email.</div>
+            <div id="tituloListado" ></div>
             <ul id="listado" class="list-group" ></ul>
         </div>
         <div class="modal-footer">
@@ -133,6 +131,20 @@
 <script>
     
     $(document).ready( function () {
+        
+        //----> Cuando se cierra el modal donde ingresa los datos de periodo seguimiento
+        $('#modalPeriodo').on('hide.bs.modal', function (e) {
+            //----> Seteo los valores de vuelta en blanco asi elije de vuelta 
+            $('#fechaDesde').val('');
+            $('#fechaHasta').val('');
+            console.log('paso por aca tambien!');
+        });
+    
+        //----> Cuando se cierra el modal que muestra el listado de mails
+        $('#modalMensaje').on('hide.bs.modal', function (e) {
+            console.log('Paso por aca!');
+            window.location.reload();
+        });
         
         //-----> acac oculto del spinner asi no se ve en modal cuando arranca
         $('.loader').hide();
@@ -208,16 +220,6 @@
         
     }
     
-    //----> Cuando se cierra el modal donde ingresa los datos de periodo seguimiento
-    $('#modalPeriodo').on('hide.bs.modal', function (e) {
-        //----> Seteo los valores de vuelta en blanco asi elije de vuelta 
-        $('#fechaDesde').val('');
-        $('#fechaHasta').val('');
-        $('#tipoPeriodo').val('');
-    });
-    
-
-    
     
     //-------> Comportamiento cuando clickea el boton de iniciar periodo
     $('#btn_periodo').click(function(event){
@@ -254,11 +256,11 @@
                         if (datos['periodo_valido']){
                             $('#cartelModal').html('<i class="fas fa-check-circle"> Periodo registrado');
                             $('#mensaje').html('El periodo creado se registro exitosamente!');
+                            $('#tituloListado').html('Listado de personas a las que se le envio el email.');
                             
-                            var listado = datos['listado'].map(function(data){
-                                return '<li class="list-group-item">'+ data.nombre_adoptante +" "+ data.apellido_adoptante +"</li>";
+                            $.each(datos['listado'], function(index, val) {
+                                $("#listado").append('<li class="list-group-item"><span class="badge badge-light badge-pill"><i class="fas fa-user-check"></i></span> '+ val.nombre_adoptante +' '+ val.apellido_adoptante +'</li>');
                             });
-                            document.getElementById('listado').innerHTML = listado;
                             
                         } else {
                             $('#cartelModal').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
@@ -296,10 +298,3 @@
     });  
     
 </script>
-
-
-
-
-
-
-

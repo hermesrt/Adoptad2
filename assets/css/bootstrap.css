@@ -5460,9 +5460,8 @@ button.close {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem;
-  max-height: calc(100vh - 210px);
-  overflow-y: auto;
 }
+
 
 .modal-footer {
   display: -ms-flexbox;

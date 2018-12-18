@@ -277,14 +277,13 @@
 						</div>
 					</div>
 					<input type="hidden" id="idAnimal">
-					
-
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 						<input type="submit"  class="btn btn-primary" value="Enviar">
-					</div>
+					</div> 
 				</form>
 			</div>
+			<div class="modal-footer"></div>
 		</div>
 	</div>
 </div>
@@ -477,7 +476,7 @@
 		
 	}
 	function imprimirEspecies(idSelectEspecie,idSelectRaza) {
-        alert("wdsa " + idSelectEspecie + " " + idSelectRaza);
+        //alert("wdsa " + idSelectEspecie + " " + idSelectRaza);
 		$.ajax({
 			url: '<?php echo base_url('C_Animal/getEspecies') ?>',
 			type: 'POST',
