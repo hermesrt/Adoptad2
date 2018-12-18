@@ -371,10 +371,24 @@
     
     function validoDni() {
         var dni = $('#dniAdoptante').val();
-        if (dni > 1000000 && dni < 99999999){
-            return true;
+        console.log(dni);
+                if (dni > 1000000 && dni < 99999999){
+                	var valido;
+        	$.ajax({
+        			url: '<?php echo base_url('C_Adoptante/existeAdoptante') ?>',
+        			type: 'POST',
+        			data: {dni: dni}
+        		})
+        	.done(function(rta) {
+        		alert(rta);
+        		if (rta) {
+        			valido=false;
+        		} else {
+        			valido = true;
+        		}
+        		});
+        	return valido;
         } else {
-            alert('Ingrese correctamente el DNI');
             return false;
         }
     }
@@ -791,8 +805,13 @@ table.on( 'draw', function () {
                 //---> comportamiento si clickea en registrar adoptante
 				$("#btnRegistrarAdoptante").click(function(event) {
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
+
+						if (validoDni()) {
+                            alert('El adoptante con ese DNI ya esta registrado!');
+
+						} else {				
                         
-                        if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoDni() && validoTelefono() && validoCiudad() ){ 
+                        if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoTelefono() && validoCiudad() ){ 
                             //----> el ajax en donde envia las cosas para el formulario
                             $.ajax({
                                 url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
@@ -823,10 +842,10 @@ table.on( 'draw', function () {
                                 //--> recarga la tabla
                                 $('#table_id').DataTable().ajax.reload();
                             }); 
-                            console.log("paso bieeen wachooo");
                         } else {
                             alert('Ingrese los datos correctamente!');
                         }
+                    }
 					} else {
 						alert("Ingrese todos los campos!");
 					}

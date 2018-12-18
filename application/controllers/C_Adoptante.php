@@ -68,6 +68,18 @@ class C_Adoptante extends CI_Controller {
 		
 	}
 
+	function existeAdoptante()
+	{
+		$this->load->model("M_Adoptante");
+		$dni = $this->input->post("dni");
+		if ($this->M_Adoptante->getAdoptantePorDni($dni)) {
+			echo "true";
+		} else {
+			echo "false";
+		}
+		
+	}
+
 
 }
 

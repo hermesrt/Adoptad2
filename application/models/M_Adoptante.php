@@ -134,4 +134,7 @@ class M_Adoptante extends CI_Model {
     }
     
     
+
+    
+    
 }
