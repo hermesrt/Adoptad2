@@ -116,13 +116,16 @@
                 </fieldset>
             </form>
             <div id="tituloListado" ></div>
+            <div class="scroll">
             <ul id="listado" class="list-group" ></ul>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
         </div>
     </div>
    </div>
+   
 </div>
 
 
@@ -256,7 +259,7 @@
                         if (datos['periodo_valido']){
                             $('#cartelModal').html('<i class="fas fa-check-circle"> Periodo registrado');
                             $('#mensaje').html('El periodo creado se registro exitosamente!');
-                            $('#tituloListado').html('Listado de personas a las que se le envio el email.');
+                            $('#tituloListado').html('Listado de personas a las que se le envio el email.<br> Cantidad de mails enviados: ' + datos['listado'].length );
                             
                             $.each(datos['listado'], function(index, val) {
                                 $("#listado").append('<li class="list-group-item"><span class="badge badge-light badge-pill"><i class="fas fa-user-check"></i></span> '+ val.nombre_adoptante +' '+ val.apellido_adoptante +'</li>');
