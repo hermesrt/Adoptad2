@@ -494,7 +494,7 @@
 
 	$(document).ready(function() {	
         
-		$("#addEspecieAlta").click(function(event) {
+		$("#addEspecieAlta").off().click(function(event) {
 			event.preventDefault();
 			var especie = prompt("Ingrese la nueva especie");
 			if (especie) {
@@ -517,7 +517,7 @@
 			
 		});
 
-		$("#addRazaAlta").click(function(event) {
+		$("#addRazaAlta").off().click(function(event) {
 			event.preventDefault();
 			var raza = prompt("Ingrese la nueva raza")
 			if (raza) {
@@ -543,7 +543,7 @@
 			
 		});
         
-        $("#addEspecieMod").click(function(event) {
+        $("#addEspecieMod").off().click(function(event) {
 			event.preventDefault();
 			var especie = prompt("Ingrese la nueva especie");
 			if (especie) {
@@ -566,7 +566,7 @@
 			
 		});
 
-		$("#addRazaMod").click(function(event) {
+		$("#addRazaMod").off().click(function(event) {
 			event.preventDefault();
 			var raza = prompt("Ingrese la nueva raza")
 			if (raza) {
@@ -699,7 +699,7 @@ $('#table_id').DataTable({
 var table = $('#table_id').DataTable();
 table.on( 'draw', function () {
 		// -----<BTN EDITAR>------//
-		$('.btn-editar').click(function(event) {
+		$('.btn-editar').off().click(function(event) {
 			var dato = armarRegistro(this);
 			llenarModal(dato);
 			$('#md-edicion').modal('show');
@@ -729,7 +729,7 @@ table.on( 'draw', function () {
 		// -----</BTN EDITAR>------//
 		
 		// -----<BTN DESACTIVAR>------//
-		$(".btn-desactivar").click(function(event) {
+		$(".btn-desactivar").off().click(function(event) {
 			var r = confirm("Seguro desea desactivar el animal?");
 			if (r) {
 				id = $(this).closest('tr').find('.id').html();
@@ -771,7 +771,7 @@ table.on( 'draw', function () {
 		// -----</BTN DESACTIVAR>------//
 
 		// -----<BTN ACTIVAR>------//
-		$(".btn-activar").click(function(event) {
+		$(".btn-activar").off().click(function(event) {
 			var r = confirm("Seguro que quiere activar este animal?");
 			if (r) {
 				id = $(this).closest('tr').find('.id').html();
@@ -790,16 +790,16 @@ table.on( 'draw', function () {
 		// -----</BTN ACTIVAR>------//
 
 		// -----<BTN Registrar Adopcion>------//
-		$(".btn-adoptar").click(function(event) {
+		$(".btn-adoptar").off().click(function(event) {
             $("#md-adopcion").modal("show");
 			id_animal = $(this).closest('tr').find('.id').html();
             
             //----> comportamiento si clicke en registrar adopcion
-			$("#registrarAdopcion").click(function(event) {
+			$("#registrarAdopcion").off().click(function(event) {
 				$("#md-altaAdoptante").modal("show");
                 
                 //---> comportamiento si clickea en registrar adoptante
-				$("#btnRegistrarAdoptante").click(function(event) {
+				$("#btnRegistrarAdoptante").off().click(function(event) {
                     var dni = $("#dniAdoptante").val(); //--> obtengo el dni
                     
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
@@ -894,7 +894,7 @@ table.on( 'draw', function () {
 						var conf = confirm("No se encontro el adoptante, desea registrarlo?");
 						if (conf) {
 							$("#md-altaAdoptante").modal("show");
-							$("#btnRegistrarAdoptante").click(function(event) {
+							$("#btnRegistrarAdoptante").off().click(function(event) {
 								if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
 									$.ajax({
 										url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
@@ -945,7 +945,7 @@ table.on( 'draw', function () {
 		// -----</BTN Registrar Adopcion>------//
 
 		// -----<BTN Revocar Adopcion>------//
-		$(".btn-revocar").click(function(event) {
+		$(".btn-revocar").off().click(function(event) {
 			var t = confirm("Seguro que desea revocar la adopción?");
 			if (t) {
 				$("#md-revocar").modal("show");
