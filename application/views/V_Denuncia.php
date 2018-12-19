@@ -94,9 +94,6 @@
 
 
 
-
-
-
 <!-- Modal para mostrar que la denuncia fue registrada --> 
 <div class="modal registro_denuncia" id="registro_denuncia" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">

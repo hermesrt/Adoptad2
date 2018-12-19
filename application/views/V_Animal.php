@@ -135,7 +135,7 @@
 				<form class="form">
 					<center><p>Ingrese el DNI del adoptatne para buscarlo, u oprima <button type="button" class="mx-2 my-2 btn btn-success" id="registrarAdopcion">Registrar <br> Adoptante</button> para registrar uno nuevo</p></center>					
 					<div class="form-group">
-						<input type="text" class="form-control mx-2" name="dni" id="dni" placeholder="Ingrese DNI del adoptante...">
+						<input type="number" class="form-control mx-2" name="dni" id="dni" placeholder="Ingrese DNI del adoptante..." min="1000000" max="99999999" maxlength="8">
 					</div>
 				</form>
 				<div class="modal-footer">
@@ -368,28 +368,25 @@
         }
     }
     
+    //-----> valida la existencia del dni en el sistema
     function validoDni() {
         var dni = $('#dniAdoptante').val();
-        console.log(dni);
-                if (dni > 1000000 && dni < 99999999){
-                	var valido;
-        	$.ajax({
-        			url: '<?php echo base_url('C_Adoptante/existeAdoptante') ?>',
-        			type: 'POST',
-        			data: {dni: dni}
-        		})
-        	.done(function(rta) {
-        		alert(rta);
-        		if (rta) {
-        			valido=false;
-        		} else {
-        			valido = true;
-        		}
-        		});
-        	return valido;
-        } else {
-            return false;
-        }
+        console.log(" Entro a validoDNI() con el dni ---> "+dni);
+        var valido;
+        $.ajax({
+                url: '<?php echo base_url('C_Adoptante/existeAdoptante') ?>',
+                type: 'POST',
+                data: {dni: dni}
+            })
+        .done(function(rta) {
+            //alert(rta);
+            if (rta) {
+                valido=false;
+            } else {
+                valido = true;
+            }
+            });
+        return valido;
     }
     
     function validoNombreApellido(){
@@ -803,57 +800,69 @@ table.on( 'draw', function () {
                 
                 //---> comportamiento si clickea en registrar adoptante
 				$("#btnRegistrarAdoptante").click(function(event) {
+                    var dni = $("#dniAdoptante").val(); //--> obtengo el dni
+                    
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
 
-						if (validoDni()) {
-                            alert('El adoptante con ese DNI ya esta registrado!');
-
-						} else {				
-                        
-                        if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoTelefono() && validoCiudad() ){ 
-                            //----> el ajax en donde envia las cosas para el formulario
-                            $.ajax({
-                                url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
-                                type: 'POST',
-                                data: {
-                                    nombreAdoptante: $("#nombreAdoptante").val(),
-                                    apellidoAdoptante: $("#apellidoAdoptante").val(),
-                                    direccionAdoptante:$("#direccionAdoptante").val(),
-                                    dniAdoptante: $("#dniAdoptante").val(),
-                                    telefonoAdoptante: $("#telefonoAdoptante").val(),
-                                    emailAdoptante: $("#emailAdoptante").val(),
-                                    ciudadAdoptante: $("#ciudadAdoptante").val(),
-                                    id_animal: id_animal
-                                },
-                            })
-                            .done(function(rta) {
-                                alert(rta);
-                                $("#md-altaAdoptante").modal("hide");
-                                $("#md-adopcion").modal("hide");
-                                //---> limpia los campos del formulario
-                                $("#nombreAdoptante").val('');
-                                $("#apellidoAdoptante").val('');
-                                $("#direccionAdoptante").val('');
-                                $("#dniAdoptante").val('');
-                                $("#telefonoAdoptante").val('');
-                                $("#emailAdoptante").val('');
-                                $("#ciudadAdoptante").val('');
-                                //--> recarga la tabla
-                                $('#table_id').DataTable().ajax.reload();
-                            }); 
+                        if (dni > 1000000 && dni<99999999){
+                            
+                            if (validoDni()) {
+                                console.log('El adoptante con ese DNI ya esta registrado!');
+                            } else {
+                                //-----> El adoptante con ese dni no esta registrado entonces tengo que validar los datos del formulario
+                                if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoTelefono() && validoCiudad() ){ 
+                                    console.log("PASO POR LAS VALIDACIONES Y DIO BIEN");
+                                    //----> el ajax en donde envia las cosas para el formulario
+                                    $.ajax({
+                                        url: '<?php echo base_url('C_Animal/registrarAdoptanteYAdopcion') ?>',
+                                        type: 'POST',
+                                        data: {
+                                            nombreAdoptante: $("#nombreAdoptante").val(),
+                                            apellidoAdoptante: $("#apellidoAdoptante").val(),
+                                            direccionAdoptante:$("#direccionAdoptante").val(),
+                                            dniAdoptante: $("#dniAdoptante").val(),
+                                            telefonoAdoptante: $("#telefonoAdoptante").val(),
+                                            emailAdoptante: $("#emailAdoptante").val(),
+                                            ciudadAdoptante: $("#ciudadAdoptante").val(),
+                                            id_animal: id_animal
+                                        },
+                                    })
+                                    .done(function(rta) {
+                                        alert(rta);
+                                        $("#md-altaAdoptante").modal("hide");
+                                        $("#md-adopcion").modal("hide");
+                                        //---> limpia los campos del formulario
+                                        $("#nombreAdoptante").val('');
+                                        $("#apellidoAdoptante").val('');
+                                        $("#direccionAdoptante").val('');
+                                        $("#dniAdoptante").val('');
+                                        $("#telefonoAdoptante").val('');
+                                        $("#emailAdoptante").val('');
+                                        $("#ciudadAdoptante").val('');
+                                        //--> recarga la tabla
+                                        $('#table_id').DataTable().ajax.reload();
+                                    }); 
+                                } else {
+                                    console.log('Ingrese los datos de los campos correctamente!');
+                                }
+                            }
                         } else {
-                            alert('Ingrese los datos correctamente!');
-                        }
-                    }
+                            alert('Ingrese el dni correctamente.');
+                        }  //-------> termina la validacoin de rango del dni
 					} else {
 						alert("Ingrese todos los campos!");
-					}
-				})
-			});
+					}   //--------> termina la validacion de que todos las campos esten bien validados
+				})      //----> termina el btnRegistrarAdoptante
+			});         //----> termina el btnRegistrarAdopcion
 
+            
 			$("#btnRegistrarAdopcion").off().click(function(event) {
 				dni = $("#dni").val();
-				$.ajax({
+                
+                if (dni > 1000000 && dni<99999999){
+                    console.log('El dni esta en el rango valido');
+                    
+                    $.ajax({
 					url: '<?php echo base_url('C_Animal/buscarAdoptante') ?>',
 					type: 'POST',
 					data: {dni: dni},
@@ -924,8 +933,13 @@ table.on( 'draw', function () {
 
 						}
 					}
-				});
-			});
+				}); //----> termina el AJAX
+                    
+                } else {
+                    alert('El dni no esta en el rango valido');
+                    $("#dni").val("");  //--> limpio el input
+                }
+			});    //----> termina el boton btnRegistrarAdopcion
 
 		});
 		// -----</BTN Registrar Adopcion>------//

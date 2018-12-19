@@ -145,7 +145,7 @@ class C_Animal extends CI_Controller {
         $this->load->model('M_Animal');
         $animal = $this->M_Animal->obtenerUno($id_animal);
         $animal->cambiarEstadoAdoptado(true);
-        echo 'El adoptatne y la adopcion fueron registradas exitosamente!';
+        echo 'El adoptante y la adopcion fueron registradas exitosamente!';
     }
 
     

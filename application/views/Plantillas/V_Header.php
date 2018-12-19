@@ -17,6 +17,7 @@
   <title>A2!</title>
   <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
   <script type="text/javascript" src="<?= base_url('assets/js/GoogleCharts.js') ?>"></script>
+  <script type="text/javascript" src="<?= base_url('assets/js/validator.js') ?>"></script>
   
   
 </head>
