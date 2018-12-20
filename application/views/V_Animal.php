@@ -367,7 +367,7 @@
     //----> valida que la direccion no sea numero y que la altura no sea nula
     function validoDireccion() {
         var direccion = $('#direccionAdoptante').val();
-        if( /^[0-9a-zA-Z]+$/.test(direccion) && isNaN(direccion) ){
+        if( /^[A-Za-z0-9\s]+$/g.test(direccion) && isNaN(direccion) ){
             console.log("direccion correcta");
             $('#dirV').html('Dirección válida');
             return true;
@@ -424,7 +424,7 @@
     
     function validoNombre(){
         var nombre = $("#nombreAdoptante").val();
-        if ( /^[a-zA-Z]+$/.test(nombre) ) {
+        if ( /^[A-Za-z\s]+$/g.test(nombre) ) {
             console.log("la expresion paso por el true "+nombre);
             $('#nomV').html("Nombre válido!"); 
            return true;
@@ -438,7 +438,7 @@
     
     function validoApellido () {
         var apellido = $("#apellidoAdoptante").val();
-        if ( /^[a-zA-Z]+$/.test(apellido) ){
+        if ( /^[A-Za-z\s]+$/g.test(apellido) ){
             $('#apeV').html("Apellido válido!");
             console.log("apellido correcto!");
             return true;
@@ -462,7 +462,7 @@
     }
     
     function validoCiudad() { 
-        if ( /^[a-zA-Z]+$/.test($("#ciudadAdoptante").val()) ){
+        if ( /^[A-Za-z\s]+$/g.test($("#ciudadAdoptante").val()) ){
             console.log("ciudad correcta");
             $('#ciudadVa').html("Ciudad válida!");
             return true;
