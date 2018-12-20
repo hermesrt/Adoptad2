@@ -40,10 +40,12 @@ class C_Seguimiento extends CI_Controller {
         
         if ($periodo_valido){  
             $periodos = $this -> periodo -> obtenerPorCentro($id_centro); //--> obtiene todos los periodos de ese centro
-            $periodo = end($periodos); //---> obtiene el ultimo periodo del array $periodos
-            
-            //----> genera el listado de adoptantes para enviar el mail
-            $datos['listado'] = $periodo -> generarListaEmail($tipoPeriodo);   
+            if ($periodos){
+                 $periodos = end($periodos); //---> obtiene el ultimo periodo del array $periodos
+                //----> genera el listado de adoptantes para enviar el mail
+                $datos['listado'] = $periodos -> generarListaEmail($tipoPeriodo);  
+            } 
+              
             $centro = $this -> centro -> obtenerUno($id_centro);
             //-----> guarda el periodo nuevo en la base de datos
             $this -> periodo -> registrarPeriodo($tipoPeriodo,$fechaDesde,$fechaHasta,$id_centro);

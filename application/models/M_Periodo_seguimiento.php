@@ -107,7 +107,9 @@ class M_Periodo_seguimiento extends CI_Model {
         $this -> db -> from('periodo_seguimiento');
         $this -> db -> where("fecha_inicio_periodo <=",$fechaDesde);
         $this -> db -> where("fecha_fin_periodo >=",$fechaDesde);
+        $this -> db -> where('tipo_periodo',$tipoPeriodo);
         $this -> db -> or_where('fecha_inicio_periodo <=',$fechaHasta) -> where('fecha_fin_periodo >=',$fechaHasta);
+        $this -> db -> where('tipo_periodo',$tipoPeriodo);
         $query = $this -> db -> get();
         if ($query -> num_rows() > 0){
             return false;

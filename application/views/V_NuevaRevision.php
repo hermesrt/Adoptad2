@@ -123,6 +123,9 @@
 	
 	$(document).ready(function() {
 		
+        //----> testea que la fecha no sea superior
+         var hoy = new Date().toISOString().split("T")[0];
+        $("#fecha").attr("max", hoy);
         
         //---> cuando se cierra el modal se recarga el modal, solucion provisoria
         $('#modalRevision').on('hide.modal', function (e) {
@@ -142,8 +145,9 @@
 
 				console.log("fecha avctual"+fechaActual.getTime());
 				console.log("fechaElegida"+fechaElegida.getTime());
-
-				if ($("#fecha").val() && fechaActual.getTime() >= fechaElegida.getTime()) {
+								
+                
+				if ($("#fecha").val() ) {
 					$.ajax({
 						url: '<?= base_url('C_Adoptante/registrarRevision') ?>',
 						type: 'POST',

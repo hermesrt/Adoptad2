@@ -80,8 +80,10 @@
                         </select>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="fechaDesde">Fecha Inicio Periodo</label>
+                        <label for="fechaDesde">Fecha Inicio Periodo</label>                      
+                        
                         <input type="date" class="form-control" name="" id="fechaDesde">
+                      
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="fechaHasta">Fecha Fin Periodo</label>
@@ -89,6 +91,12 @@
                     </fieldset>
                 </form>
             </div>
+              <script>
+                  var hoy = new Date().toISOString().split("T")[0];
+                  $("#fechaDesde").attr("min", hoy);
+                  $("#fechaHasta").attr("min", hoy);
+
+                        </script>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <div class="loader"></div><input type="submit" class="btn btn-primary btn-periodo" id="btn_periodo" value="Iniciar Periodo">
@@ -261,9 +269,14 @@
                             $('#mensaje').html('El periodo creado se registro exitosamente!');
                             $('#tituloListado').html('Listado de personas a las que se le envio el email.<br> Cantidad de mails enviados: ' + datos['listado'].length );
                             
-                            $.each(datos['listado'], function(index, val) {
+                            if (datos['listado'].length == 0){
                                 $("#listado").append('<li class="list-group-item"><span class="badge badge-light badge-pill"><i class="fas fa-user-check"></i></span> '+ val.nombre_adoptante +' '+ val.apellido_adoptante +'</li>');
-                            });
+                            } else {
+                                $.each(datos['listado'], function(index, val) {
+                                $("#listado").append('<li class="list-group-item"><span class="badge badge-light badge-pill"><i class="fas fa-user-check"></i></span> '+ val.nombre_adoptante +' '+ val.apellido_adoptante +'</li>');
+                                });
+                            }
+                            
                             
                         } else {
                             $('#cartelModal').html('<i class="fas fa-exclamation-triangle"> Periodo no registrado');
