@@ -102,7 +102,6 @@
 </div>
 
 
-
 <script type="text/javascript">
   function imprimirRazas() {
     $.ajax({
@@ -159,7 +158,7 @@
 
     for (var i = 0, len = animales.length; i < len; i++) {
       var html ='<div class="my-2 col-xs-12 col-sm-6 col-md-4 ">';
-      html +='<div class="card" style="width: 18rem;">';        
+      html +='<div class="card rounded " style="width: 18rem;" >';        
       html +='<img class="card-img-top" src="<?php echo base_url() ?>assets/img/animales/'+animales[i].nombre_imagen_animal+'">';
       html +='<div class="card-body">';        
       html +=' <h5 class="card-title">'+animales[i].nombre_animal+'</h5>';        

@@ -159,31 +159,39 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form">
+				<form class="form bootstrap-form needs-validation"  novalidate >
 					<div class="form-group">
-                        <input required type="number" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante..." max="99999999" min="1000000" >
+                        <input required type="text" class="form-control mx-2" name="dniAdoptante" id="dniAdoptante" placeholder="Ingrese DNI del adoptante..." maxlength="8" onchange="validoDni();" >
+                        <div class="valid-feedback mx-2" id="dniValido"></div>
 					</div>
 					<div class="form-group">
-						<input required type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante...">
+						<input required type="text" class="form-control mx-2" name="nombreAdoptante" id="nombreAdoptante" placeholder="Ingrese nombre del adoptante..." data-error="Ingrese el nombre correctamente!" onchange="validoNombre();">
+                        <div class="valid-feedback mx-2" id="nomV" ></div>
 					</div>
 					<div class="form-group">
-						<input required type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante...">
+						<input required type="text" class="form-control mx-2" name="apellidoAdoptante" id="apellidoAdoptante" placeholder="Ingrese apellido del adoptante..." onchange="validoApellido();">
+                        <div class="valid-feedback mx-2" id="apeV"></div>
                     </div>
 					<div class="form-group">
-						<input type="number" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese teléfono del adoptante...">
+						<input type="text" class="form-control mx-2" name="telefonoAdoptante" id="telefonoAdoptante" placeholder="Ingrese teléfono del adoptante..." maxlength="25" onchange="validoTelefono();">
+						<div class="valid-feedback mx-2" id="telefonoValido"></div>
 					</div>
 					<div class="form-group">
-						<input required type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante...">
+						<input required type="email" class="form-control mx-2" name="emailAdoptante" id="emailAdoptante" placeholder="Ingrese email del adoptante..." onchange="validoEmail();">
+						<div class="valid-feedback mx-2" id="emailV"></div>
 					</div>
 					<div class="form-group">
-						<input required type="text" class="form-control mx-2" name="ciudadAdoptante" id="ciudadAdoptante" placeholder="Ingrese ciudad del adoptante...">
+						<input required type="text" class="form-control mx-2" name="ciudadAdoptante" id="ciudadAdoptante" placeholder="Ingrese ciudad del adoptante..." onchange="validoCiudad();">
+						<div class="valid-feedback mx-2" id="ciudadVa"></div>
 					</div>
 					<div class="row">
                         <div class="col">
-                          <input required type="text" class="form-control " name="direccionAdoptante" id="direccionAdoptante" placeholder="Dirección del adoptante...">
+                          <input required type="text" class="form-control " name="direccionAdoptante" id="direccionAdoptante" placeholder="Dirección del adoptante..." onchange="validoDireccion();">
+                          <div class="valid-feedback mx-2" id="dirV"></div>
                         </div>
                         <div class="col">
-                            <input required type="number" class="form-control " name="alturaDireccion" id="alturaDireccion" min="0" max="9999" placeholder="altura de la dirección">
+                            <input required type="text" class="form-control " name="alturaDireccion" id="alturaDireccion"  maxlength="4" placeholder="altura de la dirección" onchange="validoAltura();">
+                            <div class="valid-feedback mx-2" id="altV"></div>
                         </div>
                     </div>
 				</form>
@@ -354,16 +362,27 @@
 
     //----> valida que la direccion no sea numero y que la altura no sea nula
     function validoDireccion() {
-        if( (isNaN($('#direccionAdoptante').val())) && ($('#alturaDireccion').val()) && ($("#nombreAdoptante").val().match(/^[a-zA-Z]+$/)) ){
-            var nro = $('#alturaDireccion').val();
-            if ( nro > 0 && nro < 9999 ){
-                return true;
-            } else {
-                alert("Ingrese correctamente la direccion o la altura");
-                return false;
-            }
+        var direccion = $('#direccionAdoptante').val();
+        if( /^[0-9a-zA-Z]+$/.test(direccion) && isNaN(direccion) ){
+            console.log("direccion correcta");
+            $('#dirV').html('Dirección válida');
+            return true;
         } else {
-            alert("Ingrese correctamente la direccion o la altura");
+            console.log("Ingrese correctamente la direccion o la altura");
+            $('#dirV').html('Dirección inválida!');
+            return false;
+        }
+    }
+    
+    function validoAltura () {
+        var nro = $('#alturaDireccion').val();
+        if ( nro > 0 && nro < 9999 && /^[0-9]+$/.test(nro) ){
+            console.log("altura bien puesta");
+            $('#altV').html("Altura de la dirección válida");
+            return true;
+        } else {
+            console.log("Ingrese correctamente la direccion o la altura");
+            $('#altV').html("Altura de la dirección inválida!");
             return false;
         }
     }
@@ -372,55 +391,92 @@
     function validoDni() {
         var dni = $('#dniAdoptante').val();
         console.log(" Entro a validoDNI() con el dni ---> "+dni);
-        var valido;
-        $.ajax({
+        var valido = false;
+        if (dni > 1000000 && dni< 99999999 && /^[0-9]+$/.test(dni)){
+            console.log("el dni es valido man");
+            $.ajax({
                 url: '<?php echo base_url('C_Adoptante/existeAdoptante') ?>',
                 type: 'POST',
                 data: {dni: dni}
             })
         .done(function(rta) {
-            //alert(rta);
+            console.log(rta);
             if (rta) {
                 valido=false;
+                $('#dniValido').html('El DNI es válido!');
+                console.log("el dni esta bien papa");
             } else {
                 valido = true;
+                $('#dniValido').html('El DNI ya existe en el sistema!');
+                console.log("el dni esta maaal papa");
             }
             });
+        } else {
+            $('#dniValido').html('El DNI es inválido');
+            console.log("el dni es invalido");
+        }
         return valido;
     }
     
-    function validoNombreApellido(){
-        if ( ($("#nombreAdoptante").val().match(/^[a-zA-Z]+$/)) && ($("#apellidoAdoptante").val().match(/^[a-zA-Z]+$/)) ) {
+    function validoNombre(){
+        var nombre = $("#nombreAdoptante").val();
+        if ( /^[a-zA-Z]+$/.test(nombre) ) {
+            console.log("la expresion paso por el true "+nombre);
+            $('#nomV').html("Nombre válido!"); 
            return true;
         } else {
-            alert('Ingrese correctamente el nombre o apellido');
+            console.log("la expresion paso por el false "+nombre);
+            $('#nomV').html("Nombre inválido, ingrese solo letras");
+            console.log('Ingrese correctamente el nombre o apellido');
+            return false;
+        }
+    }
+    
+    function validoApellido () {
+        var apellido = $("#apellidoAdoptante").val();
+        if ( /^[a-zA-Z]+$/.test(apellido) ){
+            $('#apeV').html("Apellido válido!");
+            console.log("apellido correcto!");
+            return true;
+        } else {
+            $('#apeV').html("Apellido inválido, ingrese solo letras");
+            console.log("apellido invalido");
             return false;
         }
     }
     
     function validoEmail() {
-        if ( $('#emailAdoptante').val().match(/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/) ){
+        if ( /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/.test($('#emailAdoptante').val()) ){
+            $('#emailV').html("E-mail válido!");
+            console.log("email correcto");
             return true;
         } else {
-            alert('Ingrese correctamente el email');
+            $('#emailV').html("E-mail inválido!");
+            console.log('Ingrese correctamente el email');
             return false;
         }
     }
     
-    function validoCiudad() {
-        // $("#ciudadAdoptante").val().match(/^[a-zA-Z]+$/)
-        if ( isNaN($("#ciudadAdoptante").val()) ){
+    function validoCiudad() { 
+        if ( /^[a-zA-Z]+$/.test($("#ciudadAdoptante").val()) ){
+            console.log("ciudad correcta");
+            $('#ciudadVa').html("Ciudad válida!");
             return true;
         }else{
-            alert('Ingrese correctamente la ciudad');
+            console.log('Ingrese correctamente la ciudad');
+            $('#ciudadVa').html("Ingrese el nombre de la ciudad correctamente!");
+            return false;
         }
     }
     
     function validoTelefono() {
-        if ( $('#telefonoAdoptante').val().match(/^[0-9-()+]{3,20}/) ){
+        if ( /^[0-9-()+]{3,20}/.test($('#telefonoAdoptante').val()) ){
+            $('#telefonoValido').html('El teléfono/celular es válido!');
+            console.log("el telefono esta bien bro");
             return true;
         } else {
-            alert('Ingrese correctamente el telefono o celular');
+            console.log('Ingrese correctamente el telefono o celular');
+            $('#telefonoValido').html('El teléfono/celular es inválido!');
             return false;
         }
     }
@@ -804,13 +860,12 @@ table.on( 'draw', function () {
                     
 					if ($("#nombreAdoptante").val() && $("#apellidoAdoptante").val() && $("#dniAdoptante").val() && $("#direccionAdoptante").val() && $("#telefonoAdoptante").val() && $("#emailAdoptante").val() && $("#ciudadAdoptante").val()) {
 
-                        if (dni > 1000000 && dni<99999999){
-                            
-                            if (validoDni()) {
+                        //----> Valida el dni
+                        if (validoDni()) {
                                 console.log('El adoptante con ese DNI ya esta registrado!');
                             } else {
                                 //-----> El adoptante con ese dni no esta registrado entonces tengo que validar los datos del formulario
-                                if ( validoNombreApellido() && validoEmail() && validoDireccion() && validoTelefono() && validoCiudad() ){ 
+                                if ( validoNombre() && validoEmail() && validoDireccion() && validoTelefono() && validoCiudad() && validoApellido() && validoAltura() ){ 
                                     console.log("PASO POR LAS VALIDACIONES Y DIO BIEN");
                                     //----> el ajax en donde envia las cosas para el formulario
                                     $.ajax({
@@ -846,9 +901,7 @@ table.on( 'draw', function () {
                                     console.log('Ingrese los datos de los campos correctamente!');
                                 }
                             }
-                        } else {
-                            alert('Ingrese el dni correctamente.');
-                        }  //-------> termina la validacoin de rango del dni
+                        
 					} else {
 						alert("Ingrese todos los campos!");
 					}   //--------> termina la validacion de que todos las campos esten bien validados

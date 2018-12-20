@@ -225,7 +225,7 @@
     
     
     //-------> Comportamiento cuando clickea el boton de iniciar periodo
-    $('#btn_periodo').click(function(event){
+    $('#btn_periodo').off().click(function(event){
         
         event.preventDefault();
         var tipo = $('#tipoPeriodo').val();
