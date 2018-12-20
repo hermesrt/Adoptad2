@@ -174,7 +174,7 @@ class M_Animal extends CI_Model {
     {
         $datos = array(
             'id_animal' => $this->id_animal,
-            'fecha_baja' => $date = date('Y-m-d'),
+            'fecha_baja' => $date = date('Y-m-d H:i:s'),
             'descripcion_baja' => $motivo
         );
         $this->db->insert('historial_baja_animal', $datos);

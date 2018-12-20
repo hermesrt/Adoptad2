@@ -272,6 +272,10 @@
 								<fieldset class="form-group">
 									<label for="fechaAlta">Fecha de Nacimiento</label>
 									<input type="date" class="form-control" id="fechaAlta" name="fechaAlta" placeholder="Fecha de Nacimiento">
+									<script type="text/javascript">
+										var hoy = new Date().toISOString().split("T")[0];
+										$("#fechaAlta").attr("max", hoy);
+									</script>
 								</fieldset>
 							</div>
 						</div>
